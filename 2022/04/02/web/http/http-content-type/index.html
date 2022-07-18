@@ -1,0 +1,1740 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Http Content-Type | iFan</title>
+  <meta name="description" content="Content-type   文件扩展名 Content-Type(Mime-Type) 文件扩展名 Content-Type(Mime-Type)    .*（ 二进制流，不知道下载文件类型） application&#x2F;octet-stream .tif image&#x2F;tiff   .001 application&#x2F;x-001 .301 application&amp;#x2F">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Http Content-Type">
+<meta property="og:url" content="https://blog.ifan.host/2022/04/02/web/http/http-content-type/index.html">
+<meta property="og:site_name" content="iFan">
+<meta property="og:description" content="Content-type   文件扩展名 Content-Type(Mime-Type) 文件扩展名 Content-Type(Mime-Type)    .*（ 二进制流，不知道下载文件类型） application&#x2F;octet-stream .tif image&#x2F;tiff   .001 application&#x2F;x-001 .301 application&amp;#x2F">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-04-02T07:55:25.000Z">
+<meta property="article:modified_time" content="2022-04-02T08:03:13.024Z">
+<meta property="article:author" content="iFan">
+<meta property="article:tag" content="WEB">
+<meta property="article:tag" content="HTTP">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://blog.ifan.host/2022/04/02/web/http/http-content-type/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="iFan" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/Mr-iFan" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">iFan</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">在路上啊</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> 北京</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Mr-iFan" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>啥也不是</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/MyBatis/">MyBatis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/Spring-Boot/">Spring Boot</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Centos/">Centos</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Debian/">Debian</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/service/">service</a><span class="category-list-count">4</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Lua/">Lua</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Minio/">Minio</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NodeJS/">NodeJS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/NodeJS/nvm/">nvm</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Jupyter/">Jupyter</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/jupyterlab/">jupyterlab</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/pyenv/">pyenv</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Scala/">Scala</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/WEB/">WEB</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/WEB/HTTP/">HTTP</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/WEB/Nginx/">Nginx</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/WEB/%E5%8E%8B%E6%B5%8B/">压测</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/boto3/">boto3</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/boto3/%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8/">文件存储</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/golang/">golang</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/Git/">Git</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/ffmpeg/">ffmpeg</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/proxy/">proxy</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/proxy/%E7%88%AC%E8%99%AB/">爬虫</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/vim/">vim</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/%E7%BC%96%E7%A8%8B%E5%B7%A5%E5%85%B7/">编程工具</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><span class="category-list-count">39</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/ElasticSearch/">ElasticSearch</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/MongoDB/">MongoDB</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/">MySQL</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/Redis/">Redis</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/Sqlite/">Sqlite</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/%E5%A4%A7%E6%95%B0%E6%8D%AE/HBase/">HBase</a><span class="category-list-count">3</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/lxml/">lxml</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/mitmproxy/">mitmproxy</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/puppeteer/">puppeteer</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/pyppeteer/">pyppeteer</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/xpath/">xpath</a><span class="category-list-count">1</span></li></ul></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Centos/" rel="tag">Centos</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Debian/" rel="tag">Debian</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ElasticSearch/" rel="tag">ElasticSearch</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/" rel="tag">Git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HBase/" rel="tag">HBase</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jupyter/" rel="tag">Jupyter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lua/" rel="tag">Lua</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Minio/" rel="tag">Minio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB/" rel="tag">MongoDB</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MyBatis/" rel="tag">MyBatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NodeJS/" rel="tag">NodeJS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scala/" rel="tag">Scala</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Boot/" rel="tag">Spring Boot</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sqlite/" rel="tag">Sqlite</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB/" rel="tag">WEB</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Wrk/" rel="tag">Wrk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/boto3/" rel="tag">boto3</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/" rel="tag">ffmpeg</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang/" rel="tag">golang</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jupyterlab/" rel="tag">jupyterlab</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lxml/" rel="tag">lxml</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mitmproxy/" rel="tag">mitmproxy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nvm/" rel="tag">nvm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/proxy/" rel="tag">proxy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/puppeteer/" rel="tag">puppeteer</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pyenv/" rel="tag">pyenv</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pyppeteer/" rel="tag">pyppeteer</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/service/" rel="tag">service</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tesseract/" rel="tag">tesseract</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/" rel="tag">vim</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xpath/" rel="tag">xpath</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="tag">基础知识</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" rel="tag">大数据</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">39</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8/" rel="tag">文件存储</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E7%A8%8B%E5%B7%A5%E5%85%B7/" rel="tag">编程工具</a><span class="tag-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Centos/" style="font-size: 13.33px;">Centos</a> <a href="/tags/Debian/" style="font-size: 13px;">Debian</a> <a href="/tags/ElasticSearch/" style="font-size: 13.78px;">ElasticSearch</a> <a href="/tags/Git/" style="font-size: 13.11px;">Git</a> <a href="/tags/HBase/" style="font-size: 13.22px;">HBase</a> <a href="/tags/HTTP/" style="font-size: 13.78px;">HTTP</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/Jupyter/" style="font-size: 13px;">Jupyter</a> <a href="/tags/Linux/" style="font-size: 13.56px;">Linux</a> <a href="/tags/Lua/" style="font-size: 13.11px;">Lua</a> <a href="/tags/Minio/" style="font-size: 13px;">Minio</a> <a href="/tags/MongoDB/" style="font-size: 13.22px;">MongoDB</a> <a href="/tags/MyBatis/" style="font-size: 13px;">MyBatis</a> <a href="/tags/MySQL/" style="font-size: 13.78px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 13.44px;">Nginx</a> <a href="/tags/NodeJS/" style="font-size: 13px;">NodeJS</a> <a href="/tags/Python/" style="font-size: 13.22px;">Python</a> <a href="/tags/Redis/" style="font-size: 13.67px;">Redis</a> <a href="/tags/Scala/" style="font-size: 13.11px;">Scala</a> <a href="/tags/Spring-Boot/" style="font-size: 13.11px;">Spring Boot</a> <a href="/tags/Sqlite/" style="font-size: 13px;">Sqlite</a> <a href="/tags/WEB/" style="font-size: 13.33px;">WEB</a> <a href="/tags/Wrk/" style="font-size: 13px;">Wrk</a> <a href="/tags/boto3/" style="font-size: 13px;">boto3</a> <a href="/tags/ffmpeg/" style="font-size: 13px;">ffmpeg</a> <a href="/tags/golang/" style="font-size: 13.89px;">golang</a> <a href="/tags/jupyterlab/" style="font-size: 13px;">jupyterlab</a> <a href="/tags/lxml/" style="font-size: 13px;">lxml</a> <a href="/tags/mitmproxy/" style="font-size: 13px;">mitmproxy</a> <a href="/tags/nvm/" style="font-size: 13px;">nvm</a> <a href="/tags/proxy/" style="font-size: 13px;">proxy</a> <a href="/tags/puppeteer/" style="font-size: 13px;">puppeteer</a> <a href="/tags/pyenv/" style="font-size: 13px;">pyenv</a> <a href="/tags/pyppeteer/" style="font-size: 13px;">pyppeteer</a> <a href="/tags/python/" style="font-size: 13px;">python</a> <a href="/tags/service/" style="font-size: 13.33px;">service</a> <a href="/tags/tesseract/" style="font-size: 13px;">tesseract</a> <a href="/tags/vim/" style="font-size: 13.11px;">vim</a> <a href="/tags/xpath/" style="font-size: 13px;">xpath</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" style="font-size: 13px;">基础知识</a> <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" style="font-size: 13.22px;">大数据</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 13.56px;">工具</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 14px;">数据库</a> <a href="/tags/%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8/" style="font-size: 13px;">文件存储</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 13.44px;">爬虫</a> <a href="/tags/%E7%BC%96%E7%A8%8B%E5%B7%A5%E5%85%B7/" style="font-size: 13.22px;">编程工具</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a><span class="archive-list-count">62</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">38</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/07/10/bigdata/hbase/rank-family/" class="title">大数据 Hbase 列族的配置</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-07-10T06:25:00.000Z" itemprop="datePublished">2022-07-10</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/WEB/">WEB</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/WEB/Nginx/">Nginx</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/07/01/web/nginx/goaccess-nginx-log/" class="title">Nginx 使用 goaccess 分析日志</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-07-01T01:01:00.000Z" itemprop="datePublished">2022-07-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Minio/">Minio</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/07/01/database/minio/minio-nginx-proxy/" class="title">Minio 配置 nginx 代理</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-07-01T01:00:00.000Z" itemprop="datePublished">2022-07-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Java/">Java</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/Java/Spring-Boot/">Spring Boot</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/06/23/language/java/framework/springboot/springboot-start-with/" class="title">Java Spring Boot 在初始化时添加业务逻辑</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-06-23T01:00:00.000Z" itemprop="datePublished">2022-06-23</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/06/10/bigdata/hbase/cmd/" class="title">大数据 Hbase 一些命令</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-06-10T06:25:00.000Z" itemprop="datePublished">2022-06-10</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-web/http/http-content-type" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Http Content-Type
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2022/04/02/web/http/http-content-type/" class="article-date">
+	  <time datetime="2022-04-02T07:55:25.000Z" itemprop="datePublished">2022-04-02</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/WEB/">WEB</a>►<a class="article-category-link" href="/categories/WEB/HTTP/">HTTP</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/HTTP/" rel="tag">HTTP</a>, <a class="article-tag-link-link" href="/tags/WEB/" rel="tag">WEB</a>
+  </span>
+
+
+        
+
+	<span class="article-read hidden-xs">
+    	<i class="icon icon-eye-fill" aria-hidden="true"></i>
+    	<span id="/2022/04/02/web/http/http-content-type/" class="leancloud_visitors"  data-flag-title="Http Content-Type">0</span>
+    </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2022/04/02/web/http/http-content-type/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1.7k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 10(分)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="Content-type"><a href="#Content-type" class="headerlink" title="Content-type"></a>Content-type</h1><table>
+<thead>
+<tr>
+<th align="left">文件扩展名</th>
+<th align="left">Content-Type(Mime-Type)</th>
+<th align="left">文件扩展名</th>
+<th align="left">Content-Type(Mime-Type)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">.*（ 二进制流，不知道下载文件类型）</td>
+<td align="left">application&#x2F;octet-stream</td>
+<td align="left">.tif</td>
+<td align="left">image&#x2F;tiff</td>
+</tr>
+<tr>
+<td align="left">.001</td>
+<td align="left">application&#x2F;x-001</td>
+<td align="left">.301</td>
+<td align="left">application&#x2F;x-301</td>
+</tr>
+<tr>
+<td align="left">.323</td>
+<td align="left">text&#x2F;h323</td>
+<td align="left">.906</td>
+<td align="left">application&#x2F;x-906</td>
+</tr>
+<tr>
+<td align="left">.907</td>
+<td align="left">drawing&#x2F;907</td>
+<td align="left">.a11</td>
+<td align="left">application&#x2F;x-a11</td>
+</tr>
+<tr>
+<td align="left">.acp</td>
+<td align="left">audio&#x2F;x-mei-aac</td>
+<td align="left">.ai</td>
+<td align="left">application&#x2F;postscript</td>
+</tr>
+<tr>
+<td align="left">.aif</td>
+<td align="left">audio&#x2F;aiff</td>
+<td align="left">.aifc</td>
+<td align="left">audio&#x2F;aiff</td>
+</tr>
+<tr>
+<td align="left">.aiff</td>
+<td align="left">audio&#x2F;aiff</td>
+<td align="left">.anv</td>
+<td align="left">application&#x2F;x-anv</td>
+</tr>
+<tr>
+<td align="left">.asa</td>
+<td align="left">text&#x2F;asa</td>
+<td align="left">.asf</td>
+<td align="left">video&#x2F;x-ms-asf</td>
+</tr>
+<tr>
+<td align="left">.asp</td>
+<td align="left">text&#x2F;asp</td>
+<td align="left">.asx</td>
+<td align="left">video&#x2F;x-ms-asf</td>
+</tr>
+<tr>
+<td align="left">.au</td>
+<td align="left">audio&#x2F;basic</td>
+<td align="left">.avi</td>
+<td align="left">video&#x2F;avi</td>
+</tr>
+<tr>
+<td align="left">.awf</td>
+<td align="left">application&#x2F;vnd.adobe.workflow</td>
+<td align="left">.biz</td>
+<td align="left">text&#x2F;xml</td>
+</tr>
+<tr>
+<td align="left">.bmp</td>
+<td align="left">application&#x2F;x-bmp</td>
+<td align="left">.bot</td>
+<td align="left">application&#x2F;x-bot</td>
+</tr>
+<tr>
+<td align="left">.c4t</td>
+<td align="left">application&#x2F;x-c4t</td>
+<td align="left">.c90</td>
+<td align="left">application&#x2F;x-c90</td>
+</tr>
+<tr>
+<td align="left">.cal</td>
+<td align="left">application&#x2F;x-cals</td>
+<td align="left">.cat</td>
+<td align="left">application&#x2F;vnd.ms-pki.seccat</td>
+</tr>
+<tr>
+<td align="left">.cdf</td>
+<td align="left">application&#x2F;x-netcdf</td>
+<td align="left">.cdr</td>
+<td align="left">application&#x2F;x-cdr</td>
+</tr>
+<tr>
+<td align="left">.cel</td>
+<td align="left">application&#x2F;x-cel</td>
+<td align="left">.cer</td>
+<td align="left">application&#x2F;x-x509-ca-cert</td>
+</tr>
+<tr>
+<td align="left">.cg4</td>
+<td align="left">application&#x2F;x-g4</td>
+<td align="left">.cgm</td>
+<td align="left">application&#x2F;x-cgm</td>
+</tr>
+<tr>
+<td align="left">.cit</td>
+<td align="left">application&#x2F;x-cit</td>
+<td align="left">.class</td>
+<td align="left">java&#x2F;*</td>
+</tr>
+<tr>
+<td align="left">.cml</td>
+<td align="left">text&#x2F;xml</td>
+<td align="left">.cmp</td>
+<td align="left">application&#x2F;x-cmp</td>
+</tr>
+<tr>
+<td align="left">.cmx</td>
+<td align="left">application&#x2F;x-cmx</td>
+<td align="left">.cot</td>
+<td align="left">application&#x2F;x-cot</td>
+</tr>
+<tr>
+<td align="left">.crl</td>
+<td align="left">application&#x2F;pkix-crl</td>
+<td align="left">.crt</td>
+<td align="left">application&#x2F;x-x509-ca-cert</td>
+</tr>
+<tr>
+<td align="left">.csi</td>
+<td align="left">application&#x2F;x-csi</td>
+<td align="left">.css</td>
+<td align="left">text&#x2F;css</td>
+</tr>
+<tr>
+<td align="left">.cut</td>
+<td align="left">application&#x2F;x-cut</td>
+<td align="left">.dbf</td>
+<td align="left">application&#x2F;x-dbf</td>
+</tr>
+<tr>
+<td align="left">.dbm</td>
+<td align="left">application&#x2F;x-dbm</td>
+<td align="left">.dbx</td>
+<td align="left">application&#x2F;x-dbx</td>
+</tr>
+<tr>
+<td align="left">.dcd</td>
+<td align="left">text&#x2F;xml</td>
+<td align="left">.dcx</td>
+<td align="left">application&#x2F;x-dcx</td>
+</tr>
+<tr>
+<td align="left">.der</td>
+<td align="left">application&#x2F;x-x509-ca-cert</td>
+<td align="left">.dgn</td>
+<td align="left">application&#x2F;x-dgn</td>
+</tr>
+<tr>
+<td align="left">.dib</td>
+<td align="left">application&#x2F;x-dib</td>
+<td align="left">.dll</td>
+<td align="left">application&#x2F;x-msdownload</td>
+</tr>
+<tr>
+<td align="left">.doc</td>
+<td align="left">application&#x2F;msword</td>
+<td align="left">.dot</td>
+<td align="left">application&#x2F;msword</td>
+</tr>
+<tr>
+<td align="left">.drw</td>
+<td align="left">application&#x2F;x-drw</td>
+<td align="left">.dtd</td>
+<td align="left">text&#x2F;xml</td>
+</tr>
+<tr>
+<td align="left">.dwf</td>
+<td align="left">Model&#x2F;vnd.dwf</td>
+<td align="left">.dwf</td>
+<td align="left">application&#x2F;x-dwf</td>
+</tr>
+<tr>
+<td align="left">.dwg</td>
+<td align="left">application&#x2F;x-dwg</td>
+<td align="left">.dxb</td>
+<td align="left">application&#x2F;x-dxb</td>
+</tr>
+<tr>
+<td align="left">.dxf</td>
+<td align="left">application&#x2F;x-dxf</td>
+<td align="left">.edn</td>
+<td align="left">application&#x2F;vnd.adobe.edn</td>
+</tr>
+<tr>
+<td align="left">.emf</td>
+<td align="left">application&#x2F;x-emf</td>
+<td align="left">.eml</td>
+<td align="left">message&#x2F;rfc822</td>
+</tr>
+<tr>
+<td align="left">.ent</td>
+<td align="left">text&#x2F;xml</td>
+<td align="left">.epi</td>
+<td align="left">application&#x2F;x-epi</td>
+</tr>
+<tr>
+<td align="left">.eps</td>
+<td align="left">application&#x2F;x-ps</td>
+<td align="left">.eps</td>
+<td align="left">application&#x2F;postscript</td>
+</tr>
+<tr>
+<td align="left">.etd</td>
+<td align="left">application&#x2F;x-ebx</td>
+<td align="left">.exe</td>
+<td align="left">application&#x2F;x-msdownload</td>
+</tr>
+<tr>
+<td align="left">.fax</td>
+<td align="left">image&#x2F;fax</td>
+<td align="left">.fdf</td>
+<td align="left">application&#x2F;vnd.fdf</td>
+</tr>
+<tr>
+<td align="left">.fif</td>
+<td align="left">application&#x2F;fractals</td>
+<td align="left">.fo</td>
+<td align="left">text&#x2F;xml</td>
+</tr>
+<tr>
+<td align="left">.frm</td>
+<td align="left">application&#x2F;x-frm</td>
+<td align="left">.g4</td>
+<td align="left">application&#x2F;x-g4</td>
+</tr>
+<tr>
+<td align="left">.gbr</td>
+<td align="left">application&#x2F;x-gbr</td>
+<td align="left">.</td>
+<td align="left">application&#x2F;x-</td>
+</tr>
+<tr>
+<td align="left">.gif</td>
+<td align="left">image&#x2F;gif</td>
+<td align="left">.gl2</td>
+<td align="left">application&#x2F;x-gl2</td>
+</tr>
+<tr>
+<td align="left">.gp4</td>
+<td align="left">application&#x2F;x-gp4</td>
+<td align="left">.hgl</td>
+<td align="left">application&#x2F;x-hgl</td>
+</tr>
+<tr>
+<td align="left">.hmr</td>
+<td align="left">application&#x2F;x-hmr</td>
+<td align="left">.hpg</td>
+<td align="left">application&#x2F;x-hpgl</td>
+</tr>
+<tr>
+<td align="left">.hpl</td>
+<td align="left">application&#x2F;x-hpl</td>
+<td align="left">.hqx</td>
+<td align="left">application&#x2F;mac-binhex40</td>
+</tr>
+<tr>
+<td align="left">.hrf</td>
+<td align="left">application&#x2F;x-hrf</td>
+<td align="left">.hta</td>
+<td align="left">application&#x2F;hta</td>
+</tr>
+<tr>
+<td align="left">.htc</td>
+<td align="left">text&#x2F;x-component</td>
+<td align="left">.htm</td>
+<td align="left">text&#x2F;html</td>
+</tr>
+<tr>
+<td align="left">.html</td>
+<td align="left">text&#x2F;html</td>
+<td align="left">.htt</td>
+<td align="left">text&#x2F;webviewhtml</td>
+</tr>
+<tr>
+<td align="left">.htx</td>
+<td align="left">text&#x2F;html</td>
+<td align="left">.icb</td>
+<td align="left">application&#x2F;x-icb</td>
+</tr>
+<tr>
+<td align="left">.ico</td>
+<td align="left">image&#x2F;x-icon</td>
+<td align="left">.ico</td>
+<td align="left">application&#x2F;x-ico</td>
+</tr>
+<tr>
+<td align="left">.iff</td>
+<td align="left">application&#x2F;x-iff</td>
+<td align="left">.ig4</td>
+<td align="left">application&#x2F;x-g4</td>
+</tr>
+<tr>
+<td align="left">.igs</td>
+<td align="left">application&#x2F;x-igs</td>
+<td align="left">.iii</td>
+<td align="left">application&#x2F;x-iphone</td>
+</tr>
+<tr>
+<td align="left">.img</td>
+<td align="left">application&#x2F;x-img</td>
+<td align="left">.ins</td>
+<td align="left">application&#x2F;x-internet-signup</td>
+</tr>
+<tr>
+<td align="left">.isp</td>
+<td align="left">application&#x2F;x-internet-signup</td>
+<td align="left">.IVF</td>
+<td align="left">video&#x2F;x-ivf</td>
+</tr>
+<tr>
+<td align="left">.java</td>
+<td align="left">java&#x2F;*</td>
+<td align="left">.jfif</td>
+<td align="left">image&#x2F;jpeg</td>
+</tr>
+<tr>
+<td align="left">.jpe</td>
+<td align="left">image&#x2F;jpeg</td>
+<td align="left">.jpe</td>
+<td align="left">application&#x2F;x-jpe</td>
+</tr>
+<tr>
+<td align="left">.jpeg</td>
+<td align="left">image&#x2F;jpeg</td>
+<td align="left">.jpg</td>
+<td align="left">image&#x2F;jpeg</td>
+</tr>
+<tr>
+<td align="left">.jpg</td>
+<td align="left">application&#x2F;x-jpg</td>
+<td align="left">.js</td>
+<td align="left">application&#x2F;x-javascript</td>
+</tr>
+<tr>
+<td align="left">.jsp</td>
+<td align="left">text&#x2F;html</td>
+<td align="left">.la1</td>
+<td align="left">audio&#x2F;x-liquid-file</td>
+</tr>
+<tr>
+<td align="left">.lar</td>
+<td align="left">application&#x2F;x-laplayer-reg</td>
+<td align="left">.latex</td>
+<td align="left">application&#x2F;x-latex</td>
+</tr>
+<tr>
+<td align="left">.lavs</td>
+<td align="left">audio&#x2F;x-liquid-secure</td>
+<td align="left">.lbm</td>
+<td align="left">application&#x2F;x-lbm</td>
+</tr>
+<tr>
+<td align="left">.lmsff</td>
+<td align="left">audio&#x2F;x-la-lms</td>
+<td align="left">.ls</td>
+<td align="left">application&#x2F;x-javascript</td>
+</tr>
+<tr>
+<td align="left">.ltr</td>
+<td align="left">application&#x2F;x-ltr</td>
+<td align="left">.m1v</td>
+<td align="left">video&#x2F;x-mpeg</td>
+</tr>
+<tr>
+<td align="left">.m2v</td>
+<td align="left">video&#x2F;x-mpeg</td>
+<td align="left">.m3u</td>
+<td align="left">audio&#x2F;mpegurl</td>
+</tr>
+<tr>
+<td align="left">.m4e</td>
+<td align="left">video&#x2F;mpeg4</td>
+<td align="left">.mac</td>
+<td align="left">application&#x2F;x-mac</td>
+</tr>
+<tr>
+<td align="left">.man</td>
+<td align="left">application&#x2F;x-troff-man</td>
+<td align="left">.math</td>
+<td align="left">text&#x2F;xml</td>
+</tr>
+<tr>
+<td align="left">.mdb</td>
+<td align="left">application&#x2F;msaccess</td>
+<td align="left">.mdb</td>
+<td align="left">application&#x2F;x-mdb</td>
+</tr>
+<tr>
+<td align="left">.mfp</td>
+<td align="left">application&#x2F;x-shockwave-flash</td>
+<td align="left">.mht</td>
+<td align="left">message&#x2F;rfc822</td>
+</tr>
+<tr>
+<td align="left">.mhtml</td>
+<td align="left">message&#x2F;rfc822</td>
+<td align="left">.mi</td>
+<td align="left">application&#x2F;x-mi</td>
+</tr>
+<tr>
+<td align="left">.mid</td>
+<td align="left">audio&#x2F;mid</td>
+<td align="left">.midi</td>
+<td align="left">audio&#x2F;mid</td>
+</tr>
+<tr>
+<td align="left">.mil</td>
+<td align="left">application&#x2F;x-mil</td>
+<td align="left">.mml</td>
+<td align="left">text&#x2F;xml</td>
+</tr>
+<tr>
+<td align="left">.mnd</td>
+<td align="left">audio&#x2F;x-musicnet-download</td>
+<td align="left">.mns</td>
+<td align="left">audio&#x2F;x-musicnet-stream</td>
+</tr>
+<tr>
+<td align="left">.mocha</td>
+<td align="left">application&#x2F;x-javascript</td>
+<td align="left">.movie</td>
+<td align="left">video&#x2F;x-sgi-movie</td>
+</tr>
+<tr>
+<td align="left">.mp1</td>
+<td align="left">audio&#x2F;mp1</td>
+<td align="left">.mp2</td>
+<td align="left">audio&#x2F;mp2</td>
+</tr>
+<tr>
+<td align="left">.mp2v</td>
+<td align="left">video&#x2F;mpeg</td>
+<td align="left">.mp3</td>
+<td align="left">audio&#x2F;mp3</td>
+</tr>
+<tr>
+<td align="left">.mp4</td>
+<td align="left">video&#x2F;mpeg4</td>
+<td align="left">.mpa</td>
+<td align="left">video&#x2F;x-mpg</td>
+</tr>
+<tr>
+<td align="left">.mpd</td>
+<td align="left">application&#x2F;vnd.ms-project</td>
+<td align="left">.mpe</td>
+<td align="left">video&#x2F;x-mpeg</td>
+</tr>
+<tr>
+<td align="left">.mpeg</td>
+<td align="left">video&#x2F;mpg</td>
+<td align="left">.mpg</td>
+<td align="left">video&#x2F;mpg</td>
+</tr>
+<tr>
+<td align="left">.mpga</td>
+<td align="left">audio&#x2F;rn-mpeg</td>
+<td align="left">.mpp</td>
+<td align="left">application&#x2F;vnd.ms-project</td>
+</tr>
+<tr>
+<td align="left">.mps</td>
+<td align="left">video&#x2F;x-mpeg</td>
+<td align="left">.mpt</td>
+<td align="left">application&#x2F;vnd.ms-project</td>
+</tr>
+<tr>
+<td align="left">.mpv</td>
+<td align="left">video&#x2F;mpg</td>
+<td align="left">.mpv2</td>
+<td align="left">video&#x2F;mpeg</td>
+</tr>
+<tr>
+<td align="left">.mpw</td>
+<td align="left">application&#x2F;vnd.ms-project</td>
+<td align="left">.mpx</td>
+<td align="left">application&#x2F;vnd.ms-project</td>
+</tr>
+<tr>
+<td align="left">.mtx</td>
+<td align="left">text&#x2F;xml</td>
+<td align="left">.mxp</td>
+<td align="left">application&#x2F;x-mmxp</td>
+</tr>
+<tr>
+<td align="left">.net</td>
+<td align="left">image&#x2F;pnetvue</td>
+<td align="left">.nrf</td>
+<td align="left">application&#x2F;x-nrf</td>
+</tr>
+<tr>
+<td align="left">.nws</td>
+<td align="left">message&#x2F;rfc822</td>
+<td align="left">.odc</td>
+<td align="left">text&#x2F;x-ms-odc</td>
+</tr>
+<tr>
+<td align="left">.out</td>
+<td align="left">application&#x2F;x-out</td>
+<td align="left">.p10</td>
+<td align="left">application&#x2F;pkcs10</td>
+</tr>
+<tr>
+<td align="left">.p12</td>
+<td align="left">application&#x2F;x-pkcs12</td>
+<td align="left">.p7b</td>
+<td align="left">application&#x2F;x-pkcs7-certificates</td>
+</tr>
+<tr>
+<td align="left">.p7c</td>
+<td align="left">application&#x2F;pkcs7-mime</td>
+<td align="left">.p7m</td>
+<td align="left">application&#x2F;pkcs7-mime</td>
+</tr>
+<tr>
+<td align="left">.p7r</td>
+<td align="left">application&#x2F;x-pkcs7-certreqresp</td>
+<td align="left">.p7s</td>
+<td align="left">application&#x2F;pkcs7-signature</td>
+</tr>
+<tr>
+<td align="left">.pc5</td>
+<td align="left">application&#x2F;x-pc5</td>
+<td align="left">.pci</td>
+<td align="left">application&#x2F;x-pci</td>
+</tr>
+<tr>
+<td align="left">.pcl</td>
+<td align="left">application&#x2F;x-pcl</td>
+<td align="left">.pcx</td>
+<td align="left">application&#x2F;x-pcx</td>
+</tr>
+<tr>
+<td align="left">.pdf</td>
+<td align="left">application&#x2F;pdf</td>
+<td align="left">.pdf</td>
+<td align="left">application&#x2F;pdf</td>
+</tr>
+<tr>
+<td align="left">.pdx</td>
+<td align="left">application&#x2F;vnd.adobe.pdx</td>
+<td align="left">.pfx</td>
+<td align="left">application&#x2F;x-pkcs12</td>
+</tr>
+<tr>
+<td align="left">.pgl</td>
+<td align="left">application&#x2F;x-pgl</td>
+<td align="left">.pic</td>
+<td align="left">application&#x2F;x-pic</td>
+</tr>
+<tr>
+<td align="left">.pko</td>
+<td align="left">application&#x2F;vnd.ms-pki.pko</td>
+<td align="left">.pl</td>
+<td align="left">application&#x2F;x-perl</td>
+</tr>
+<tr>
+<td align="left">.plg</td>
+<td align="left">text&#x2F;html</td>
+<td align="left">.pls</td>
+<td align="left">audio&#x2F;scpls</td>
+</tr>
+<tr>
+<td align="left">.plt</td>
+<td align="left">application&#x2F;x-plt</td>
+<td align="left">.png</td>
+<td align="left">image&#x2F;png</td>
+</tr>
+<tr>
+<td align="left">.png</td>
+<td align="left">application&#x2F;x-png</td>
+<td align="left">.pot</td>
+<td align="left">application&#x2F;vnd.ms-powerpoint</td>
+</tr>
+<tr>
+<td align="left">.ppa</td>
+<td align="left">application&#x2F;vnd.ms-powerpoint</td>
+<td align="left">.ppm</td>
+<td align="left">application&#x2F;x-ppm</td>
+</tr>
+<tr>
+<td align="left">.pps</td>
+<td align="left">application&#x2F;vnd.ms-powerpoint</td>
+<td align="left">.ppt</td>
+<td align="left">application&#x2F;vnd.ms-powerpoint</td>
+</tr>
+<tr>
+<td align="left">.ppt</td>
+<td align="left">application&#x2F;x-ppt</td>
+<td align="left">.pr</td>
+<td align="left">application&#x2F;x-pr</td>
+</tr>
+<tr>
+<td align="left">.prf</td>
+<td align="left">application&#x2F;pics-rules</td>
+<td align="left">.prn</td>
+<td align="left">application&#x2F;x-prn</td>
+</tr>
+<tr>
+<td align="left">.prt</td>
+<td align="left">application&#x2F;x-prt</td>
+<td align="left">.ps</td>
+<td align="left">application&#x2F;x-ps</td>
+</tr>
+<tr>
+<td align="left">.ps</td>
+<td align="left">application&#x2F;postscript</td>
+<td align="left">.ptn</td>
+<td align="left">application&#x2F;x-ptn</td>
+</tr>
+<tr>
+<td align="left">.pwz</td>
+<td align="left">application&#x2F;vnd.ms-powerpoint</td>
+<td align="left">.r3t</td>
+<td align="left">text&#x2F;vnd.rn-realtext3d</td>
+</tr>
+<tr>
+<td align="left">.ra</td>
+<td align="left">audio&#x2F;vnd.rn-realaudio</td>
+<td align="left">.ram</td>
+<td align="left">audio&#x2F;x-pn-realaudio</td>
+</tr>
+<tr>
+<td align="left">.ras</td>
+<td align="left">application&#x2F;x-ras</td>
+<td align="left">.rat</td>
+<td align="left">application&#x2F;rat-file</td>
+</tr>
+<tr>
+<td align="left">.rdf</td>
+<td align="left">text&#x2F;xml</td>
+<td align="left">.rec</td>
+<td align="left">application&#x2F;vnd.rn-recording</td>
+</tr>
+<tr>
+<td align="left">.red</td>
+<td align="left">application&#x2F;x-red</td>
+<td align="left">.rgb</td>
+<td align="left">application&#x2F;x-rgb</td>
+</tr>
+<tr>
+<td align="left">.rjs</td>
+<td align="left">application&#x2F;vnd.rn-realsystem-rjs</td>
+<td align="left">.rjt</td>
+<td align="left">application&#x2F;vnd.rn-realsystem-rjt</td>
+</tr>
+<tr>
+<td align="left">.rlc</td>
+<td align="left">application&#x2F;x-rlc</td>
+<td align="left">.rle</td>
+<td align="left">application&#x2F;x-rle</td>
+</tr>
+<tr>
+<td align="left">.rm</td>
+<td align="left">application&#x2F;vnd.rn-realmedia</td>
+<td align="left">.rmf</td>
+<td align="left">application&#x2F;vnd.adobe.rmf</td>
+</tr>
+<tr>
+<td align="left">.rmi</td>
+<td align="left">audio&#x2F;mid</td>
+<td align="left">.rmj</td>
+<td align="left">application&#x2F;vnd.rn-realsystem-rmj</td>
+</tr>
+<tr>
+<td align="left">.rmm</td>
+<td align="left">audio&#x2F;x-pn-realaudio</td>
+<td align="left">.rmp</td>
+<td align="left">application&#x2F;vnd.rn-rn_music_package</td>
+</tr>
+<tr>
+<td align="left">.rms</td>
+<td align="left">application&#x2F;vnd.rn-realmedia-secure</td>
+<td align="left">.rmvb</td>
+<td align="left">application&#x2F;vnd.rn-realmedia-vbr</td>
+</tr>
+<tr>
+<td align="left">.rmx</td>
+<td align="left">application&#x2F;vnd.rn-realsystem-rmx</td>
+<td align="left">.rnx</td>
+<td align="left">application&#x2F;vnd.rn-realplayer</td>
+</tr>
+<tr>
+<td align="left">.rp</td>
+<td align="left">image&#x2F;vnd.rn-realpix</td>
+<td align="left">.rpm</td>
+<td align="left">audio&#x2F;x-pn-realaudio-plugin</td>
+</tr>
+<tr>
+<td align="left">.rsml</td>
+<td align="left">application&#x2F;vnd.rn-rsml</td>
+<td align="left">.rt</td>
+<td align="left">text&#x2F;vnd.rn-realtext</td>
+</tr>
+<tr>
+<td align="left">.rtf</td>
+<td align="left">application&#x2F;msword</td>
+<td align="left">.rtf</td>
+<td align="left">application&#x2F;x-rtf</td>
+</tr>
+<tr>
+<td align="left">.rv</td>
+<td align="left">video&#x2F;vnd.rn-realvideo</td>
+<td align="left">.sam</td>
+<td align="left">application&#x2F;x-sam</td>
+</tr>
+<tr>
+<td align="left">.sat</td>
+<td align="left">application&#x2F;x-sat</td>
+<td align="left">.sdp</td>
+<td align="left">application&#x2F;sdp</td>
+</tr>
+<tr>
+<td align="left">.sdw</td>
+<td align="left">application&#x2F;x-sdw</td>
+<td align="left">.sit</td>
+<td align="left">application&#x2F;x-stuffit</td>
+</tr>
+<tr>
+<td align="left">.slb</td>
+<td align="left">application&#x2F;x-slb</td>
+<td align="left">.sld</td>
+<td align="left">application&#x2F;x-sld</td>
+</tr>
+<tr>
+<td align="left">.slk</td>
+<td align="left">drawing&#x2F;x-slk</td>
+<td align="left">.smi</td>
+<td align="left">application&#x2F;smil</td>
+</tr>
+<tr>
+<td align="left">.smil</td>
+<td align="left">application&#x2F;smil</td>
+<td align="left">.smk</td>
+<td align="left">application&#x2F;x-smk</td>
+</tr>
+<tr>
+<td align="left">.snd</td>
+<td align="left">audio&#x2F;basic</td>
+<td align="left">.sol</td>
+<td align="left">text&#x2F;plain</td>
+</tr>
+<tr>
+<td align="left">.sor</td>
+<td align="left">text&#x2F;plain</td>
+<td align="left">.spc</td>
+<td align="left">application&#x2F;x-pkcs7-certificates</td>
+</tr>
+<tr>
+<td align="left">.spl</td>
+<td align="left">application&#x2F;futuresplash</td>
+<td align="left">.spp</td>
+<td align="left">text&#x2F;xml</td>
+</tr>
+<tr>
+<td align="left">.ssm</td>
+<td align="left">application&#x2F;streamingmedia</td>
+<td align="left">.sst</td>
+<td align="left">application&#x2F;vnd.ms-pki.certstore</td>
+</tr>
+<tr>
+<td align="left">.stl</td>
+<td align="left">application&#x2F;vnd.ms-pki.stl</td>
+<td align="left">.stm</td>
+<td align="left">text&#x2F;html</td>
+</tr>
+<tr>
+<td align="left">.sty</td>
+<td align="left">application&#x2F;x-sty</td>
+<td align="left">.svg</td>
+<td align="left">text&#x2F;xml</td>
+</tr>
+<tr>
+<td align="left">.swf</td>
+<td align="left">application&#x2F;x-shockwave-flash</td>
+<td align="left">.tdf</td>
+<td align="left">application&#x2F;x-tdf</td>
+</tr>
+<tr>
+<td align="left">.tg4</td>
+<td align="left">application&#x2F;x-tg4</td>
+<td align="left">.tga</td>
+<td align="left">application&#x2F;x-tga</td>
+</tr>
+<tr>
+<td align="left">.tif</td>
+<td align="left">image&#x2F;tiff</td>
+<td align="left">.tif</td>
+<td align="left">application&#x2F;x-tif</td>
+</tr>
+<tr>
+<td align="left">.tiff</td>
+<td align="left">image&#x2F;tiff</td>
+<td align="left">.tld</td>
+<td align="left">text&#x2F;xml</td>
+</tr>
+<tr>
+<td align="left">.top</td>
+<td align="left">drawing&#x2F;x-top</td>
+<td align="left">.torrent</td>
+<td align="left">application&#x2F;x-bittorrent</td>
+</tr>
+<tr>
+<td align="left">.tsd</td>
+<td align="left">text&#x2F;xml</td>
+<td align="left">.txt</td>
+<td align="left">text&#x2F;plain</td>
+</tr>
+<tr>
+<td align="left">.uin</td>
+<td align="left">application&#x2F;x-icq</td>
+<td align="left">.uls</td>
+<td align="left">text&#x2F;iuls</td>
+</tr>
+<tr>
+<td align="left">.vcf</td>
+<td align="left">text&#x2F;x-vcard</td>
+<td align="left">.vda</td>
+<td align="left">application&#x2F;x-vda</td>
+</tr>
+<tr>
+<td align="left">.vdx</td>
+<td align="left">application&#x2F;vnd.visio</td>
+<td align="left">.vml</td>
+<td align="left">text&#x2F;xml</td>
+</tr>
+<tr>
+<td align="left">.vpg</td>
+<td align="left">application&#x2F;x-vpeg005</td>
+<td align="left">.vsd</td>
+<td align="left">application&#x2F;vnd.visio</td>
+</tr>
+<tr>
+<td align="left">.vsd</td>
+<td align="left">application&#x2F;x-vsd</td>
+<td align="left">.vss</td>
+<td align="left">application&#x2F;vnd.visio</td>
+</tr>
+<tr>
+<td align="left">.vst</td>
+<td align="left">application&#x2F;vnd.visio</td>
+<td align="left">.vst</td>
+<td align="left">application&#x2F;x-vst</td>
+</tr>
+<tr>
+<td align="left">.vsw</td>
+<td align="left">application&#x2F;vnd.visio</td>
+<td align="left">.vsx</td>
+<td align="left">application&#x2F;vnd.visio</td>
+</tr>
+<tr>
+<td align="left">.vtx</td>
+<td align="left">application&#x2F;vnd.visio</td>
+<td align="left">.vxml</td>
+<td align="left">text&#x2F;xml</td>
+</tr>
+<tr>
+<td align="left">.wav</td>
+<td align="left">audio&#x2F;wav</td>
+<td align="left">.wax</td>
+<td align="left">audio&#x2F;x-ms-wax</td>
+</tr>
+<tr>
+<td align="left">.wb1</td>
+<td align="left">application&#x2F;x-wb1</td>
+<td align="left">.wb2</td>
+<td align="left">application&#x2F;x-wb2</td>
+</tr>
+<tr>
+<td align="left">.wb3</td>
+<td align="left">application&#x2F;x-wb3</td>
+<td align="left">.wbmp</td>
+<td align="left">image&#x2F;vnd.wap.wbmp</td>
+</tr>
+<tr>
+<td align="left">.wiz</td>
+<td align="left">application&#x2F;msword</td>
+<td align="left">.wk3</td>
+<td align="left">application&#x2F;x-wk3</td>
+</tr>
+<tr>
+<td align="left">.wk4</td>
+<td align="left">application&#x2F;x-wk4</td>
+<td align="left">.wkq</td>
+<td align="left">application&#x2F;x-wkq</td>
+</tr>
+<tr>
+<td align="left">.wks</td>
+<td align="left">application&#x2F;x-wks</td>
+<td align="left">.wm</td>
+<td align="left">video&#x2F;x-ms-wm</td>
+</tr>
+<tr>
+<td align="left">.wma</td>
+<td align="left">audio&#x2F;x-ms-wma</td>
+<td align="left">.wmd</td>
+<td align="left">application&#x2F;x-ms-wmd</td>
+</tr>
+<tr>
+<td align="left">.wmf</td>
+<td align="left">application&#x2F;x-wmf</td>
+<td align="left">.wml</td>
+<td align="left">text&#x2F;vnd.wap.wml</td>
+</tr>
+<tr>
+<td align="left">.wmv</td>
+<td align="left">video&#x2F;x-ms-wmv</td>
+<td align="left">.wmx</td>
+<td align="left">video&#x2F;x-ms-wmx</td>
+</tr>
+<tr>
+<td align="left">.wmz</td>
+<td align="left">application&#x2F;x-ms-wmz</td>
+<td align="left">.wp6</td>
+<td align="left">application&#x2F;x-wp6</td>
+</tr>
+<tr>
+<td align="left">.wpd</td>
+<td align="left">application&#x2F;x-wpd</td>
+<td align="left">.wpg</td>
+<td align="left">application&#x2F;x-wpg</td>
+</tr>
+<tr>
+<td align="left">.wpl</td>
+<td align="left">application&#x2F;vnd.ms-wpl</td>
+<td align="left">.wq1</td>
+<td align="left">application&#x2F;x-wq1</td>
+</tr>
+<tr>
+<td align="left">.wr1</td>
+<td align="left">application&#x2F;x-wr1</td>
+<td align="left">.wri</td>
+<td align="left">application&#x2F;x-wri</td>
+</tr>
+<tr>
+<td align="left">.wrk</td>
+<td align="left">application&#x2F;x-wrk</td>
+<td align="left">.ws</td>
+<td align="left">application&#x2F;x-ws</td>
+</tr>
+<tr>
+<td align="left">.ws2</td>
+<td align="left">application&#x2F;x-ws</td>
+<td align="left">.wsc</td>
+<td align="left">text&#x2F;scriptlet</td>
+</tr>
+<tr>
+<td align="left">.wsdl</td>
+<td align="left">text&#x2F;xml</td>
+<td align="left">.wvx</td>
+<td align="left">video&#x2F;x-ms-wvx</td>
+</tr>
+<tr>
+<td align="left">.xdp</td>
+<td align="left">application&#x2F;vnd.adobe.xdp</td>
+<td align="left">.xdr</td>
+<td align="left">text&#x2F;xml</td>
+</tr>
+<tr>
+<td align="left">.xfd</td>
+<td align="left">application&#x2F;vnd.adobe.xfd</td>
+<td align="left">.xfdf</td>
+<td align="left">application&#x2F;vnd.adobe.xfdf</td>
+</tr>
+<tr>
+<td align="left">.xhtml</td>
+<td align="left">text&#x2F;html</td>
+<td align="left">.xls</td>
+<td align="left">application&#x2F;vnd.ms-excel</td>
+</tr>
+<tr>
+<td align="left">.xls</td>
+<td align="left">application&#x2F;x-xls</td>
+<td align="left">.xlw</td>
+<td align="left">application&#x2F;x-xlw</td>
+</tr>
+<tr>
+<td align="left">.xml</td>
+<td align="left">text&#x2F;xml</td>
+<td align="left">.xpl</td>
+<td align="left">audio&#x2F;scpls</td>
+</tr>
+<tr>
+<td align="left">.xq</td>
+<td align="left">text&#x2F;xml</td>
+<td align="left">.xql</td>
+<td align="left">text&#x2F;xml</td>
+</tr>
+<tr>
+<td align="left">.xquery</td>
+<td align="left">text&#x2F;xml</td>
+<td align="left">.xsd</td>
+<td align="left">text&#x2F;xml</td>
+</tr>
+<tr>
+<td align="left">.xsl</td>
+<td align="left">text&#x2F;xml</td>
+<td align="left">.xslt</td>
+<td align="left">text&#x2F;xml</td>
+</tr>
+<tr>
+<td align="left">.xwd</td>
+<td align="left">application&#x2F;x-xwd</td>
+<td align="left">.x_b</td>
+<td align="left">application&#x2F;x-x_b</td>
+</tr>
+<tr>
+<td align="left">.sis</td>
+<td align="left">application&#x2F;vnd.symbian.install</td>
+<td align="left">.sisx</td>
+<td align="left">application&#x2F;vnd.symbian.install</td>
+</tr>
+<tr>
+<td align="left">.x_t</td>
+<td align="left">application&#x2F;x-x_t</td>
+<td align="left">.ipa</td>
+<td align="left">application&#x2F;vnd.iphone</td>
+</tr>
+<tr>
+<td align="left">.apk</td>
+<td align="left">application&#x2F;vnd.android.package-archive</td>
+<td align="left">.xap</td>
+<td align="left">application&#x2F;x-silverlight-app</td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://blog.ifan.host/2022/04/02/web/http/http-content-type/" title="Http Content-Type" target="_blank" rel="external">https://blog.ifan.host/2022/04/02/web/http/http-content-type/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/Mr-iFan" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/Mr-iFan" target="_blank"><span class="text-dark">iFan</span><small class="ml-1x">在路上啊</small></a></h3>
+        <div>个人简介。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2022/04/02/web/nginx/wrk/" title="Wrk压测"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2022/04/02/web/http/http-code/" title="Http 状态码"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.jpg" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Mr-iFan" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+<!-- custom analytics part create by xiamo -->
+<script defer src="https://cdn1.lncld.net/static/js/av-min-1.2.1.js"></script>
+<script defer>
+AV.init({
+  appId: 'NWrHqpVOYyEWPWucCx1ItMHb-gzGzoHsz',
+  appKey: '7WN72ODWriRqLktj8J6ehXBF'
+});
+
+function showTime(Counter) {
+	var query = new AV.Query(Counter);
+		var visitors= $('.leancloud_visitors');
+		query.greaterThanOrEqualTo("time", 0);		
+		query.find({
+			success: function(results) {
+				if (results.length == 0) {				
+					return;
+				}
+				var data = results;
+				visitors.each(function(){
+					var url = $(this).attr('id').trim();					
+					for (var i = 0; i < data.length; i++) {
+						var object = data[i];
+						var content = object.get('time');
+						var _url = object.get('url')
+						if(url == _url){
+							$(this).text(content);
+						}
+					}
+				})
+				
+			},
+			error: function(object, error) {
+				console.log("Error: " + error.code + " " + error.message);
+			}
+		});
+}
+
+function addCount(Counter) {
+	var Counter = AV.Object.extend("Counter");
+	url = $(".leancloud_visitors").attr('id').trim();
+	title = $(".leancloud_visitors").attr('data-flag-title').trim();
+	var query = new AV.Query(Counter);
+	query.equalTo("url", url);
+	query.find({
+		success: function(results) {
+			if (results.length > 0) {
+				var counter = results[0];
+				counter.fetchWhenSave(true);
+				counter.increment("time");
+				counter.save(null, {
+					success: function(counter) {
+						var content = counter.get('time');
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(counter, error) {
+						console.log('Failed to save Visitor num, with error message: ' + error.message);
+					}
+				});
+			} else {
+				var newcounter = new Counter();
+				newcounter.set("title", title);
+				newcounter.set("url", url);
+				newcounter.set("time", 1);
+				newcounter.save(null, {
+					success: function(newcounter) {
+					    console.log("newcounter.get('time')="+newcounter.get('time'));
+						var content = newcounter.get('time');
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(newcounter, error) {
+						console.log('Failed to create');
+					}
+				});
+			}
+		},
+		error: function(error) {
+			console.log('Error:' + error.code + " " + error.message);
+		}
+	});
+}
+$(function() {
+	var Counter = AV.Object.extend("Counter");
+	if ($('.leancloud_visitors').length == 1) {
+		addCount(Counter);
+	} else {
+		showTime(Counter);
+	}
+}); 
+</script>
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

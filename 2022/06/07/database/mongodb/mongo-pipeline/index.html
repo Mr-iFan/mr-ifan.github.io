@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>MongoDB 聚合 | iFan</title>
+  <meta name="description" content="MongoDB 的聚合操作聚合操作处理数据记录并返回计算结果。聚合操作将来自多个 document 的值分组，并可以对分组的数据执行各种操作以返回单个结果。 MongoDB 提供了三种执行聚合的方式：聚合管道，map-reduce 函数和单一目的聚合方法。 PipelinePipeline 简介MongoDB 的聚合框架以数据处理管道（Pipeline）的概念为模型。 MongoDB 通过 db.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MongoDB 聚合">
+<meta property="og:url" content="https://blog.ifan.host/2022/06/07/database/mongodb/mongo-pipeline/index.html">
+<meta property="og:site_name" content="iFan">
+<meta property="og:description" content="MongoDB 的聚合操作聚合操作处理数据记录并返回计算结果。聚合操作将来自多个 document 的值分组，并可以对分组的数据执行各种操作以返回单个结果。 MongoDB 提供了三种执行聚合的方式：聚合管道，map-reduce 函数和单一目的聚合方法。 PipelinePipeline 简介MongoDB 的聚合框架以数据处理管道（Pipeline）的概念为模型。 MongoDB 通过 db.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.ifan.host/images/database/mongodb/mongodb-20220607090002.png">
+<meta property="og:image" content="https://blog.ifan.host/images/database/mongodb/mongodb-20220607090003.svg">
+<meta property="og:image" content="https://blog.ifan.host/images/database/mongodb/mongodb-20220607090004.svg">
+<meta property="og:image" content="https://blog.ifan.host/images/database/mongodb/mongodb-20220607090005.png">
+<meta property="article:published_time" content="2022-06-07T01:15:00.000Z">
+<meta property="article:modified_time" content="2022-06-18T13:26:08.806Z">
+<meta property="article:author" content="iFan">
+<meta property="article:tag" content="数据库">
+<meta property="article:tag" content="MongoDB">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.ifan.host/images/database/mongodb/mongodb-20220607090002.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://blog.ifan.host/2022/06/07/database/mongodb/mongo-pipeline/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="iFan" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/Mr-iFan" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">iFan</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">在路上啊</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> 北京</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Mr-iFan" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>啥也不是</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/MyBatis/">MyBatis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/Spring-Boot/">Spring Boot</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Centos/">Centos</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Debian/">Debian</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/service/">service</a><span class="category-list-count">4</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Lua/">Lua</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Minio/">Minio</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NodeJS/">NodeJS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/NodeJS/nvm/">nvm</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Jupyter/">Jupyter</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/jupyterlab/">jupyterlab</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/pyenv/">pyenv</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Scala/">Scala</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/WEB/">WEB</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/WEB/HTTP/">HTTP</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/WEB/Nginx/">Nginx</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/WEB/%E5%8E%8B%E6%B5%8B/">压测</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/boto3/">boto3</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/boto3/%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8/">文件存储</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/golang/">golang</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/Git/">Git</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/ffmpeg/">ffmpeg</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/proxy/">proxy</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/proxy/%E7%88%AC%E8%99%AB/">爬虫</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/vim/">vim</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/%E7%BC%96%E7%A8%8B%E5%B7%A5%E5%85%B7/">编程工具</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><span class="category-list-count">39</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/ElasticSearch/">ElasticSearch</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/MongoDB/">MongoDB</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/">MySQL</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/Redis/">Redis</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/Sqlite/">Sqlite</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/%E5%A4%A7%E6%95%B0%E6%8D%AE/HBase/">HBase</a><span class="category-list-count">3</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/lxml/">lxml</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/mitmproxy/">mitmproxy</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/puppeteer/">puppeteer</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/pyppeteer/">pyppeteer</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/xpath/">xpath</a><span class="category-list-count">1</span></li></ul></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Centos/" rel="tag">Centos</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Debian/" rel="tag">Debian</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ElasticSearch/" rel="tag">ElasticSearch</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/" rel="tag">Git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HBase/" rel="tag">HBase</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jupyter/" rel="tag">Jupyter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lua/" rel="tag">Lua</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Minio/" rel="tag">Minio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB/" rel="tag">MongoDB</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MyBatis/" rel="tag">MyBatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NodeJS/" rel="tag">NodeJS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scala/" rel="tag">Scala</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Boot/" rel="tag">Spring Boot</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sqlite/" rel="tag">Sqlite</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB/" rel="tag">WEB</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Wrk/" rel="tag">Wrk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/boto3/" rel="tag">boto3</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/" rel="tag">ffmpeg</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang/" rel="tag">golang</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jupyterlab/" rel="tag">jupyterlab</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lxml/" rel="tag">lxml</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mitmproxy/" rel="tag">mitmproxy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nvm/" rel="tag">nvm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/proxy/" rel="tag">proxy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/puppeteer/" rel="tag">puppeteer</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pyenv/" rel="tag">pyenv</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pyppeteer/" rel="tag">pyppeteer</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/service/" rel="tag">service</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tesseract/" rel="tag">tesseract</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/" rel="tag">vim</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xpath/" rel="tag">xpath</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="tag">基础知识</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" rel="tag">大数据</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">39</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8/" rel="tag">文件存储</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E7%A8%8B%E5%B7%A5%E5%85%B7/" rel="tag">编程工具</a><span class="tag-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Centos/" style="font-size: 13.33px;">Centos</a> <a href="/tags/Debian/" style="font-size: 13px;">Debian</a> <a href="/tags/ElasticSearch/" style="font-size: 13.78px;">ElasticSearch</a> <a href="/tags/Git/" style="font-size: 13.11px;">Git</a> <a href="/tags/HBase/" style="font-size: 13.22px;">HBase</a> <a href="/tags/HTTP/" style="font-size: 13.78px;">HTTP</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/Jupyter/" style="font-size: 13px;">Jupyter</a> <a href="/tags/Linux/" style="font-size: 13.56px;">Linux</a> <a href="/tags/Lua/" style="font-size: 13.11px;">Lua</a> <a href="/tags/Minio/" style="font-size: 13px;">Minio</a> <a href="/tags/MongoDB/" style="font-size: 13.22px;">MongoDB</a> <a href="/tags/MyBatis/" style="font-size: 13px;">MyBatis</a> <a href="/tags/MySQL/" style="font-size: 13.78px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 13.44px;">Nginx</a> <a href="/tags/NodeJS/" style="font-size: 13px;">NodeJS</a> <a href="/tags/Python/" style="font-size: 13.22px;">Python</a> <a href="/tags/Redis/" style="font-size: 13.67px;">Redis</a> <a href="/tags/Scala/" style="font-size: 13.11px;">Scala</a> <a href="/tags/Spring-Boot/" style="font-size: 13.11px;">Spring Boot</a> <a href="/tags/Sqlite/" style="font-size: 13px;">Sqlite</a> <a href="/tags/WEB/" style="font-size: 13.33px;">WEB</a> <a href="/tags/Wrk/" style="font-size: 13px;">Wrk</a> <a href="/tags/boto3/" style="font-size: 13px;">boto3</a> <a href="/tags/ffmpeg/" style="font-size: 13px;">ffmpeg</a> <a href="/tags/golang/" style="font-size: 13.89px;">golang</a> <a href="/tags/jupyterlab/" style="font-size: 13px;">jupyterlab</a> <a href="/tags/lxml/" style="font-size: 13px;">lxml</a> <a href="/tags/mitmproxy/" style="font-size: 13px;">mitmproxy</a> <a href="/tags/nvm/" style="font-size: 13px;">nvm</a> <a href="/tags/proxy/" style="font-size: 13px;">proxy</a> <a href="/tags/puppeteer/" style="font-size: 13px;">puppeteer</a> <a href="/tags/pyenv/" style="font-size: 13px;">pyenv</a> <a href="/tags/pyppeteer/" style="font-size: 13px;">pyppeteer</a> <a href="/tags/python/" style="font-size: 13px;">python</a> <a href="/tags/service/" style="font-size: 13.33px;">service</a> <a href="/tags/tesseract/" style="font-size: 13px;">tesseract</a> <a href="/tags/vim/" style="font-size: 13.11px;">vim</a> <a href="/tags/xpath/" style="font-size: 13px;">xpath</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" style="font-size: 13px;">基础知识</a> <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" style="font-size: 13.22px;">大数据</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 13.56px;">工具</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 14px;">数据库</a> <a href="/tags/%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8/" style="font-size: 13px;">文件存储</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 13.44px;">爬虫</a> <a href="/tags/%E7%BC%96%E7%A8%8B%E5%B7%A5%E5%85%B7/" style="font-size: 13.22px;">编程工具</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a><span class="archive-list-count">62</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">38</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/07/10/bigdata/hbase/rank-family/" class="title">大数据 Hbase 列族的配置</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-07-10T06:25:00.000Z" itemprop="datePublished">2022-07-10</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/WEB/">WEB</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/WEB/Nginx/">Nginx</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/07/01/web/nginx/goaccess-nginx-log/" class="title">Nginx 使用 goaccess 分析日志</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-07-01T01:01:00.000Z" itemprop="datePublished">2022-07-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Minio/">Minio</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/07/01/database/minio/minio-nginx-proxy/" class="title">Minio 配置 nginx 代理</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-07-01T01:00:00.000Z" itemprop="datePublished">2022-07-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Java/">Java</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/Java/Spring-Boot/">Spring Boot</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/06/23/language/java/framework/springboot/springboot-start-with/" class="title">Java Spring Boot 在初始化时添加业务逻辑</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-06-23T01:00:00.000Z" itemprop="datePublished">2022-06-23</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/06/10/bigdata/hbase/cmd/" class="title">大数据 Hbase 一些命令</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-06-10T06:25:00.000Z" itemprop="datePublished">2022-06-10</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-database/mongodb/mongo-pipeline" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      MongoDB 聚合
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2022/06/07/database/mongodb/mongo-pipeline/" class="article-date">
+	  <time datetime="2022-06-07T01:15:00.000Z" itemprop="datePublished">2022-06-07</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>►<a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/MongoDB/">MongoDB</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/MongoDB/" rel="tag">MongoDB</a>, <a class="article-tag-link-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a>
+  </span>
+
+
+        
+
+	<span class="article-read hidden-xs">
+    	<i class="icon icon-eye-fill" aria-hidden="true"></i>
+    	<span id="/2022/06/07/database/mongodb/mongo-pipeline/" class="leancloud_visitors"  data-flag-title="MongoDB 聚合">0</span>
+    </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2022/06/07/database/mongodb/mongo-pipeline/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 3.5k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 16(分)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="MongoDB-的聚合操作"><a href="#MongoDB-的聚合操作" class="headerlink" title="MongoDB 的聚合操作"></a>MongoDB 的聚合操作</h1><p>聚合操作处理数据记录并返回计算结果。聚合操作将来自多个 document 的值分组，并可以对分组的数据执行各种操作以返回单个结果。 MongoDB 提供了三种执行聚合的方式：聚合管道，map-reduce 函数和单一目的聚合方法。</p>
+<h2 id="Pipeline"><a href="#Pipeline" class="headerlink" title="Pipeline"></a>Pipeline</h2><h3 id="Pipeline-简介"><a href="#Pipeline-简介" class="headerlink" title="Pipeline 简介"></a>Pipeline 简介</h3><p>MongoDB 的聚合框架以数据处理管道（Pipeline）的概念为模型。</p>
+<p><strong>MongoDB 通过 <code>db.collection.aggregate()</code> 方法支持聚合操作</strong>。并提供了 <code>aggregate</code> 命令来执行 pipeline。</p>
+<p>MongoDB Pipeline 由多个阶段（stages）组成。每个阶段在 document 通过 pipeline 时都会对其进行转换。pipeline 阶段不需要为每个输入 document 都生成一个输出 document。例如，某些阶段可能会生成新 document 或过滤 document。</p>
+<p>同一个阶段可以在 pipeline 中出现多次，但 <code>$out</code>、<code>$merge</code>,和 <code>$geoNear</code> 阶段除外。所有可用 pipeline 阶段可以参考：<a target="_blank" rel="noopener" href="https://docs.mongodb.com/manual/reference/operator/aggregation-pipeline/#aggregation-pipeline-operator-reference">Aggregation Pipeline Stages</a>。</p>
+<p><img src="/images/database/mongodb/mongodb-20220607090002.png" alt="img"></p>
+<ul>
+<li>第一阶段：<code>$match</code> 阶段按状态字段过滤 document，然后将状态等于 A 的那些 document 传递到下一阶段。</li>
+<li>第二阶段：<code>$group</code> 阶段按 cust_id 字段对 document 进行分组，以计算每个唯一 cust_id 的金额总和。</li>
+</ul>
+<p>最基本的管道阶段提供过滤器，其操作类似于查询和 document 转换（修改输出 document 形式）。</p>
+<p>其他管道操作提供了用于按特定字段对 document 进行分组和排序的工具，以及用于汇总数组（包括 document 数组）内容的工具。另外，管道阶段可以将运算符用于诸如计算平均值或连接字符串之类的任务。</p>
+<p>聚合管道也可以在分片 collection 上操作。</p>
+<h3 id="Pipeline-优化"><a href="#Pipeline-优化" class="headerlink" title="Pipeline 优化"></a>Pipeline 优化</h3><h4 id="投影优化"><a href="#投影优化" class="headerlink" title="投影优化"></a>投影优化</h4><p>Pipeline 可以确定是否仅需要 document 中必填字段即可获得结果。</p>
+<h4 id="Pipeline-串行优化"><a href="#Pipeline-串行优化" class="headerlink" title="Pipeline 串行优化"></a>Pipeline 串行优化</h4><p>（<code>$project</code>、<code>$unset</code>、<code>$addFields</code>、<code>$set</code>） + <code>$match</code> 串行优化</p>
+<p>对于包含投影阶段（<code>$project</code> 或 <code>$unset</code> 或 <code>$addFields</code> 或 <code>$set</code>），且后续跟随着 <code>$match</code> 阶段的 Pipeline ，MongoDB 会将所有 <code>$match</code> 阶段中不需要在投影阶段中计算出的值的过滤器，移动一个在投影阶段之前的新 <code>$match</code> 阶段。</p>
+<p>如果 Pipeline 包含多个投影阶段 和 &#x2F; 或 <code>$match</code> 阶段，则 MongoDB 将为每个 <code>$match</code> 阶段执行此优化，将每个 <code>$match</code> 过滤器移动到该过滤器不依赖的所有投影阶段之前。</p>
+<p>【示例】Pipeline 串行优化示例</p>
+<p>优化前：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123; <span class="attr">$addFields</span>: &#123;</span><br><span class="line">    <span class="attr">maxTime</span>: &#123; <span class="attr">$max</span>: <span class="string">&quot;$times&quot;</span> &#125;,</span><br><span class="line">    <span class="attr">minTime</span>: &#123; <span class="attr">$min</span>: <span class="string">&quot;$times&quot;</span> &#125;</span><br><span class="line">&#125; &#125;,</span><br><span class="line">&#123; <span class="attr">$project</span>: &#123;</span><br><span class="line">    <span class="attr">_id</span>: <span class="number">1</span>, <span class="attr">name</span>: <span class="number">1</span>, <span class="attr">times</span>: <span class="number">1</span>, <span class="attr">maxTime</span>: <span class="number">1</span>, <span class="attr">minTime</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="attr">avgTime</span>: &#123; <span class="attr">$avg</span>: [<span class="string">&quot;$maxTime&quot;</span>, <span class="string">&quot;$minTime&quot;</span>] &#125;</span><br><span class="line">&#125; &#125;,</span><br><span class="line">&#123; <span class="attr">$match</span>: &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&quot;Joe Schmoe&quot;</span>,</span><br><span class="line">    <span class="attr">maxTime</span>: &#123; <span class="attr">$lt</span>: <span class="number">20</span> &#125;,</span><br><span class="line">    <span class="attr">minTime</span>: &#123; <span class="attr">$gt</span>: <span class="number">5</span> &#125;,</span><br><span class="line">    <span class="attr">avgTime</span>: &#123; <span class="attr">$gt</span>: <span class="number">7</span> &#125;</span><br><span class="line">&#125; &#125;</span><br></pre></td></tr></table></figure>
+
+<p>优化后：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123; <span class="attr">$match</span>: &#123; <span class="attr">name</span>: <span class="string">&quot;Joe Schmoe&quot;</span> &#125; &#125;,</span><br><span class="line">&#123; <span class="attr">$addFields</span>: &#123;</span><br><span class="line">    <span class="attr">maxTime</span>: &#123; <span class="attr">$max</span>: <span class="string">&quot;$times&quot;</span> &#125;,</span><br><span class="line">    <span class="attr">minTime</span>: &#123; <span class="attr">$min</span>: <span class="string">&quot;$times&quot;</span> &#125;</span><br><span class="line">&#125; &#125;,</span><br><span class="line">&#123; <span class="attr">$match</span>: &#123; <span class="attr">maxTime</span>: &#123; <span class="attr">$lt</span>: <span class="number">20</span> &#125;, <span class="attr">minTime</span>: &#123; <span class="attr">$gt</span>: <span class="number">5</span> &#125; &#125; &#125;,</span><br><span class="line">&#123; <span class="attr">$project</span>: &#123;</span><br><span class="line">    <span class="attr">_id</span>: <span class="number">1</span>, <span class="attr">name</span>: <span class="number">1</span>, <span class="attr">times</span>: <span class="number">1</span>, <span class="attr">maxTime</span>: <span class="number">1</span>, <span class="attr">minTime</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="attr">avgTime</span>: &#123; <span class="attr">$avg</span>: [<span class="string">&quot;$maxTime&quot;</span>, <span class="string">&quot;$minTime&quot;</span>] &#125;</span><br><span class="line">&#125; &#125;,</span><br><span class="line">&#123; <span class="attr">$match</span>: &#123; <span class="attr">avgTime</span>: &#123; <span class="attr">$gt</span>: <span class="number">7</span> &#125; &#125; &#125;</span><br></pre></td></tr></table></figure>
+
+<p>说明：</p>
+<p><code>&#123; name: &quot;Joe Schmoe&quot; &#125;</code> 不需要计算任何投影阶段的值，所以可以放在最前面。</p>
+<p><code>&#123; avgTime: &#123; $gt: 7 &#125; &#125;</code> 依赖 <code>$project</code> 阶段的 <code>avgTime</code> 字段，所以不能移动。</p>
+<p><code>maxTime</code> 和 <code>minTime</code> 字段被 <code>$addFields</code> 阶段所依赖，但自身不依赖其他，所以会新建一个 <code>$match</code> 阶段，并将其置于 <code>$project</code> 阶段之前。</p>
+<h4 id="Pipeline-并行优化"><a href="#Pipeline-并行优化" class="headerlink" title="Pipeline 并行优化"></a>Pipeline 并行优化</h4><p>如果可能，优化阶段会将 Pipeline 阶段合并到其前身。通常，合并发生在任意序列重新排序优化之后。</p>
+<h5 id="sort-limit"><a href="#sort-limit" class="headerlink" title="$sort + $limit"></a><code>$sort</code> + <code>$limit</code></h5><p>当 <code>$sort</code> 在 <code>$limit</code> 之前时，如果没有中间阶段修改文档数量（例如 <code>$unwind</code>、<code>$group</code>），则优化程序可以将 <code>$limit</code> 合并到 <code>$sort</code> 中。如果有管道阶段更改了 <code>$sort</code> 和 <code>$limit</code> 阶段之间的文档数，则 MongoDB 不会将 <code>$limit</code> 合并到 <code>$sort</code> 中。</p>
+<p>【示例】<code>$sort</code> + <code>$limit</code></p>
+<p>优化前：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123; $sort : &#123; age : -<span class="number">1</span> &#125; &#125;,</span><br><span class="line">&#123; $project : &#123; age : <span class="number">1</span>, status : <span class="number">1</span>, name : <span class="number">1</span> &#125; &#125;,</span><br><span class="line">&#123; <span class="attr">$limit</span>: <span class="number">5</span> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>优化后：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;$sort&quot;</span> : &#123;</span><br><span class="line">       <span class="string">&quot;sortKey&quot;</span> : &#123;</span><br><span class="line">          <span class="string">&quot;age&quot;</span> : -<span class="number">1</span></span><br><span class="line">       &#125;,</span><br><span class="line">       <span class="string">&quot;limit&quot;</span> : <span class="title class_">NumberLong</span>(<span class="number">5</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;,</span><br><span class="line">&#123; <span class="string">&quot;$project&quot;</span> : &#123;</span><br><span class="line">         <span class="string">&quot;age&quot;</span> : <span class="number">1</span>,</span><br><span class="line">         <span class="string">&quot;status&quot;</span> : <span class="number">1</span>,</span><br><span class="line">         <span class="string">&quot;name&quot;</span> : <span class="number">1</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="limit-limit"><a href="#limit-limit" class="headerlink" title="$limit + $limit"></a><code>$limit</code> + <code>$limit</code></h5><p>如果一个 <code>$limit</code> 紧随另一个 <code>$limit</code>，那么它们可以合并为一。</p>
+<p>优化前：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123; <span class="attr">$limit</span>: <span class="number">100</span> &#125;,</span><br><span class="line">&#123; <span class="attr">$limit</span>: <span class="number">10</span> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>优化后：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">$limit</span>: <span class="number">10</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="skip-skip"><a href="#skip-skip" class="headerlink" title="$skip + $skip"></a><code>$skip</code> + <code>$skip</code></h5><p>如果一个 <code>$skip</code> 紧随另一个 <code>$skip</code>，那么它们可以合并为一。</p>
+<p>优化前：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123; <span class="attr">$skip</span>: <span class="number">5</span> &#125;,</span><br><span class="line">&#123; <span class="attr">$skip</span>: <span class="number">2</span> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>优化后：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">$skip</span>: <span class="number">7</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="match-match"><a href="#match-match" class="headerlink" title="$match + $match"></a><code>$match</code> + <code>$match</code></h5><p>如果一个 <code>$skip</code> 紧随另一个 <code>$skip</code> ，那么它们可以通过 <code>$and</code> 合并为一。</p>
+<p>优化前：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123; <span class="attr">$match</span>: &#123; <span class="attr">year</span>: <span class="number">2014</span> &#125; &#125;,</span><br><span class="line">&#123; <span class="attr">$match</span>: &#123; <span class="attr">status</span>: <span class="string">&quot;A&quot;</span> &#125; &#125;</span><br></pre></td></tr></table></figure>
+
+<p>优化后：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">$match</span>: &#123;</span><br><span class="line">    <span class="attr">$and</span>: [&#123; <span class="attr">year</span>: <span class="number">2014</span> &#125;, &#123; <span class="attr">status</span>: <span class="string">&#x27;A&#x27;</span> &#125;]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="lookup-unwind"><a href="#lookup-unwind" class="headerlink" title="$lookup + $unwind"></a><code>$lookup</code> + <code>$unwind</code></h5><p>如果一个 <code>$unwind</code> 紧随另一个 <code>$lookup</code>，并且 <code>$unwind</code> 在 <code>$lookup</code> 的 as 字段上运行时，优化程序可以将 <code>$unwind</code> 合并到 <code>$lookup</code> 阶段。这样可以避免创建较大的中间文档。</p>
+<p>优化前：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">$lookup</span>: &#123;</span><br><span class="line">    <span class="attr">from</span>: <span class="string">&quot;otherCollection&quot;</span>,</span><br><span class="line">    <span class="attr">as</span>: <span class="string">&quot;resultingArray&quot;</span>,</span><br><span class="line">    <span class="attr">localField</span>: <span class="string">&quot;x&quot;</span>,</span><br><span class="line">    <span class="attr">foreignField</span>: <span class="string">&quot;y&quot;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br><span class="line">&#123; <span class="attr">$unwind</span>: <span class="string">&quot;$resultingArray&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>优化后：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">$lookup</span>: &#123;</span><br><span class="line">    <span class="attr">from</span>: <span class="string">&quot;otherCollection&quot;</span>,</span><br><span class="line">    <span class="attr">as</span>: <span class="string">&quot;resultingArray&quot;</span>,</span><br><span class="line">    <span class="attr">localField</span>: <span class="string">&quot;x&quot;</span>,</span><br><span class="line">    <span class="attr">foreignField</span>: <span class="string">&quot;y&quot;</span>,</span><br><span class="line">    <span class="attr">unwinding</span>: &#123; <span class="attr">preserveNullAndEmptyArrays</span>: <span class="literal">false</span> &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Pipeline-限制"><a href="#Pipeline-限制" class="headerlink" title="Pipeline 限制"></a>Pipeline 限制</h3><p>结果集中的每个文档均受 BSON 文档大小限制（当前为 16 MB）</p>
+<p>Pipeline 的内存限制为 100 MB。</p>
+<h2 id="Map-Reduce"><a href="#Map-Reduce" class="headerlink" title="Map-Reduce"></a>Map-Reduce</h2><blockquote>
+<p>聚合 pipeline 比 map-reduce 提供更好的性能和更一致的接口。</p>
+</blockquote>
+<p>Map-reduce 是一种数据处理范式，用于将大量数据汇总为有用的聚合结果。为了执行 map-reduce 操作，MongoDB 提供了 <a target="_blank" rel="noopener" href="https://docs.mongodb.com/manual/reference/command/mapReduce/#dbcmd.mapReduce"><code>mapReduce</code></a> 数据库命令。</p>
+<p><img src="/images/database/mongodb/mongodb-20220607090003.svg" alt="img"></p>
+<p>在上面的操作中，MongoDB 将 map 阶段应用于每个输入 document（即 collection 中与查询条件匹配的 document）。 map 函数分发出多个键-值对。对于具有多个值的那些键，MongoDB 应用 reduce 阶段，该阶段收集并汇总聚合的数据。然后，MongoDB 将结果存储在 collection 中。可选地，reduce 函数的输出可以通过 finalize 函数来进一步汇总聚合结果。</p>
+<p>MongoDB 中的所有 map-reduce 函数都是 JavaScript，并在 mongod 进程中运行。 Map-reduce 操作将单个 collection 的 document 作为输入，并且可以在开始 map 阶段之前执行任意排序和限制。 mapReduce 可以将 map-reduce 操作的结果作为 document 返回，也可以将结果写入 collection。</p>
+<h2 id="单一目的聚合方法"><a href="#单一目的聚合方法" class="headerlink" title="单一目的聚合方法"></a>单一目的聚合方法</h2><p>MongoDB 支持一下单一目的的聚合操作：</p>
+<ul>
+<li><code>db.collection.estimatedDocumentCount()</code></li>
+<li><code>db.collection.count()</code></li>
+<li><code>db.collection.distinct()</code></li>
+</ul>
+<p>所有这些操作都汇总了单个 collection 中的 document。尽管这些操作提供了对常见聚合过程的简单访问，但是它们相比聚合 pipeline 和 map-reduce，缺少灵活性和丰富的功能性。</p>
+<p><img src="/images/database/mongodb/mongodb-20220607090004.svg" alt="img"></p>
+<h2 id="SQL-和-MongoDB-聚合对比"><a href="#SQL-和-MongoDB-聚合对比" class="headerlink" title="SQL 和 MongoDB 聚合对比"></a>SQL 和 MongoDB 聚合对比</h2><p>MongoDB pipeline 提供了许多等价于 SQL 中常见聚合语句的操作。</p>
+<p>下表概述了常见的 SQL 聚合语句或函数和 MongoDB 聚合操作的映射表：</p>
+<table>
+<thead>
+<tr>
+<th align="left">SQL Terms, Functions, and Concepts</th>
+<th align="left">MongoDB Aggregation Operators</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>WHERE</code></td>
+<td align="left"><a target="_blank" rel="noopener" href="https://docs.mongodb.com/manual/reference/operator/aggregation/match/#pipe._S_match"><code>$match</code></a></td>
+</tr>
+<tr>
+<td align="left"><code>GROUP BY</code></td>
+<td align="left"><a target="_blank" rel="noopener" href="https://docs.mongodb.com/manual/reference/operator/aggregation/group/#pipe._S_group"><code>$group</code></a></td>
+</tr>
+<tr>
+<td align="left"><code>HAVING</code></td>
+<td align="left"><a target="_blank" rel="noopener" href="https://docs.mongodb.com/manual/reference/operator/aggregation/match/#pipe._S_match"><code>$match</code></a></td>
+</tr>
+<tr>
+<td align="left"><code>SELECT</code></td>
+<td align="left"><a target="_blank" rel="noopener" href="https://docs.mongodb.com/manual/reference/operator/aggregation/project/#pipe._S_project"><code>$project</code></a></td>
+</tr>
+<tr>
+<td align="left"><code>ORDER BY</code></td>
+<td align="left"><a target="_blank" rel="noopener" href="https://docs.mongodb.com/manual/reference/operator/aggregation/sort/#pipe._S_sort"><code>$sort</code></a></td>
+</tr>
+<tr>
+<td align="left"><code>LIMIT</code></td>
+<td align="left"><a target="_blank" rel="noopener" href="https://docs.mongodb.com/manual/reference/operator/aggregation/limit/#pipe._S_limit"><code>$limit</code></a></td>
+</tr>
+<tr>
+<td align="left"><code>SUM()</code></td>
+<td align="left"><a target="_blank" rel="noopener" href="https://docs.mongodb.com/manual/reference/operator/aggregation/sum/#grp._S_sum"><code>$sum</code></a></td>
+</tr>
+<tr>
+<td align="left"><code>COUNT()</code></td>
+<td align="left"><a target="_blank" rel="noopener" href="https://docs.mongodb.com/manual/reference/operator/aggregation/sum/#grp._S_sum"><code>$sum</code></a><a target="_blank" rel="noopener" href="https://docs.mongodb.com/manual/reference/operator/aggregation/sortByCount/#pipe._S_sortByCount"><code>$sortByCount</code></a></td>
+</tr>
+<tr>
+<td align="left"><code>JOIN</code></td>
+<td align="left"><a target="_blank" rel="noopener" href="https://docs.mongodb.com/manual/reference/operator/aggregation/lookup/#pipe._S_lookup"><code>$lookup</code></a></td>
+</tr>
+<tr>
+<td align="left"><code>SELECT INTO NEW_TABLE</code></td>
+<td align="left"><a target="_blank" rel="noopener" href="https://docs.mongodb.com/manual/reference/operator/aggregation/out/#pipe._S_out"><code>$out</code></a></td>
+</tr>
+<tr>
+<td align="left"><code>MERGE INTO TABLE</code></td>
+<td align="left"><a target="_blank" rel="noopener" href="https://docs.mongodb.com/manual/reference/operator/aggregation/merge/#pipe._S_merge"><code>$merge</code></a> (Available starting in MongoDB 4.2)</td>
+</tr>
+<tr>
+<td align="left"><code>UNION ALL</code></td>
+<td align="left"><a target="_blank" rel="noopener" href="https://docs.mongodb.com/manual/reference/operator/aggregation/unionWith/#pipe._S_unionWith"><code>$unionWith</code></a> (Available starting in MongoDB 4.4)</td>
+</tr>
+</tbody></table>
+<p>【示例】</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><span class="line">db.<span class="property">orders</span>.<span class="title function_">insertMany</span>([</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">_id</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="attr">cust_id</span>: <span class="string">&#x27;Ant O. Knee&#x27;</span>,</span><br><span class="line">    <span class="attr">ord_date</span>: <span class="keyword">new</span> <span class="title class_">Date</span>(<span class="string">&#x27;2020-03-01&#x27;</span>),</span><br><span class="line">    <span class="attr">price</span>: <span class="number">25</span>,</span><br><span class="line">    <span class="attr">items</span>: [</span><br><span class="line">      &#123; <span class="attr">sku</span>: <span class="string">&#x27;oranges&#x27;</span>, <span class="attr">qty</span>: <span class="number">5</span>, <span class="attr">price</span>: <span class="number">2.5</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">sku</span>: <span class="string">&#x27;apples&#x27;</span>, <span class="attr">qty</span>: <span class="number">5</span>, <span class="attr">price</span>: <span class="number">2.5</span> &#125;,</span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">status</span>: <span class="string">&#x27;A&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">_id</span>: <span class="number">2</span>,</span><br><span class="line">    <span class="attr">cust_id</span>: <span class="string">&#x27;Ant O. Knee&#x27;</span>,</span><br><span class="line">    <span class="attr">ord_date</span>: <span class="keyword">new</span> <span class="title class_">Date</span>(<span class="string">&#x27;2020-03-08&#x27;</span>),</span><br><span class="line">    <span class="attr">price</span>: <span class="number">70</span>,</span><br><span class="line">    <span class="attr">items</span>: [</span><br><span class="line">      &#123; <span class="attr">sku</span>: <span class="string">&#x27;oranges&#x27;</span>, <span class="attr">qty</span>: <span class="number">8</span>, <span class="attr">price</span>: <span class="number">2.5</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">sku</span>: <span class="string">&#x27;chocolates&#x27;</span>, <span class="attr">qty</span>: <span class="number">5</span>, <span class="attr">price</span>: <span class="number">10</span> &#125;,</span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">status</span>: <span class="string">&#x27;A&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">_id</span>: <span class="number">3</span>,</span><br><span class="line">    <span class="attr">cust_id</span>: <span class="string">&#x27;Busby Bee&#x27;</span>,</span><br><span class="line">    <span class="attr">ord_date</span>: <span class="keyword">new</span> <span class="title class_">Date</span>(<span class="string">&#x27;2020-03-08&#x27;</span>),</span><br><span class="line">    <span class="attr">price</span>: <span class="number">50</span>,</span><br><span class="line">    <span class="attr">items</span>: [</span><br><span class="line">      &#123; <span class="attr">sku</span>: <span class="string">&#x27;oranges&#x27;</span>, <span class="attr">qty</span>: <span class="number">10</span>, <span class="attr">price</span>: <span class="number">2.5</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">sku</span>: <span class="string">&#x27;pears&#x27;</span>, <span class="attr">qty</span>: <span class="number">10</span>, <span class="attr">price</span>: <span class="number">2.5</span> &#125;,</span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">status</span>: <span class="string">&#x27;A&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">_id</span>: <span class="number">4</span>,</span><br><span class="line">    <span class="attr">cust_id</span>: <span class="string">&#x27;Busby Bee&#x27;</span>,</span><br><span class="line">    <span class="attr">ord_date</span>: <span class="keyword">new</span> <span class="title class_">Date</span>(<span class="string">&#x27;2020-03-18&#x27;</span>),</span><br><span class="line">    <span class="attr">price</span>: <span class="number">25</span>,</span><br><span class="line">    <span class="attr">items</span>: [&#123; <span class="attr">sku</span>: <span class="string">&#x27;oranges&#x27;</span>, <span class="attr">qty</span>: <span class="number">10</span>, <span class="attr">price</span>: <span class="number">2.5</span> &#125;],</span><br><span class="line">    <span class="attr">status</span>: <span class="string">&#x27;A&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">_id</span>: <span class="number">5</span>,</span><br><span class="line">    <span class="attr">cust_id</span>: <span class="string">&#x27;Busby Bee&#x27;</span>,</span><br><span class="line">    <span class="attr">ord_date</span>: <span class="keyword">new</span> <span class="title class_">Date</span>(<span class="string">&#x27;2020-03-19&#x27;</span>),</span><br><span class="line">    <span class="attr">price</span>: <span class="number">50</span>,</span><br><span class="line">    <span class="attr">items</span>: [&#123; <span class="attr">sku</span>: <span class="string">&#x27;chocolates&#x27;</span>, <span class="attr">qty</span>: <span class="number">5</span>, <span class="attr">price</span>: <span class="number">10</span> &#125;],</span><br><span class="line">    <span class="attr">status</span>: <span class="string">&#x27;A&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">_id</span>: <span class="number">6</span>,</span><br><span class="line">    <span class="attr">cust_id</span>: <span class="string">&#x27;Cam Elot&#x27;</span>,</span><br><span class="line">    <span class="attr">ord_date</span>: <span class="keyword">new</span> <span class="title class_">Date</span>(<span class="string">&#x27;2020-03-19&#x27;</span>),</span><br><span class="line">    <span class="attr">price</span>: <span class="number">35</span>,</span><br><span class="line">    <span class="attr">items</span>: [</span><br><span class="line">      &#123; <span class="attr">sku</span>: <span class="string">&#x27;carrots&#x27;</span>, <span class="attr">qty</span>: <span class="number">10</span>, <span class="attr">price</span>: <span class="number">1.0</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">sku</span>: <span class="string">&#x27;apples&#x27;</span>, <span class="attr">qty</span>: <span class="number">10</span>, <span class="attr">price</span>: <span class="number">2.5</span> &#125;,</span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">status</span>: <span class="string">&#x27;A&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">_id</span>: <span class="number">7</span>,</span><br><span class="line">    <span class="attr">cust_id</span>: <span class="string">&#x27;Cam Elot&#x27;</span>,</span><br><span class="line">    <span class="attr">ord_date</span>: <span class="keyword">new</span> <span class="title class_">Date</span>(<span class="string">&#x27;2020-03-20&#x27;</span>),</span><br><span class="line">    <span class="attr">price</span>: <span class="number">25</span>,</span><br><span class="line">    <span class="attr">items</span>: [&#123; <span class="attr">sku</span>: <span class="string">&#x27;oranges&#x27;</span>, <span class="attr">qty</span>: <span class="number">10</span>, <span class="attr">price</span>: <span class="number">2.5</span> &#125;],</span><br><span class="line">    <span class="attr">status</span>: <span class="string">&#x27;A&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">_id</span>: <span class="number">8</span>,</span><br><span class="line">    <span class="attr">cust_id</span>: <span class="string">&#x27;Don Quis&#x27;</span>,</span><br><span class="line">    <span class="attr">ord_date</span>: <span class="keyword">new</span> <span class="title class_">Date</span>(<span class="string">&#x27;2020-03-20&#x27;</span>),</span><br><span class="line">    <span class="attr">price</span>: <span class="number">75</span>,</span><br><span class="line">    <span class="attr">items</span>: [</span><br><span class="line">      &#123; <span class="attr">sku</span>: <span class="string">&#x27;chocolates&#x27;</span>, <span class="attr">qty</span>: <span class="number">5</span>, <span class="attr">price</span>: <span class="number">10</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">sku</span>: <span class="string">&#x27;apples&#x27;</span>, <span class="attr">qty</span>: <span class="number">10</span>, <span class="attr">price</span>: <span class="number">2.5</span> &#125;,</span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">status</span>: <span class="string">&#x27;A&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">_id</span>: <span class="number">9</span>,</span><br><span class="line">    <span class="attr">cust_id</span>: <span class="string">&#x27;Don Quis&#x27;</span>,</span><br><span class="line">    <span class="attr">ord_date</span>: <span class="keyword">new</span> <span class="title class_">Date</span>(<span class="string">&#x27;2020-03-20&#x27;</span>),</span><br><span class="line">    <span class="attr">price</span>: <span class="number">55</span>,</span><br><span class="line">    <span class="attr">items</span>: [</span><br><span class="line">      &#123; <span class="attr">sku</span>: <span class="string">&#x27;carrots&#x27;</span>, <span class="attr">qty</span>: <span class="number">5</span>, <span class="attr">price</span>: <span class="number">1.0</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">sku</span>: <span class="string">&#x27;apples&#x27;</span>, <span class="attr">qty</span>: <span class="number">10</span>, <span class="attr">price</span>: <span class="number">2.5</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">sku</span>: <span class="string">&#x27;oranges&#x27;</span>, <span class="attr">qty</span>: <span class="number">10</span>, <span class="attr">price</span>: <span class="number">2.5</span> &#125;,</span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">status</span>: <span class="string">&#x27;A&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">_id</span>: <span class="number">10</span>,</span><br><span class="line">    <span class="attr">cust_id</span>: <span class="string">&#x27;Don Quis&#x27;</span>,</span><br><span class="line">    <span class="attr">ord_date</span>: <span class="keyword">new</span> <span class="title class_">Date</span>(<span class="string">&#x27;2020-03-23&#x27;</span>),</span><br><span class="line">    <span class="attr">price</span>: <span class="number">25</span>,</span><br><span class="line">    <span class="attr">items</span>: [&#123; <span class="attr">sku</span>: <span class="string">&#x27;oranges&#x27;</span>, <span class="attr">qty</span>: <span class="number">10</span>, <span class="attr">price</span>: <span class="number">2.5</span> &#125;],</span><br><span class="line">    <span class="attr">status</span>: <span class="string">&#x27;A&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+
+<p>SQL 和 MongoDB 聚合方式对比：</p>
+<p><img src="/images/database/mongodb/mongodb-20220607090005.png" alt="img"></p>
+<h2 id="MongoDB-聚合操作"><a href="#MongoDB-聚合操作" class="headerlink" title="MongoDB 聚合操作"></a>MongoDB 聚合操作</h2><p>MongoDB 中聚合(aggregate)主要用于处理数据(诸如统计平均值,求和等)，并返回计算后的数据结果。有点类似 sql 语句中的 count(*)。</p>
+<h3 id="管道"><a href="#管道" class="headerlink" title="管道"></a>管道</h3><p>整个聚合运算过程称为管道，它是由多个步骤组成，每个管道</p>
+<ul>
+<li>接受一系列文档（原始数据）；</li>
+<li>每个步骤对这些文档进行一系列运算；</li>
+<li>结果文档输出给下一个步骤；</li>
+</ul>
+<p>聚合操作的基本格式</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pipeline = [$stage1, $stage1, ..., $stageN];</span><br><span class="line"></span><br><span class="line">db.&lt;集合&gt;.aggregate(pipeline, &#123;options&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="聚合步骤"><a href="#聚合步骤" class="headerlink" title="聚合步骤"></a>聚合步骤</h3><table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>作用</th>
+<th>SQL 等价运算符</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>$match</code></td>
+<td>过滤</td>
+<td>WHERE</td>
+</tr>
+<tr>
+<td><code>$project</code></td>
+<td>投影</td>
+<td>AS</td>
+</tr>
+<tr>
+<td><code>$sort</code></td>
+<td>排序</td>
+<td>ORDER BY</td>
+</tr>
+<tr>
+<td><code>$group</code></td>
+<td>分组</td>
+<td>GROUP BY</td>
+</tr>
+<tr>
+<td><code>$skip</code> &#x2F; <code>$limit</code></td>
+<td>结果限制</td>
+<td>SKIP &#x2F; LIMIT</td>
+</tr>
+<tr>
+<td><code>$lookup</code></td>
+<td>左外连接</td>
+<td>LEFT OUTER JOIN</td>
+</tr>
+<tr>
+<td><code>$unwind</code></td>
+<td>展开数组</td>
+<td>N&#x2F;A</td>
+</tr>
+<tr>
+<td><code>$graphLookup</code></td>
+<td>图搜索</td>
+<td>N&#x2F;A</td>
+</tr>
+<tr>
+<td><code>$facet</code> &#x2F; <code>$bucket</code></td>
+<td>分面搜索</td>
+<td>N&#x2F;A</td>
+</tr>
+</tbody></table>
+<p>【示例】</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">db.collection.insertMany([&#123;<span class="string">&quot;title&quot;</span>:<span class="string">&quot;MongoDB Overview&quot;</span>,<span class="string">&quot;description&quot;</span>:<span class="string">&quot;MongoDB is no sql database&quot;</span>,<span class="string">&quot;by_user&quot;</span>:<span class="string">&quot;collection&quot;</span>,<span class="string">&quot;tagsr&quot;</span>:[<span class="string">&quot;mongodb&quot;</span>,<span class="string">&quot;database&quot;</span>,<span class="string">&quot;NoSQL&quot;</span>],<span class="string">&quot;likes&quot;</span>:<span class="string">&quot;100&quot;</span>&#125;,&#123;<span class="string">&quot;title&quot;</span>:<span class="string">&quot;NoSQL Overview&quot;</span>,<span class="string">&quot;description&quot;</span>:<span class="string">&quot;No sql database is very fast&quot;</span>,<span class="string">&quot;by_user&quot;</span>:<span class="string">&quot;collection&quot;</span>,<span class="string">&quot;tagsr&quot;</span>:[<span class="string">&quot;mongodb&quot;</span>,<span class="string">&quot;database&quot;</span>,<span class="string">&quot;NoSQL&quot;</span>],<span class="string">&quot;likes&quot;</span>:<span class="string">&quot;10&quot;</span>&#125;,&#123;<span class="string">&quot;title&quot;</span>:<span class="string">&quot;Neo4j Overview&quot;</span>,<span class="string">&quot;description&quot;</span>:<span class="string">&quot;Neo4j is no sql database&quot;</span>,<span class="string">&quot;by_user&quot;</span>:<span class="string">&quot;Neo4j&quot;</span>,<span class="string">&quot;tagsr&quot;</span>:[<span class="string">&quot;neo4j&quot;</span>,<span class="string">&quot;database&quot;</span>,<span class="string">&quot;NoSQL&quot;</span>],<span class="string">&quot;likes&quot;</span>:<span class="string">&quot;750&quot;</span>&#125;])</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">db.collection.aggregate([&#123;<span class="variable">$group</span> : &#123;_id : <span class="string">&quot;<span class="variable">$by_user</span>&quot;</span>, num_tutorial : &#123;<span class="variable">$sum</span> : 1&#125;&#125;&#125;])</span></span><br><span class="line">&#123; &quot;_id&quot; : null, &quot;num_tutorial&quot; : 3 &#125;</span><br><span class="line">&#123; &quot;_id&quot; : &quot;Neo4j&quot;, &quot;num_tutorial&quot; : 1 &#125;</span><br><span class="line">&#123; &quot;_id&quot; : &quot;collection&quot;, &quot;num_tutorial&quot; : 2 &#125;</span><br></pre></td></tr></table></figure>
+
+<p>下表展示了一些聚合的表达式:</p>
+<table>
+<thead>
+<tr>
+<th align="left">表达式</th>
+<th align="left">描述</th>
+<th align="left">实例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>$sum</code></td>
+<td align="left">计算总和。</td>
+<td align="left"><code>db.mycol.aggregate([&#123;$group : &#123;_id : &quot;$by_user&quot;, num_tutorial : &#123;$sum : &quot;$likes&quot;&#125;&#125;&#125;])</code></td>
+</tr>
+<tr>
+<td align="left"><code>$avg</code></td>
+<td align="left">计算平均值</td>
+<td align="left"><code>db.mycol.aggregate([&#123;$group : &#123;_id : &quot;$by_user&quot;, num_tutorial : &#123;$avg : &quot;$likes&quot;&#125;&#125;&#125;])</code></td>
+</tr>
+<tr>
+<td align="left"><code>$min</code></td>
+<td align="left">获取集合中所有文档对应值得最小值。</td>
+<td align="left"><code>db.mycol.aggregate([&#123;$group : &#123;_id : &quot;$by_user&quot;, num_tutorial : &#123;$min : &quot;$likes&quot;&#125;&#125;&#125;])</code></td>
+</tr>
+<tr>
+<td align="left"><code>$max</code></td>
+<td align="left">获取集合中所有文档对应值得最大值。</td>
+<td align="left"><code>db.mycol.aggregate([&#123;$group : &#123;_id : &quot;$by_user&quot;, num_tutorial : &#123;$max : &quot;$likes&quot;&#125;&#125;&#125;])</code></td>
+</tr>
+<tr>
+<td align="left"><code>$push</code></td>
+<td align="left">在结果文档中插入值到一个数组中。</td>
+<td align="left"><code>db.mycol.aggregate([&#123;$group : &#123;_id : &quot;$by_user&quot;, url : &#123;$push: &quot;$url&quot;&#125;&#125;&#125;])</code></td>
+</tr>
+<tr>
+<td align="left"><code>$addToSet</code></td>
+<td align="left">在结果文档中插入值到一个数组中，但不创建副本。</td>
+<td align="left"><code>db.mycol.aggregate([&#123;$group : &#123;_id : &quot;$by_user&quot;, url : &#123;$addToSet : &quot;$url&quot;&#125;&#125;&#125;])</code></td>
+</tr>
+<tr>
+<td align="left"><code>$first</code></td>
+<td align="left">根据资源文档的排序获取第一个文档数据。</td>
+<td align="left"><code>db.mycol.aggregate([&#123;$group : &#123;_id : &quot;$by_user&quot;, first_url : &#123;$first : &quot;$url&quot;&#125;&#125;&#125;])</code></td>
+</tr>
+<tr>
+<td align="left"><code>$last</code></td>
+<td align="left">根据资源文档的排序获取最后一个文档数据</td>
+<td align="left"><code>db.mycol.aggregate([&#123;$group : &#123;_id : &quot;$by_user&quot;, last_url : &#123;$last : &quot;$url&quot;&#125;&#125;&#125;])</code></td>
+</tr>
+</tbody></table>
+<h1 id="MapReduce"><a href="#MapReduce" class="headerlink" title="MapReduce"></a>MapReduce</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">db.<span class="title function_">runCommand</span>(&#123;  </span><br><span class="line">    <span class="attr">mapreduce</span>:&lt;collection&gt;,  <span class="comment">//需要进行处理的集合名</span></span><br><span class="line">    <span class="attr">map</span>:&lt;mapfunction&gt;,  <span class="comment">//映射函数（分组）</span></span><br><span class="line">    <span class="attr">reduce</span>:&lt;reducefunction&gt;,  <span class="comment">//统计函数</span></span><br><span class="line">    [,<span class="attr">query</span>:&lt;query filter object&gt;]  //，在发往map函数之前，对文档进行过滤 </span><br><span class="line">    [,sort:&lt;sorts the input objects using this key.Useful for optimization,like sorting by the emit key for fewer reduces&gt;]  //在发往map函数之前，对文档进行排序</span><br><span class="line">    [,limit:&lt;number of objects to return from collection&gt;]  //限制发往map函数的文档数量</span><br><span class="line">    [,out:&lt;see output options below&gt;]  //新建集合，用于存放统计结果</span><br><span class="line">    [,keeptemp:&lt;true|false&gt;]  //是否保存统计结果为临时集合</span><br><span class="line">    [,finalize:&lt;finalizefunction&gt;]  //最终处理函数，对reduce返回结果（存入out之前）进行最终处理</span><br><span class="line">    [,scope:&lt;object where fields go into javascript global scope&gt;] //向map、reduce、finalize导入外部变量</span><br><span class="line">    [,verbose:true]  //详细的统计信息，用于调试</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><strong>map函数(分组)</strong> ，调用<code>emit(key, values)</code>，遍历collection中所有的记录，其中emit中的key是分组依据，values是分组后需要保留的数据；key对应最后结果集中的_id。</p>
+<p><strong>reduce函数(聚合)</strong> ，接收map函数的key,values作为参数，将<strong>key-values</strong>变成<strong>key-value</strong>，将<strong>values</strong>数组变成一个个单一的value。当key-values中的values数组过大时，会再被切分成多个小的key-values，再对这些小的key-values分别执行reduce，再将多个块的结构组合成一个新的数组，作为redus函数的第二个参数，继续reduce操作。</p>
+<h3 id="group-aggegate-MapReduce比较"><a href="#group-aggegate-MapReduce比较" class="headerlink" title="group,aggegate,MapReduce比较"></a>group,aggegate,MapReduce比较</h3><table>
+<thead>
+<tr>
+<th></th>
+<th>group</th>
+<th>aggregate</th>
+<th>MapReduce</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>是否使用JavaScript引擎</td>
+<td>是，定制reduce函数</td>
+<td>是，不能编写自定义函数</td>
+<td>是</td>
+</tr>
+<tr>
+<td>返回结果集保存位置</td>
+<td>内联，结果必须符合BSON文档限制</td>
+<td>内联，服务器支持最大文档大小(16Mb)</td>
+<td>内联，新集合，合并，替换，减少</td>
+</tr>
+<tr>
+<td>处理数据大小</td>
+<td>小于10000</td>
+<td>操作在内存中完成，有内存大小的限制，</td>
+<td>大型数据集，超过20000的独立分组</td>
+</tr>
+<tr>
+<td>处理性能</td>
+<td>低于aggregate</td>
+<td>较高，管道可以重复使用</td>
+<td>低于aggregate</td>
+</tr>
+<tr>
+<td>灵活度</td>
+<td>低于mapReduce</td>
+<td>低于MapReduce</td>
+<td>较高，能使用JavaScript</td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://blog.ifan.host/2022/06/07/database/mongodb/mongo-pipeline/" title="MongoDB 聚合" target="_blank" rel="external">https://blog.ifan.host/2022/06/07/database/mongodb/mongo-pipeline/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/Mr-iFan" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/Mr-iFan" target="_blank"><span class="text-dark">iFan</span><small class="ml-1x">在路上啊</small></a></h3>
+        <div>个人简介。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2022/06/08/language/java/framework/springboot/profile/" title="Java Spring Boot 注解 profile 区分环境"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2022/06/07/database/mongodb/mongodb-backup/" title="MongoDB 数据导入导出"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.jpg" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Mr-iFan" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+<!-- custom analytics part create by xiamo -->
+<script defer src="https://cdn1.lncld.net/static/js/av-min-1.2.1.js"></script>
+<script defer>
+AV.init({
+  appId: 'NWrHqpVOYyEWPWucCx1ItMHb-gzGzoHsz',
+  appKey: '7WN72ODWriRqLktj8J6ehXBF'
+});
+
+function showTime(Counter) {
+	var query = new AV.Query(Counter);
+		var visitors= $('.leancloud_visitors');
+		query.greaterThanOrEqualTo("time", 0);		
+		query.find({
+			success: function(results) {
+				if (results.length == 0) {				
+					return;
+				}
+				var data = results;
+				visitors.each(function(){
+					var url = $(this).attr('id').trim();					
+					for (var i = 0; i < data.length; i++) {
+						var object = data[i];
+						var content = object.get('time');
+						var _url = object.get('url')
+						if(url == _url){
+							$(this).text(content);
+						}
+					}
+				})
+				
+			},
+			error: function(object, error) {
+				console.log("Error: " + error.code + " " + error.message);
+			}
+		});
+}
+
+function addCount(Counter) {
+	var Counter = AV.Object.extend("Counter");
+	url = $(".leancloud_visitors").attr('id').trim();
+	title = $(".leancloud_visitors").attr('data-flag-title').trim();
+	var query = new AV.Query(Counter);
+	query.equalTo("url", url);
+	query.find({
+		success: function(results) {
+			if (results.length > 0) {
+				var counter = results[0];
+				counter.fetchWhenSave(true);
+				counter.increment("time");
+				counter.save(null, {
+					success: function(counter) {
+						var content = counter.get('time');
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(counter, error) {
+						console.log('Failed to save Visitor num, with error message: ' + error.message);
+					}
+				});
+			} else {
+				var newcounter = new Counter();
+				newcounter.set("title", title);
+				newcounter.set("url", url);
+				newcounter.set("time", 1);
+				newcounter.save(null, {
+					success: function(newcounter) {
+					    console.log("newcounter.get('time')="+newcounter.get('time'));
+						var content = newcounter.get('time');
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(newcounter, error) {
+						console.log('Failed to create');
+					}
+				});
+			}
+		},
+		error: function(error) {
+			console.log('Error:' + error.code + " " + error.message);
+		}
+	});
+}
+$(function() {
+	var Counter = AV.Object.extend("Counter");
+	if ($('.leancloud_visitors').length == 1) {
+		addCount(Counter);
+	} else {
+		showTime(Counter);
+	}
+}); 
+</script>
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>
