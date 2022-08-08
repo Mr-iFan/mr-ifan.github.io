@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>puppeteer 简单使用 | iFan</title>
+  <meta name="description" content="Puppeteer下载安装  API中文网址 12npm i puppeteer# yarn add puppeteer  下载的时候还会下载 Chromium ,因为网速慢，总是出错，所以单独下载 Chromium 12npm i puppeteer-core# yarn add puppeteer-core  Chromium 可以在这里下载 安装完了运行一遍脚本试试 123456789101">
+<meta property="og:type" content="article">
+<meta property="og:title" content="puppeteer 简单使用">
+<meta property="og:url" content="https://blog.ifan.host/2022/06/03/spider/puppeteer/puppeteer/index.html">
+<meta property="og:site_name" content="iFan">
+<meta property="og:description" content="Puppeteer下载安装  API中文网址 12npm i puppeteer# yarn add puppeteer  下载的时候还会下载 Chromium ,因为网速慢，总是出错，所以单独下载 Chromium 12npm i puppeteer-core# yarn add puppeteer-core  Chromium 可以在这里下载 安装完了运行一遍脚本试试 123456789101">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-06-03T05:24:00.000Z">
+<meta property="article:modified_time" content="2022-08-08T10:24:39.561Z">
+<meta property="article:author" content="iFan">
+<meta property="article:tag" content="爬虫">
+<meta property="article:tag" content="puppeteer">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://blog.ifan.host/2022/06/03/spider/puppeteer/puppeteer/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="iFan" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/Mr-iFan" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">iFan</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">在路上啊</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> 北京</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Mr-iFan" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>啥也不是</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/MyBatis/">MyBatis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/Spring-Boot/">Spring Boot</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Centos/">Centos</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Debian/">Debian</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/service/">service</a><span class="category-list-count">4</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Lua/">Lua</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Minio/">Minio</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NodeJS/">NodeJS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/NodeJS/nvm/">nvm</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Jupyter/">Jupyter</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/jupyterlab/">jupyterlab</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/pyenv/">pyenv</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Scala/">Scala</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/WEB/">WEB</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/WEB/HTTP/">HTTP</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/WEB/Nginx/">Nginx</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/WEB/%E5%8E%8B%E6%B5%8B/">压测</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/boto3/">boto3</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/boto3/%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8/">文件存储</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/golang/">golang</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a><span class="category-list-count">10</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/Git/">Git</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/ffmpeg/">ffmpeg</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/proxy/">proxy</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/proxy/%E7%88%AC%E8%99%AB/">爬虫</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/vim/">vim</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/%E7%BC%96%E7%A8%8B%E5%B7%A5%E5%85%B7/">编程工具</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><span class="category-list-count">39</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/ElasticSearch/">ElasticSearch</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/MongoDB/">MongoDB</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/">MySQL</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/Redis/">Redis</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/Sqlite/">Sqlite</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/%E5%A4%A7%E6%95%B0%E6%8D%AE/HBase/">HBase</a><span class="category-list-count">3</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/lxml/">lxml</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/mitmproxy/">mitmproxy</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/puppeteer/">puppeteer</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/pyppeteer/">pyppeteer</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/xpath/">xpath</a><span class="category-list-count">1</span></li></ul></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Centos/" rel="tag">Centos</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Debian/" rel="tag">Debian</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ElasticSearch/" rel="tag">ElasticSearch</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/" rel="tag">Git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HBase/" rel="tag">HBase</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jupyter/" rel="tag">Jupyter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lua/" rel="tag">Lua</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Minio/" rel="tag">Minio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB/" rel="tag">MongoDB</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MyBatis/" rel="tag">MyBatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NodeJS/" rel="tag">NodeJS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scala/" rel="tag">Scala</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Boot/" rel="tag">Spring Boot</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sqlite/" rel="tag">Sqlite</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB/" rel="tag">WEB</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Wrk/" rel="tag">Wrk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/boto3/" rel="tag">boto3</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/" rel="tag">ffmpeg</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang/" rel="tag">golang</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jupyterlab/" rel="tag">jupyterlab</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lxml/" rel="tag">lxml</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mitmproxy/" rel="tag">mitmproxy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nvm/" rel="tag">nvm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/proxy/" rel="tag">proxy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/puppeteer/" rel="tag">puppeteer</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pyenv/" rel="tag">pyenv</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pyppeteer/" rel="tag">pyppeteer</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/service/" rel="tag">service</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tesseract/" rel="tag">tesseract</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/" rel="tag">vim</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xpath/" rel="tag">xpath</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="tag">基础知识</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" rel="tag">大数据</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">39</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8/" rel="tag">文件存储</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E7%A8%8B%E5%B7%A5%E5%85%B7/" rel="tag">编程工具</a><span class="tag-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Centos/" style="font-size: 13.33px;">Centos</a> <a href="/tags/Debian/" style="font-size: 13px;">Debian</a> <a href="/tags/ElasticSearch/" style="font-size: 13.78px;">ElasticSearch</a> <a href="/tags/Git/" style="font-size: 13.11px;">Git</a> <a href="/tags/HBase/" style="font-size: 13.22px;">HBase</a> <a href="/tags/HTTP/" style="font-size: 13.78px;">HTTP</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/Jupyter/" style="font-size: 13px;">Jupyter</a> <a href="/tags/Linux/" style="font-size: 13.56px;">Linux</a> <a href="/tags/Lua/" style="font-size: 13.11px;">Lua</a> <a href="/tags/Minio/" style="font-size: 13px;">Minio</a> <a href="/tags/MongoDB/" style="font-size: 13.22px;">MongoDB</a> <a href="/tags/MyBatis/" style="font-size: 13px;">MyBatis</a> <a href="/tags/MySQL/" style="font-size: 13.78px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 13.44px;">Nginx</a> <a href="/tags/NodeJS/" style="font-size: 13px;">NodeJS</a> <a href="/tags/Python/" style="font-size: 13.22px;">Python</a> <a href="/tags/Redis/" style="font-size: 13.67px;">Redis</a> <a href="/tags/Scala/" style="font-size: 13.11px;">Scala</a> <a href="/tags/Spring-Boot/" style="font-size: 13.11px;">Spring Boot</a> <a href="/tags/Sqlite/" style="font-size: 13px;">Sqlite</a> <a href="/tags/WEB/" style="font-size: 13.33px;">WEB</a> <a href="/tags/Wrk/" style="font-size: 13px;">Wrk</a> <a href="/tags/boto3/" style="font-size: 13px;">boto3</a> <a href="/tags/ffmpeg/" style="font-size: 13px;">ffmpeg</a> <a href="/tags/golang/" style="font-size: 13.89px;">golang</a> <a href="/tags/jupyterlab/" style="font-size: 13px;">jupyterlab</a> <a href="/tags/lxml/" style="font-size: 13px;">lxml</a> <a href="/tags/mitmproxy/" style="font-size: 13px;">mitmproxy</a> <a href="/tags/nvm/" style="font-size: 13px;">nvm</a> <a href="/tags/proxy/" style="font-size: 13px;">proxy</a> <a href="/tags/puppeteer/" style="font-size: 13px;">puppeteer</a> <a href="/tags/pyenv/" style="font-size: 13px;">pyenv</a> <a href="/tags/pyppeteer/" style="font-size: 13px;">pyppeteer</a> <a href="/tags/python/" style="font-size: 13px;">python</a> <a href="/tags/service/" style="font-size: 13.33px;">service</a> <a href="/tags/tesseract/" style="font-size: 13px;">tesseract</a> <a href="/tags/vim/" style="font-size: 13.11px;">vim</a> <a href="/tags/xpath/" style="font-size: 13px;">xpath</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" style="font-size: 13px;">基础知识</a> <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" style="font-size: 13.22px;">大数据</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 13.67px;">工具</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 14px;">数据库</a> <a href="/tags/%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8/" style="font-size: 13px;">文件存储</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 13.44px;">爬虫</a> <a href="/tags/%E7%BC%96%E7%A8%8B%E5%B7%A5%E5%85%B7/" style="font-size: 13.22px;">编程工具</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a><span class="archive-list-count">61</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">38</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/%E5%B7%A5%E5%85%B7/proxy/">proxy</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/08/08/tools/proxy/" class="title">nginx正向代理、tinyproxy和goproxy代理</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-08-08T10:24:39.539Z" itemprop="datePublished">2022-08-08</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/08/03/tools/typora/" class="title">Typora 修改源码模式和预览模式的宽度</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-08-03T00:56:00.000Z" itemprop="datePublished">2022-08-03</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/07/10/bigdata/hbase/rank-family/" class="title">大数据 Hbase 列族的配置</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-07-10T06:25:00.000Z" itemprop="datePublished">2022-07-10</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/WEB/">WEB</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/WEB/Nginx/">Nginx</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/07/01/web/nginx/goaccess-nginx-log/" class="title">Nginx 使用 goaccess 分析日志</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-07-01T01:01:00.000Z" itemprop="datePublished">2022-07-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Minio/">Minio</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/07/01/database/minio/minio-nginx-proxy/" class="title">Minio 配置 nginx 代理</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-07-01T01:00:00.000Z" itemprop="datePublished">2022-07-01</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-spider/puppeteer/puppeteer" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      puppeteer 简单使用
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2022/06/03/spider/puppeteer/puppeteer/" class="article-date">
+	  <time datetime="2022-06-03T05:24:00.000Z" itemprop="datePublished">2022-06-03</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a>►<a class="article-category-link" href="/categories/%E7%88%AC%E8%99%AB/puppeteer/">puppeteer</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/puppeteer/" rel="tag">puppeteer</a>, <a class="article-tag-link-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a>
+  </span>
+
+
+        
+
+	<span class="article-read hidden-xs">
+    	<i class="icon icon-eye-fill" aria-hidden="true"></i>
+    	<span id="/2022/06/03/spider/puppeteer/puppeteer/" class="leancloud_visitors"  data-flag-title="puppeteer 简单使用">0</span>
+    </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2022/06/03/spider/puppeteer/puppeteer/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1.4k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 5(分)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="Puppeteer"><a href="#Puppeteer" class="headerlink" title="Puppeteer"></a>Puppeteer</h1><p>下载安装 </p>
+<p><a target="_blank" rel="noopener" href="https://zhaoqize.github.io/puppeteer-api-zh_CN/">API中文网址</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm i puppeteer</span><br><span class="line"># yarn add puppeteer</span><br></pre></td></tr></table></figure>
+
+<p>下载的时候还会下载 <code>Chromium</code> ,因为网速慢，总是出错，所以单独下载 <code>Chromium</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm i puppeteer-core</span><br><span class="line"># yarn add puppeteer-core</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://npm.taobao.org/mirrors/chromium-browser-snapshots/">Chromium</a> 可以在这里下载</p>
+<p>安装完了运行一遍脚本试试</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> puppeteer = <span class="built_in">require</span>(<span class="string">&#x27;puppeteer-core&#x27;</span>);</span><br><span class="line"></span><br><span class="line">(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> conf = &#123;</span><br><span class="line">    <span class="attr">headless</span>: <span class="literal">false</span>, <span class="comment">// 指定无头模式</span></span><br><span class="line">    <span class="attr">executablePath</span>:  <span class="string">&#x27;/path/to/Chrome&#x27;</span> <span class="comment">// 指定 Chromium 的位置</span></span><br><span class="line">    <span class="attr">args</span>: [</span><br><span class="line">      <span class="string">&#x27;–disable-gpu&#x27;</span>, <span class="comment">// GPU硬件加速</span></span><br><span class="line">      <span class="string">&#x27;–disable-dev-shm-usage&#x27;</span>, <span class="comment">// 创建临时文件共享内存</span></span><br><span class="line">      <span class="string">&#x27;–disable-setuid-sandbox&#x27;</span>, <span class="comment">// uid沙盒</span></span><br><span class="line">      <span class="string">&#x27;–no-first-run&#x27;</span>, <span class="comment">// 没有设置首页。在启动的时候，就会打开一个空白页面。</span></span><br><span class="line">      <span class="string">&#x27;–no-sandbox&#x27;</span>, <span class="comment">// 沙盒模式</span></span><br><span class="line">      <span class="string">&#x27;–no-zygote&#x27;</span>,</span><br><span class="line">      <span class="string">&#x27;–single-process&#x27;</span> <span class="comment">// 单进程运行</span></span><br><span class="line">     ]</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">const</span> browser = <span class="keyword">await</span> puppeteer.<span class="title function_">launch</span>();</span><br><span class="line">  <span class="keyword">const</span> page = <span class="keyword">await</span> browser.<span class="title function_">newPage</span>();</span><br><span class="line">  <span class="keyword">await</span> page.<span class="title function_">goto</span>(<span class="string">&#x27;https://example.com&#x27;</span>);</span><br><span class="line">  <span class="comment">// 执行 javascript 并返回结果</span></span><br><span class="line">  <span class="keyword">const</span> dimensions = <span class="keyword">await</span> page.evaluate(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      <span class="attr">width</span>: <span class="variable language_">document</span>.<span class="property">documentElement</span>.<span class="property">clientWidth</span>,</span><br><span class="line">      <span class="attr">height</span>: <span class="variable language_">document</span>.<span class="property">documentElement</span>.<span class="property">clientHeight</span>,</span><br><span class="line">      <span class="attr">deviceScaleFactor</span>: <span class="variable language_">window</span>.<span class="property">devicePixelRatio</span></span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Dimensions:&#x27;</span>, dimensions);</span><br><span class="line">  <span class="comment">// 保存 png 图片</span></span><br><span class="line">  <span class="keyword">await</span> page.<span class="title function_">screenshot</span>(&#123;<span class="attr">path</span>: <span class="string">&#x27;example.png&#x27;</span>&#125;);</span><br><span class="line">  <span class="keyword">await</span> browser.<span class="title function_">close</span>();</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+
+<h3 id="conf-的一些参数"><a href="#conf-的一些参数" class="headerlink" title="conf 的一些参数"></a>conf 的一些参数</h3><table>
+<thead>
+<tr>
+<th>参数名称</th>
+<th>参数类型</th>
+<th>参数说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ignoreHTTPSErrors</td>
+<td>boolean</td>
+<td>在请求的过程中是否忽略 <code>Https</code> 报错信息，默认为 <code>false</code></td>
+</tr>
+<tr>
+<td>headless</td>
+<td>boolean</td>
+<td>是否以<strong>无头</strong>的模式运行 <code>chrome</code>, 也就是不显示 <code>UI</code>， 默认为 <code>true</code></td>
+</tr>
+<tr>
+<td>executablePath</td>
+<td>string</td>
+<td>可执行文件的路劲，<code>Puppeteer</code> 默认是使用它自带的 <code>chrome webdriver</code>, 如果你想指定一个自己的 <code>webdriver</code> 路径，可以通过这个参数设置</td>
+</tr>
+<tr>
+<td>slowMo</td>
+<td>number</td>
+<td>使 <code>Puppeteer</code> 操作减速，单位是毫秒。如果你想看看 <code>Puppeteer</code> 的整个工作过程，这个参数将非常有用。</td>
+</tr>
+<tr>
+<td>args</td>
+<td>Array(String)</td>
+<td>传递给 <code>chrome</code> 实例的其他参数，比如你可以使用<code>–ash-host-window-bounds=1024x768</code> 来设置浏览器窗口大小。更多参数参数列表可以参考<a target="_blank" rel="noopener" href="https://peter.sh/experiments/chromium-command-line-switches/">这里</a></td>
+</tr>
+<tr>
+<td>handleSIGINT</td>
+<td>boolean</td>
+<td>是否允许通过进程信号控制 <code>chrome</code> 进程，也就是说是否可以使用 <code>CTRL+C</code> 关闭并退出浏览器.</td>
+</tr>
+<tr>
+<td>timeout</td>
+<td>number</td>
+<td>等待 <code>Chrome</code> 实例启动的最长时间。默认为30000（30秒）。如果传入 0 的话则不限制时间</td>
+</tr>
+<tr>
+<td>dumpio</td>
+<td>boolean</td>
+<td>是否将浏览器进程<code>stdout</code>和<code>stderr</code>导入到<code>process.stdout</code>和<code>process.stderr</code>中。默认为<code>false</code>。</td>
+</tr>
+<tr>
+<td>userDataDir</td>
+<td>string</td>
+<td>设置用户数据目录，默认linux 是在 <code>~/.config</code> 目录，window 默认在 <code>C:\Users\AppData\Local\Google\Chrome\User Data</code>, 其中 <code>USER</code> 代表当前登录的用户名</td>
+</tr>
+<tr>
+<td>env</td>
+<td>Object</td>
+<td>指定对<code>Chromium</code>可见的环境变量。默认为<code>process.env</code>。</td>
+</tr>
+<tr>
+<td>devtools</td>
+<td>boolean</td>
+<td>是否为每个选项卡自动打开<code>DevTools</code>面板， 这个选项只有当 <code>headless</code> 设置为 <code>false</code> 的时候有效</td>
+</tr>
+</tbody></table>
+<h3 id="Browser-的一些方法"><a href="#Browser-的一些方法" class="headerlink" title="Browser 的一些方法"></a>Browser 的一些方法</h3><table>
+<thead>
+<tr>
+<th>方法名称</th>
+<th>返回值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>browser.close()</td>
+<td>Promise</td>
+<td>关闭浏览器</td>
+</tr>
+<tr>
+<td>browser.disconnect()</td>
+<td>void</td>
+<td>断开浏览器连接</td>
+</tr>
+<tr>
+<td>browser.newPage()</td>
+<td>Promise(Page)</td>
+<td>创建一个 <code>Page</code> 实例</td>
+</tr>
+<tr>
+<td>browser.pages()</td>
+<td>Promise(Array(Page))</td>
+<td>获取所有打开的 <code>Page</code> 实例</td>
+</tr>
+<tr>
+<td>browser.targets()</td>
+<td>Array(Target)</td>
+<td>获取所有活动的 <code>targets</code></td>
+</tr>
+<tr>
+<td>browser.version()</td>
+<td>Promise(String)</td>
+<td>获取浏览器的版本</td>
+</tr>
+<tr>
+<td>browser.wsEndpoint()</td>
+<td>String</td>
+<td>返回浏览器实例的 <code>socket</code> 连接 <code>URL</code>, 可以通过这个 <code>URL</code> 重连接 <code>chrome</code> 实例</td>
+</tr>
+</tbody></table>
+<h2 id="做个人吧"><a href="#做个人吧" class="headerlink" title="做个人吧"></a>做个人吧</h2><p>在我们使用 <code>Puppeteer</code> 做爬虫时，我们希望尽量像个正常的浏览器一样去做一些事，但是 <code>Puppeteer</code> 最初还是隐含了一些变量，该变量告诉web网站，我们并不是真正的人。</p>
+<p>我们可以使用一些封装好的插件，来隐藏这些变量。</p>
+<p>很多时候，我们会使用 <a target="_blank" rel="noopener" href="https://bot.sannysoft.com/">该网站</a> 来查看我们是不是像个人了。</p>
+<p><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/puppeteer-extra">npm文档</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yarn add puppeteer puppeteer-extra</span><br><span class="line"># npm install puppeteer puppeteer-extra</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// puppeteer-extra is a drop-in replacement for puppeteer,</span></span><br><span class="line"><span class="comment">// it augments the installed puppeteer with plugin functionality.</span></span><br><span class="line"><span class="comment">// Any number of plugins can be added through `puppeteer.use()`</span></span><br><span class="line"><span class="keyword">const</span> puppeteer = <span class="built_in">require</span>(<span class="string">&#x27;puppeteer-extra&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Add stealth plugin and use defaults (all tricks to hide puppeteer usage)</span></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">StealthPlugin</span> = <span class="built_in">require</span>(<span class="string">&#x27;puppeteer-extra-plugin-stealth&#x27;</span>)</span><br><span class="line">puppeteer.<span class="title function_">use</span>(<span class="title class_">StealthPlugin</span>())</span><br><span class="line"></span><br><span class="line"><span class="comment">// Add adblocker plugin to block all ads and trackers (saves bandwidth)</span></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">AdblockerPlugin</span> = <span class="built_in">require</span>(<span class="string">&#x27;puppeteer-extra-plugin-adblocker&#x27;</span>)</span><br><span class="line">puppeteer.<span class="title function_">use</span>(<span class="title class_">AdblockerPlugin</span>(&#123; <span class="attr">blockTrackers</span>: <span class="literal">true</span> &#125;))</span><br><span class="line"></span><br><span class="line"><span class="comment">// That&#x27;s it, the rest is puppeteer usage as normal ????</span></span><br><span class="line">puppeteer.<span class="title function_">launch</span>(&#123; <span class="attr">headless</span>: <span class="literal">true</span> &#125;).<span class="title function_">then</span>(<span class="keyword">async</span> browser =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> page = <span class="keyword">await</span> browser.<span class="title function_">newPage</span>()</span><br><span class="line">  <span class="keyword">await</span> page.<span class="title function_">setViewport</span>(&#123; <span class="attr">width</span>: <span class="number">800</span>, <span class="attr">height</span>: <span class="number">600</span> &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Testing adblocker plugin..`</span>)</span><br><span class="line">  <span class="keyword">await</span> page.<span class="title function_">goto</span>(<span class="string">&#x27;https://www.vanityfair.com&#x27;</span>)</span><br><span class="line">  <span class="keyword">await</span> page.<span class="title function_">waitFor</span>(<span class="number">1000</span>)</span><br><span class="line">  <span class="keyword">await</span> page.<span class="title function_">screenshot</span>(&#123; <span class="attr">path</span>: <span class="string">&#x27;adblocker.png&#x27;</span>, <span class="attr">fullPage</span>: <span class="literal">true</span> &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Testing the stealth plugin..`</span>)</span><br><span class="line">  <span class="keyword">await</span> page.<span class="title function_">goto</span>(<span class="string">&#x27;https://bot.sannysoft.com&#x27;</span>)</span><br><span class="line">  <span class="keyword">await</span> page.<span class="title function_">waitFor</span>(<span class="number">5000</span>)</span><br><span class="line">  <span class="keyword">await</span> page.<span class="title function_">screenshot</span>(&#123; <span class="attr">path</span>: <span class="string">&#x27;stealth.png&#x27;</span>, <span class="attr">fullPage</span>: <span class="literal">true</span> &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`All done, check the screenshots. ✨`</span>)</span><br><span class="line">  <span class="keyword">await</span> browser.<span class="title function_">close</span>()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="你还想跑快点？"><a href="#你还想跑快点？" class="headerlink" title="你还想跑快点？"></a>你还想跑快点？</h2><p>首先：我们要知道，<code>Puppeteer</code> 并不能很好的实现并发，而且消耗的内存，CPU都是相对来说比较高的，而且使用不好，还容易出现大量失效的 <code>chrome</code> 进程。</p>
+<p>然后：我们需要知道这货在哪里比较耗时，针对性的优化。</p>
+<p><code>Puppeteer</code> 在第一次启动的时候消耗了很多时间，我们可以只启动一次，然后将一些API提供出去，供调用者使用，结合 <code>express</code> 实现web接口的调用。</p>
+<p>在请求一个页面的时候，会有很多的 <code>css</code>, <code>js</code>, <code>font</code> 文件一块加载了，很多时候都是没用的，我们可以<strong>拦截</strong>这些请求，进行快速返回，就不用等待那么长时间了。</p>
+<p>我们总是要等待页面渲染完成之后，才会进行下一步的操作，那么什么时候渲染完成呢？不知道！</p>
+<ol>
+<li>等待固定的时间，emmm，最好别，因为网络总是不稳定的。</li>
+<li>等待固定元素渲染完成，出现。</li>
+<li>等待一段时间内没有网络请求。</li>
+</ol>
+<p>多看看启动的参数，里面也有一些加速的选项，如<code>GPU加速</code>,<code>缓存文件加速</code>等等</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://blog.ifan.host/2022/06/03/spider/puppeteer/puppeteer/" title="puppeteer 简单使用" target="_blank" rel="external">https://blog.ifan.host/2022/06/03/spider/puppeteer/puppeteer/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/Mr-iFan" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/Mr-iFan" target="_blank"><span class="text-dark">iFan</span><small class="ml-1x">在路上啊</small></a></h3>
+        <div>个人简介。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2022/06/03/spider/minproxy/" title="mitmproxy 简单使用"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2022/06/03/spider/puppeteer/pyppeteer/" title="pyppeteer 简单使用"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.jpg" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Mr-iFan" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+<!-- custom analytics part create by xiamo -->
+<script defer src="https://cdn1.lncld.net/static/js/av-min-1.2.1.js"></script>
+<script defer>
+AV.init({
+  appId: 'NWrHqpVOYyEWPWucCx1ItMHb-gzGzoHsz',
+  appKey: '7WN72ODWriRqLktj8J6ehXBF'
+});
+
+function showTime(Counter) {
+	var query = new AV.Query(Counter);
+		var visitors= $('.leancloud_visitors');
+		query.greaterThanOrEqualTo("time", 0);		
+		query.find({
+			success: function(results) {
+				if (results.length == 0) {				
+					return;
+				}
+				var data = results;
+				visitors.each(function(){
+					var url = $(this).attr('id').trim();					
+					for (var i = 0; i < data.length; i++) {
+						var object = data[i];
+						var content = object.get('time');
+						var _url = object.get('url')
+						if(url == _url){
+							$(this).text(content);
+						}
+					}
+				})
+				
+			},
+			error: function(object, error) {
+				console.log("Error: " + error.code + " " + error.message);
+			}
+		});
+}
+
+function addCount(Counter) {
+	var Counter = AV.Object.extend("Counter");
+	url = $(".leancloud_visitors").attr('id').trim();
+	title = $(".leancloud_visitors").attr('data-flag-title').trim();
+	var query = new AV.Query(Counter);
+	query.equalTo("url", url);
+	query.find({
+		success: function(results) {
+			if (results.length > 0) {
+				var counter = results[0];
+				counter.fetchWhenSave(true);
+				counter.increment("time");
+				counter.save(null, {
+					success: function(counter) {
+						var content = counter.get('time');
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(counter, error) {
+						console.log('Failed to save Visitor num, with error message: ' + error.message);
+					}
+				});
+			} else {
+				var newcounter = new Counter();
+				newcounter.set("title", title);
+				newcounter.set("url", url);
+				newcounter.set("time", 1);
+				newcounter.save(null, {
+					success: function(newcounter) {
+					    console.log("newcounter.get('time')="+newcounter.get('time'));
+						var content = newcounter.get('time');
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(newcounter, error) {
+						console.log('Failed to create');
+					}
+				});
+			}
+		},
+		error: function(error) {
+			console.log('Error:' + error.code + " " + error.message);
+		}
+	});
+}
+$(function() {
+	var Counter = AV.Object.extend("Counter");
+	if ($('.leancloud_visitors').length == 1) {
+		addCount(Counter);
+	} else {
+		showTime(Counter);
+	}
+}); 
+</script>
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

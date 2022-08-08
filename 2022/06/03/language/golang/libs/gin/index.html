@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>GoLang gin web组件 | iFan</title>
+  <meta name="description" content="Gin Web下载Gin 1234go  get -u  github.com&#x2F;gin-gonic&#x2F;gingo mod init gingo mod edit -require github.com&#x2F;gin-gonic&#x2F;gin@latest  http服务123456789101112131415161718192021222324package mainimport (    &quot;git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GoLang gin web组件">
+<meta property="og:url" content="https://blog.ifan.host/2022/06/03/language/golang/libs/gin/index.html">
+<meta property="og:site_name" content="iFan">
+<meta property="og:description" content="Gin Web下载Gin 1234go  get -u  github.com&#x2F;gin-gonic&#x2F;gingo mod init gingo mod edit -require github.com&#x2F;gin-gonic&#x2F;gin@latest  http服务123456789101112131415161718192021222324package mainimport (    &quot;git">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-06-03T06:25:00.000Z">
+<meta property="article:modified_time" content="2022-08-08T10:24:39.549Z">
+<meta property="article:author" content="iFan">
+<meta property="article:tag" content="golang">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://blog.ifan.host/2022/06/03/language/golang/libs/gin/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="iFan" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/Mr-iFan" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">iFan</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">在路上啊</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> 北京</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Mr-iFan" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>啥也不是</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/MyBatis/">MyBatis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/Spring-Boot/">Spring Boot</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Centos/">Centos</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Debian/">Debian</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/service/">service</a><span class="category-list-count">4</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Lua/">Lua</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Minio/">Minio</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NodeJS/">NodeJS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/NodeJS/nvm/">nvm</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Jupyter/">Jupyter</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/jupyterlab/">jupyterlab</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/pyenv/">pyenv</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Scala/">Scala</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/WEB/">WEB</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/WEB/HTTP/">HTTP</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/WEB/Nginx/">Nginx</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/WEB/%E5%8E%8B%E6%B5%8B/">压测</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/boto3/">boto3</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/boto3/%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8/">文件存储</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/golang/">golang</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a><span class="category-list-count">10</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/Git/">Git</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/ffmpeg/">ffmpeg</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/proxy/">proxy</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/proxy/%E7%88%AC%E8%99%AB/">爬虫</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/vim/">vim</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/%E7%BC%96%E7%A8%8B%E5%B7%A5%E5%85%B7/">编程工具</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><span class="category-list-count">39</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/ElasticSearch/">ElasticSearch</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/MongoDB/">MongoDB</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/">MySQL</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/Redis/">Redis</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/Sqlite/">Sqlite</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/%E5%A4%A7%E6%95%B0%E6%8D%AE/HBase/">HBase</a><span class="category-list-count">3</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/lxml/">lxml</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/mitmproxy/">mitmproxy</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/puppeteer/">puppeteer</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/pyppeteer/">pyppeteer</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/xpath/">xpath</a><span class="category-list-count">1</span></li></ul></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Centos/" rel="tag">Centos</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Debian/" rel="tag">Debian</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ElasticSearch/" rel="tag">ElasticSearch</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/" rel="tag">Git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HBase/" rel="tag">HBase</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jupyter/" rel="tag">Jupyter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lua/" rel="tag">Lua</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Minio/" rel="tag">Minio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB/" rel="tag">MongoDB</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MyBatis/" rel="tag">MyBatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NodeJS/" rel="tag">NodeJS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scala/" rel="tag">Scala</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Boot/" rel="tag">Spring Boot</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sqlite/" rel="tag">Sqlite</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB/" rel="tag">WEB</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Wrk/" rel="tag">Wrk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/boto3/" rel="tag">boto3</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/" rel="tag">ffmpeg</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang/" rel="tag">golang</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jupyterlab/" rel="tag">jupyterlab</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lxml/" rel="tag">lxml</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mitmproxy/" rel="tag">mitmproxy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nvm/" rel="tag">nvm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/proxy/" rel="tag">proxy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/puppeteer/" rel="tag">puppeteer</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pyenv/" rel="tag">pyenv</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pyppeteer/" rel="tag">pyppeteer</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/service/" rel="tag">service</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tesseract/" rel="tag">tesseract</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/" rel="tag">vim</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xpath/" rel="tag">xpath</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="tag">基础知识</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" rel="tag">大数据</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">39</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8/" rel="tag">文件存储</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E7%A8%8B%E5%B7%A5%E5%85%B7/" rel="tag">编程工具</a><span class="tag-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Centos/" style="font-size: 13.33px;">Centos</a> <a href="/tags/Debian/" style="font-size: 13px;">Debian</a> <a href="/tags/ElasticSearch/" style="font-size: 13.78px;">ElasticSearch</a> <a href="/tags/Git/" style="font-size: 13.11px;">Git</a> <a href="/tags/HBase/" style="font-size: 13.22px;">HBase</a> <a href="/tags/HTTP/" style="font-size: 13.78px;">HTTP</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/Jupyter/" style="font-size: 13px;">Jupyter</a> <a href="/tags/Linux/" style="font-size: 13.56px;">Linux</a> <a href="/tags/Lua/" style="font-size: 13.11px;">Lua</a> <a href="/tags/Minio/" style="font-size: 13px;">Minio</a> <a href="/tags/MongoDB/" style="font-size: 13.22px;">MongoDB</a> <a href="/tags/MyBatis/" style="font-size: 13px;">MyBatis</a> <a href="/tags/MySQL/" style="font-size: 13.78px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 13.44px;">Nginx</a> <a href="/tags/NodeJS/" style="font-size: 13px;">NodeJS</a> <a href="/tags/Python/" style="font-size: 13.22px;">Python</a> <a href="/tags/Redis/" style="font-size: 13.67px;">Redis</a> <a href="/tags/Scala/" style="font-size: 13.11px;">Scala</a> <a href="/tags/Spring-Boot/" style="font-size: 13.11px;">Spring Boot</a> <a href="/tags/Sqlite/" style="font-size: 13px;">Sqlite</a> <a href="/tags/WEB/" style="font-size: 13.33px;">WEB</a> <a href="/tags/Wrk/" style="font-size: 13px;">Wrk</a> <a href="/tags/boto3/" style="font-size: 13px;">boto3</a> <a href="/tags/ffmpeg/" style="font-size: 13px;">ffmpeg</a> <a href="/tags/golang/" style="font-size: 13.89px;">golang</a> <a href="/tags/jupyterlab/" style="font-size: 13px;">jupyterlab</a> <a href="/tags/lxml/" style="font-size: 13px;">lxml</a> <a href="/tags/mitmproxy/" style="font-size: 13px;">mitmproxy</a> <a href="/tags/nvm/" style="font-size: 13px;">nvm</a> <a href="/tags/proxy/" style="font-size: 13px;">proxy</a> <a href="/tags/puppeteer/" style="font-size: 13px;">puppeteer</a> <a href="/tags/pyenv/" style="font-size: 13px;">pyenv</a> <a href="/tags/pyppeteer/" style="font-size: 13px;">pyppeteer</a> <a href="/tags/python/" style="font-size: 13px;">python</a> <a href="/tags/service/" style="font-size: 13.33px;">service</a> <a href="/tags/tesseract/" style="font-size: 13px;">tesseract</a> <a href="/tags/vim/" style="font-size: 13.11px;">vim</a> <a href="/tags/xpath/" style="font-size: 13px;">xpath</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" style="font-size: 13px;">基础知识</a> <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" style="font-size: 13.22px;">大数据</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 13.67px;">工具</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 14px;">数据库</a> <a href="/tags/%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8/" style="font-size: 13px;">文件存储</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 13.44px;">爬虫</a> <a href="/tags/%E7%BC%96%E7%A8%8B%E5%B7%A5%E5%85%B7/" style="font-size: 13.22px;">编程工具</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a><span class="archive-list-count">61</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">38</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/%E5%B7%A5%E5%85%B7/proxy/">proxy</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/08/08/tools/proxy/" class="title">nginx正向代理、tinyproxy和goproxy代理</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-08-08T10:24:39.539Z" itemprop="datePublished">2022-08-08</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/08/03/tools/typora/" class="title">Typora 修改源码模式和预览模式的宽度</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-08-03T00:56:00.000Z" itemprop="datePublished">2022-08-03</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/07/10/bigdata/hbase/rank-family/" class="title">大数据 Hbase 列族的配置</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-07-10T06:25:00.000Z" itemprop="datePublished">2022-07-10</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/WEB/">WEB</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/WEB/Nginx/">Nginx</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/07/01/web/nginx/goaccess-nginx-log/" class="title">Nginx 使用 goaccess 分析日志</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-07-01T01:01:00.000Z" itemprop="datePublished">2022-07-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Minio/">Minio</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/07/01/database/minio/minio-nginx-proxy/" class="title">Minio 配置 nginx 代理</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-07-01T01:00:00.000Z" itemprop="datePublished">2022-07-01</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-language/golang/libs/gin" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      GoLang gin web组件
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2022/06/03/language/golang/libs/gin/" class="article-date">
+	  <time datetime="2022-06-03T06:25:00.000Z" itemprop="datePublished">2022-06-03</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/golang/">golang</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/golang/" rel="tag">golang</a>
+  </span>
+
+
+        
+
+	<span class="article-read hidden-xs">
+    	<i class="icon icon-eye-fill" aria-hidden="true"></i>
+    	<span id="/2022/06/03/language/golang/libs/gin/" class="leancloud_visitors"  data-flag-title="GoLang gin web组件">0</span>
+    </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2022/06/03/language/golang/libs/gin/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 2.6k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 14(分)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="Gin-Web"><a href="#Gin-Web" class="headerlink" title="Gin Web"></a>Gin Web</h1><p>下载Gin</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">go  get -u  github.com/gin-gonic/gin</span><br><span class="line"></span><br><span class="line">go mod init gin</span><br><span class="line">go mod edit -require github.com/gin-gonic/gin@latest</span><br></pre></td></tr></table></figure>
+
+<h3 id="http服务"><a href="#http服务" class="headerlink" title="http服务"></a>http服务</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;github.com/gin-gonic/gin&quot;</span></span><br><span class="line">    <span class="string">&quot;net/http&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="comment">// 初始化引擎</span></span><br><span class="line">    engine := gin.Default()</span><br><span class="line">    <span class="comment">// 注册一个路由和处理函数</span></span><br><span class="line">    engine.Any(<span class="string">&quot;/&quot;</span>, WebRoot)</span><br><span class="line">    <span class="comment">// 绑定端口，然后启动应用</span></span><br><span class="line">    engine.Run(<span class="string">&quot;:9205&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 根请求处理函数</span></span><br><span class="line"><span class="comment">* 所有本次请求相关的方法都在 context 中，完美</span></span><br><span class="line"><span class="comment">* 输出响应 hello, world</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">WebRoot</span><span class="params">(context *gin.Context)</span></span> &#123;</span><br><span class="line">    context.String(http.StatusOK, <span class="string">&quot;hello, world&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>基础组件构建的http服务</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">    <span class="string">&quot;net/http&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">handler</span> <span class="params">(writer http.ResponseWriter, request *http.Request)</span></span>&#123;</span><br><span class="line">    fmt.Fprintf(writer, <span class="string">&quot;hello %s&quot;</span>, request.URL.Path[<span class="number">1</span>:])</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    http.HandleFunc(<span class="string">&quot;/&quot;</span>, handler)</span><br><span class="line">    http.ListenAndServe(<span class="string">&quot;:8080&quot;</span>, <span class="literal">nil</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Route"><a href="#Route" class="headerlink" title="Route"></a>Route</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;github.com/gin-gonic/gin&quot;</span></span><br><span class="line">	<span class="string">&quot;net/http&quot;</span></span><br><span class="line">)</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	router := gin.Default()</span><br><span class="line">	router.GET(<span class="string">&quot;/someGet&quot;</span>,getting)</span><br><span class="line">	<span class="comment">//router.POST(&quot;/somePost&quot;, posting)</span></span><br><span class="line">	<span class="comment">//router.PUT(&quot;/somePut&quot;, putting)</span></span><br><span class="line">	<span class="comment">//router.DELETE(&quot;/someDelete&quot;, deleting)</span></span><br><span class="line">	<span class="comment">//router.PATCH(&quot;/somePatch&quot;, patching)</span></span><br><span class="line">	<span class="comment">//router.HEAD(&quot;/someHead&quot;, head)</span></span><br><span class="line">	<span class="comment">//router.OPTIONS(&quot;/someOptions&quot;, options)</span></span><br><span class="line">	router.Run()</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">getting</span><span class="params">(context *gin.Context)</span></span>&#123;</span><br><span class="line">	context.String(http.StatusOK, <span class="string">&quot;getting&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="解析路径参数"><a href="#解析路径参数" class="headerlink" title="解析路径参数"></a>解析路径参数</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 注册一个动态路由</span></span><br><span class="line"><span class="comment">// 可以匹配 /user/joy</span></span><br><span class="line"><span class="comment">// 不能匹配 /user 和 /user/</span></span><br><span class="line">router.GET(<span class="string">&quot;/user/:name&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">  <span class="comment">// 使用 c.Param(key) 获取 url 参数</span></span><br><span class="line">  name := c.Param(<span class="string">&quot;name&quot;</span>)</span><br><span class="line">  c.String(http.StatusOK, <span class="string">&quot;Hello %s&quot;</span>, name)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注册一个高级的动态路由</span></span><br><span class="line"><span class="comment">// 该路由会匹配 /user/john/ 和 /user/john/send</span></span><br><span class="line"><span class="comment">// 如果没有任何路由匹配到 /user/john, 那么他就会重定向到 /user/john/，从而被该方法匹配到</span></span><br><span class="line">router.GET(<span class="string">&quot;/user/:name/*action&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">  name := c.Param(<span class="string">&quot;name&quot;</span>)</span><br><span class="line">  action := c.Param(<span class="string">&quot;action&quot;</span>)</span><br><span class="line">  message := name + <span class="string">&quot; is &quot;</span> + action</span><br><span class="line">  c.String(http.StatusOK, message)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="获取Query参数"><a href="#获取Query参数" class="headerlink" title="获取Query参数"></a>获取Query参数</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> User <span class="keyword">struct</span>&#123;</span><br><span class="line">	Name <span class="type">string</span> <span class="string">`form:&quot;name&quot;`</span></span><br><span class="line">	role <span class="type">string</span> <span class="string">`form:&quot;role&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 匹配users?name=xxx&amp;role=xxx，role可选</span></span><br><span class="line">r.GET(<span class="string">&quot;/users&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">    name := c.Query(<span class="string">&quot;name&quot;</span>)</span><br><span class="line">    role := c.DefaultQuery(<span class="string">&quot;role&quot;</span>, <span class="string">&quot;teacher&quot;</span>)</span><br><span class="line">		<span class="keyword">var</span> user User</span><br><span class="line">		err:=ctx.ShouldBindQuery(&amp;user)</span><br><span class="line">		<span class="keyword">if</span>  err== <span class="literal">nil</span>&#123;</span><br><span class="line">      fmt.Println(<span class="string">&quot;user&quot;</span>, user)</span><br><span class="line">    &#125;</span><br><span class="line">  	c.String(http.StatusOK, <span class="string">&quot;%s is a %s&quot;</span>, name, role)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="获取Post参数"><a href="#获取Post参数" class="headerlink" title="获取Post参数"></a>获取Post参数</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> User <span class="keyword">struct</span>&#123;</span><br><span class="line">	Name <span class="type">string</span> <span class="string">`form:&quot;name&quot;`</span></span><br><span class="line">	Pwd <span class="type">int</span> <span class="string">`form:&quot;password&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// POST</span></span><br><span class="line">r.POST(<span class="string">&quot;/form&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">    username := c.PostForm(<span class="string">&quot;username&quot;</span>)</span><br><span class="line">    password := c.DefaultPostForm(<span class="string">&quot;password&quot;</span>, <span class="string">&quot;000000&quot;</span>) <span class="comment">// 可设置默认值</span></span><br><span class="line">		<span class="keyword">var</span> user User</span><br><span class="line">    err:=ctx.ShouldBind(&amp;user)</span><br><span class="line">    <span class="keyword">if</span>  err== <span class="literal">nil</span>&#123;</span><br><span class="line">      fmt.Println(<span class="string">&quot;user&quot;</span>, user) </span><br><span class="line">    &#125;</span><br><span class="line">    c.JSON(http.StatusOK, gin.H&#123;</span><br><span class="line">        <span class="string">&quot;username&quot;</span>: username,</span><br><span class="line">        <span class="string">&quot;password&quot;</span>: password,</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Map参数（字典参数）"><a href="#Map参数（字典参数）" class="headerlink" title="Map参数（字典参数）"></a>Map参数（字典参数）</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">r.POST(<span class="string">&quot;/post&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">    ids := c.QueryMap(<span class="string">&quot;ids&quot;</span>)</span><br><span class="line">    names := c.PostFormMap(<span class="string">&quot;names&quot;</span>)</span><br><span class="line"></span><br><span class="line">    c.JSON(http.StatusOK, gin.H&#123;</span><br><span class="line">        <span class="string">&quot;ids&quot;</span>:   ids,</span><br><span class="line">        <span class="string">&quot;names&quot;</span>: names,</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -g &quot;http://localhost:9999/post?ids[Jack]=001&amp;ids[Tom]=002&quot; -X POST -d &#x27;names[a]=Sam&amp;names[b]=David&#x27;</span><br><span class="line">&#123;&quot;ids&quot;:&#123;&quot;Jack&quot;:&quot;001&quot;,&quot;Tom&quot;:&quot;002&quot;&#125;,&quot;names&quot;:&#123;&quot;a&quot;:&quot;Sam&quot;,&quot;b&quot;:&quot;David&quot;\&#125;\&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="分组路由-Grouping-Routes"><a href="#分组路由-Grouping-Routes" class="headerlink" title="分组路由(Grouping Routes)"></a>分组路由(Grouping Routes)</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// group routes 分组路由</span></span><br><span class="line">defaultHandler := <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">    c.JSON(http.StatusOK, gin.H&#123;</span><br><span class="line">        <span class="string">&quot;path&quot;</span>: c.FullPath(),</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// group: v1</span></span><br><span class="line">v1 := r.Group(<span class="string">&quot;/v1&quot;</span>)</span><br><span class="line">&#123;</span><br><span class="line">    v1.GET(<span class="string">&quot;/posts&quot;</span>, defaultHandler)</span><br><span class="line">    v1.GET(<span class="string">&quot;/series&quot;</span>, defaultHandler)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// group: v2</span></span><br><span class="line">v2 := r.Group(<span class="string">&quot;/v2&quot;</span>)</span><br><span class="line">&#123;</span><br><span class="line">    v2.GET(<span class="string">&quot;/posts&quot;</span>, defaultHandler)</span><br><span class="line">    v2.GET(<span class="string">&quot;/series&quot;</span>, defaultHandler)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="重定向"><a href="#重定向" class="headerlink" title="重定向"></a>重定向</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">r.GET(<span class="string">&quot;/redirect&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">    c.Redirect(http.StatusMovedPermanently, <span class="string">&quot;/index&quot;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">r.GET(<span class="string">&quot;/goindex&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">    c.Request.URL.Path = <span class="string">&quot;/&quot;</span></span><br><span class="line">    r.HandleContext(c)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="上传文件"><a href="#上传文件" class="headerlink" title="上传文件"></a>上传文件</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">r.POST(<span class="string">&quot;/upload1&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">    file, _ := c.FormFile(<span class="string">&quot;file&quot;</span>)</span><br><span class="line">    <span class="comment">// c.SaveUploadedFile(file, dst)</span></span><br><span class="line">    c.String(http.StatusOK, <span class="string">&quot;%s uploaded!&quot;</span>, file.Filename)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -X POST http://localhost:8080/upload \</span><br><span class="line">  -F &quot;file=@/Users/appleboy/test.zip&quot; \</span><br><span class="line">  -H &quot;Content-Type: multipart/form-data&quot;</span><br></pre></td></tr></table></figure>
+
+<h4 id="多个文件"><a href="#多个文件" class="headerlink" title="多个文件"></a>多个文件</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">r.POST(<span class="string">&quot;/upload2&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">    <span class="comment">// Multipart form</span></span><br><span class="line">    form, _ := c.MultipartForm()</span><br><span class="line">    files := form.File[<span class="string">&quot;upload[]&quot;</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> _, file := <span class="keyword">range</span> files &#123;</span><br><span class="line">        log.Println(file.Filename)</span><br><span class="line">        <span class="comment">// c.SaveUploadedFile(file, dst)</span></span><br><span class="line">    &#125;</span><br><span class="line">    c.String(http.StatusOK, <span class="string">&quot;%d files uploaded!&quot;</span>, <span class="built_in">len</span>(files))</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">curl -X POST http://localhost:8080/upload \</span><br><span class="line">  -F &quot;upload[]=@/Users/appleboy/test1.zip&quot; \</span><br><span class="line">  -F &quot;upload[]=@/Users/appleboy/test2.zip&quot; \</span><br><span class="line">  -H &quot;Content-Type: multipart/form-data&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="中间件"><a href="#中间件" class="headerlink" title="中间件"></a>中间件</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;github.com/gin-gonic/gin&quot;</span></span><br><span class="line">	<span class="string">&quot;log&quot;</span></span><br><span class="line">	<span class="comment">//&quot;net/http&quot;</span></span><br><span class="line">)</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	router := gin.Default()</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 注册一个路由，使用了 middleware1，middleware2 两个中间件</span></span><br><span class="line">	router.GET(<span class="string">&quot;/someGet&quot;</span>, middleware1, middleware2, handler)</span><br><span class="line">  <span class="comment">// 路由组使用中间件</span></span><br><span class="line">	v1 := router.Group(<span class="string">&quot;/v1&quot;</span>,middleware1)</span><br><span class="line">	&#123;</span><br><span class="line">		v1.GET(<span class="string">&quot;/home&quot;</span>,handler)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 默认绑定 :8080</span></span><br><span class="line">	router.Run()</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">middleware1</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">	log.Println(<span class="string">&quot;exec middleware1&quot;</span>)</span><br><span class="line"></span><br><span class="line">	<span class="comment">//你可以写一些逻辑代码</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 执行该中间件之后的逻辑</span></span><br><span class="line">	c.Next()</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">middleware2</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">	log.Println(<span class="string">&quot;arrive at middleware2&quot;</span>)</span><br><span class="line">	<span class="comment">// 执行该中间件之前，先跳到流程的下一个方法</span></span><br><span class="line">	c.Next()</span><br><span class="line">	<span class="comment">// 流程中的其他逻辑已经执行完了</span></span><br><span class="line">	log.Println(<span class="string">&quot;exec middleware2&quot;</span>)</span><br><span class="line"></span><br><span class="line">	<span class="comment">//你可以写一些逻辑代码</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">handler</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">	log.Println(<span class="string">&quot;exec handler&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Logger</span><span class="params">()</span></span> gin.HandlerFunc &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">        t := time.Now()</span><br><span class="line">        <span class="comment">// 给Context实例设置一个值</span></span><br><span class="line">        c.Set(<span class="string">&quot;geektutu&quot;</span>, <span class="string">&quot;1111&quot;</span>)</span><br><span class="line">        <span class="comment">// 请求前</span></span><br><span class="line">        c.Next()</span><br><span class="line">        <span class="comment">// 请求后</span></span><br><span class="line">        latency := time.Since(t)</span><br><span class="line">        log.Print(latency)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="热加载"><a href="#热加载" class="headerlink" title="热加载"></a>热加载</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">go get -v -u github.com/pilu/fresh</span><br><span class="line">fresh</span><br></pre></td></tr></table></figure>
+
+<h2 id="日志文件"><a href="#日志文件" class="headerlink" title="日志文件"></a>日志文件</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="comment">// Disable Console Color, you don&#x27;t need console color when writing the logs to file.</span></span><br><span class="line">    gin.DisableConsoleColor()</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Logging to a file.</span></span><br><span class="line">    f, _ := os.Create(<span class="string">&quot;gin.log&quot;</span>)</span><br><span class="line">    gin.DefaultWriter = io.MultiWriter(f)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Use the following code if you need to write the logs to file and console at the same time.</span></span><br><span class="line">    <span class="comment">// gin.DefaultWriter = io.MultiWriter(f, os.Stdout)</span></span><br><span class="line"></span><br><span class="line">    router := gin.Default()</span><br><span class="line">    router.GET(<span class="string">&quot;/ping&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">        c.String(<span class="number">200</span>, <span class="string">&quot;pong&quot;</span>)</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    router.Run(<span class="string">&quot;:8080&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="日志格式化"><a href="#日志格式化" class="headerlink" title="日志格式化"></a>日志格式化</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    router := gin.New()</span><br><span class="line"></span><br><span class="line">    <span class="comment">// LoggerWithFormatter middleware will write the logs to gin.DefaultWriter</span></span><br><span class="line">    <span class="comment">// By default gin.DefaultWriter = os.Stdout</span></span><br><span class="line">    router.Use(gin.LoggerWithFormatter(<span class="function"><span class="keyword">func</span><span class="params">(param gin.LogFormatterParams)</span></span> <span class="type">string</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// your custom format</span></span><br><span class="line">        <span class="keyword">return</span> fmt.Sprintf(<span class="string">&quot;%s - [%s] \&quot;%s %s %s %d %s \&quot;%s\&quot; %s\&quot;\n&quot;</span>,</span><br><span class="line">                param.ClientIP,</span><br><span class="line">                param.TimeStamp.Format(time.RFC1123),</span><br><span class="line">                param.Method,</span><br><span class="line">                param.Path,</span><br><span class="line">                param.Request.Proto,</span><br><span class="line">                param.StatusCode,</span><br><span class="line">                param.Latency,</span><br><span class="line">                param.Request.UserAgent(),</span><br><span class="line">                param.ErrorMessage,</span><br><span class="line">        )</span><br><span class="line">    &#125;))</span><br><span class="line">    router.Use(gin.Recovery())</span><br><span class="line"></span><br><span class="line">    router.GET(<span class="string">&quot;/ping&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">        c.String(<span class="number">200</span>, <span class="string">&quot;pong&quot;</span>)</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    router.Run(<span class="string">&quot;:8080&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="自定义验证器"><a href="#自定义验证器" class="headerlink" title="自定义验证器"></a>自定义验证器</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;net/http&quot;</span></span><br><span class="line">    <span class="string">&quot;time&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="string">&quot;github.com/gin-gonic/gin&quot;</span></span><br><span class="line">    <span class="string">&quot;github.com/gin-gonic/gin/binding&quot;</span></span><br><span class="line">    <span class="string">&quot;github.com/go-playground/validator/v10&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Booking contains binded and validated data.</span></span><br><span class="line"><span class="keyword">type</span> Booking <span class="keyword">struct</span> &#123;</span><br><span class="line">    CheckIn  time.Time <span class="string">`form:&quot;check_in&quot; binding:&quot;required,bookabledate&quot; time_format:&quot;2006-01-02&quot;`</span></span><br><span class="line">    CheckOut time.Time <span class="string">`form:&quot;check_out&quot; binding:&quot;required,gtfield=CheckIn&quot; time_format:&quot;2006-01-02&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> bookableDate validator.Func = <span class="function"><span class="keyword">func</span><span class="params">(fl validator.FieldLevel)</span></span> <span class="type">bool</span> &#123;</span><br><span class="line">    date, ok := fl.Field().Interface().(time.Time)</span><br><span class="line">    <span class="keyword">if</span> ok &#123;</span><br><span class="line">        today := time.Now()</span><br><span class="line">        <span class="keyword">if</span> today.After(date) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    route := gin.Default()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> v, ok := binding.Validator.Engine().(*validator.Validate); ok &#123;</span><br><span class="line">        v.RegisterValidation(<span class="string">&quot;bookabledate&quot;</span>, bookableDate)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    route.GET(<span class="string">&quot;/bookable&quot;</span>, getBookable)</span><br><span class="line">    route.Run(<span class="string">&quot;:8085&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">getBookable</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> b Booking</span><br><span class="line">    <span class="keyword">if</span> err := c.ShouldBindWith(&amp;b, binding.Query); err == <span class="literal">nil</span> &#123;</span><br><span class="line">        c.JSON(http.StatusOK, gin.H&#123;<span class="string">&quot;message&quot;</span>: <span class="string">&quot;Booking dates are valid!&quot;</span>&#125;)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        c.JSON(http.StatusBadRequest, gin.H&#123;<span class="string">&quot;error&quot;</span>: err.Error()&#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ curl &quot;localhost:8085/bookable?check_in=2030-04-16&amp;check_out=2030-04-17&quot;</span><br><span class="line">&#123;&quot;message&quot;:&quot;Booking dates are valid!&quot;&#125;</span><br><span class="line"></span><br><span class="line">$ curl &quot;localhost:8085/bookable?check_in=2030-03-10&amp;check_out=2030-03-09&quot;</span><br><span class="line">&#123;&quot;error&quot;:&quot;Key: &#x27;Booking.CheckOut&#x27; Error:Field validation for &#x27;CheckOut&#x27; failed on the &#x27;gtfield&#x27; tag&quot;&#125;</span><br><span class="line"></span><br><span class="line">$ curl &quot;localhost:8085/bookable?check_in=2000-03-09&amp;check_out=2000-03-10&quot;</span><br><span class="line">&#123;&quot;error&quot;:&quot;Key: &#x27;Booking.CheckIn&#x27; Error:Field validation for &#x27;CheckIn&#x27; failed on the &#x27;bookabledate&#x27; tag&quot;&#125;%    </span><br></pre></td></tr></table></figure>
+
+<h3 id="仅绑定查询字段"><a href="#仅绑定查询字段" class="headerlink" title="仅绑定查询字段"></a>仅绑定查询字段</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;log&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="string">&quot;github.com/gin-gonic/gin&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Person <span class="keyword">struct</span> &#123;</span><br><span class="line">    Name    <span class="type">string</span> <span class="string">`form:&quot;name&quot;`</span></span><br><span class="line">    Address <span class="type">string</span> <span class="string">`form:&quot;address&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    route := gin.Default()</span><br><span class="line">    route.Any(<span class="string">&quot;/testing&quot;</span>, startPage)</span><br><span class="line">    route.Run(<span class="string">&quot;:8085&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">startPage</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> person Person</span><br><span class="line">    <span class="keyword">if</span> c.ShouldBindQuery(&amp;person) == <span class="literal">nil</span> &#123;</span><br><span class="line">        log.Println(<span class="string">&quot;====== Only Bind By Query String ======&quot;</span>)</span><br><span class="line">        log.Println(person.Name)</span><br><span class="line">        log.Println(person.Address)</span><br><span class="line">    &#125;</span><br><span class="line">    c.String(<span class="number">200</span>, <span class="string">&quot;Success&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="绑定Query和Pose"><a href="#绑定Query和Pose" class="headerlink" title="绑定Query和Pose"></a>绑定Query和Pose</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;log&quot;</span></span><br><span class="line">    <span class="string">&quot;time&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="string">&quot;github.com/gin-gonic/gin&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Person <span class="keyword">struct</span> &#123;</span><br><span class="line">        Name       <span class="type">string</span>    <span class="string">`form:&quot;name&quot;`</span></span><br><span class="line">        Address    <span class="type">string</span>    <span class="string">`form:&quot;address&quot;`</span></span><br><span class="line">        Birthday   time.Time <span class="string">`form:&quot;birthday&quot; time_format:&quot;2006-01-02&quot; time_utc:&quot;1&quot;`</span></span><br><span class="line">        CreateTime time.Time <span class="string">`form:&quot;createTime&quot; time_format:&quot;unixNano&quot;`</span></span><br><span class="line">        UnixTime   time.Time <span class="string">`form:&quot;unixTime&quot; time_format:&quot;unix&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    route := gin.Default()</span><br><span class="line">    route.GET(<span class="string">&quot;/testing&quot;</span>, startPage)</span><br><span class="line">    route.Run(<span class="string">&quot;:8085&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">startPage</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> person Person</span><br><span class="line">    <span class="comment">// If `GET`, only `Form` binding engine (`query`) used.</span></span><br><span class="line">    <span class="comment">// If `POST`, first checks the `content-type` for `JSON` or `XML`, then uses `Form` (`form-data`).</span></span><br><span class="line">    <span class="comment">// See more at https://github.com/gin-gonic/gin/blob/master/binding/binding.go#L48</span></span><br><span class="line">        <span class="keyword">if</span> c.ShouldBind(&amp;person) == <span class="literal">nil</span> &#123;</span><br><span class="line">                log.Println(person.Name)</span><br><span class="line">                log.Println(person.Address)</span><br><span class="line">                log.Println(person.Birthday)</span><br><span class="line">                log.Println(person.CreateTime)</span><br><span class="line">                log.Println(person.UnixTime)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    c.String(<span class="number">200</span>, <span class="string">&quot;Success&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X GET &quot;localhost:8085/testing?name=appleboy&amp;address=xyz&amp;birthday=1992-03-15&amp;createTime=1562400033000000123&amp;unixTime=1562400033&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="绑定Uri"><a href="#绑定Uri" class="headerlink" title="绑定Uri"></a>绑定Uri</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;github.com/gin-gonic/gin&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Person <span class="keyword">struct</span> &#123;</span><br><span class="line">    ID <span class="type">string</span> <span class="string">`uri:&quot;id&quot; binding:&quot;required,uuid&quot;`</span></span><br><span class="line">    Name <span class="type">string</span> <span class="string">`uri:&quot;name&quot; binding:&quot;required&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    route := gin.Default()</span><br><span class="line">    route.GET(<span class="string">&quot;/:name/:id&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">        <span class="keyword">var</span> person Person</span><br><span class="line">        <span class="keyword">if</span> err := c.ShouldBindUri(&amp;person); err != <span class="literal">nil</span> &#123;</span><br><span class="line">            c.JSON(<span class="number">400</span>, gin.H&#123;<span class="string">&quot;msg&quot;</span>: err&#125;)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line">        c.JSON(<span class="number">200</span>, gin.H&#123;<span class="string">&quot;name&quot;</span>: person.Name, <span class="string">&quot;uuid&quot;</span>: person.ID&#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">    route.Run(<span class="string">&quot;:8088&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -v localhost:8088/thinkerou/987fbc97-4bed-5078-9f07-9141ba07c9f3</span><br><span class="line">$ curl -v localhost:8088/thinkerou/not-uuid</span><br></pre></td></tr></table></figure>
+
+<h2 id="静态文件"><a href="#静态文件" class="headerlink" title="静态文件"></a>静态文件</h2><h3 id="Html模板-Template"><a href="#Html模板-Template" class="headerlink" title="Html模板(Template)"></a>Html模板(Template)</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> student <span class="keyword">struct</span> &#123;</span><br><span class="line">    Name <span class="type">string</span></span><br><span class="line">    Age  <span class="type">int8</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">r.LoadHTMLGlob(<span class="string">&quot;templates/*&quot;</span>)</span><br><span class="line"><span class="comment">// r.LoadHTMLGlob(&quot;templates/**/*&quot;) // 解析目录下的目录 </span></span><br><span class="line"><span class="comment">// 设置template使用的方法</span></span><br><span class="line">r.SetFuncMap(template.FuncMap&#123;</span><br><span class="line">	<span class="string">&quot;isStart&quot;</span>:     isStart,</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">isStart</span><span class="params">(index <span class="type">int</span>)</span></span> <span class="type">bool</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> index == <span class="number">0</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">stu1 := &amp;student&#123;Name: <span class="string">&quot;Geektutu&quot;</span>, Age: <span class="number">20</span>&#125;</span><br><span class="line">stu2 := &amp;student&#123;Name: <span class="string">&quot;Jack&quot;</span>, Age: <span class="number">22</span>&#125;</span><br><span class="line">r.GET(<span class="string">&quot;/arr&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">    c.HTML(http.StatusOK, <span class="string">&quot;arr.tmpl&quot;</span>, gin.H&#123;</span><br><span class="line">        <span class="string">&quot;title&quot;</span>:  <span class="string">&quot;Gin&quot;</span>,</span><br><span class="line">        <span class="string">&quot;stuArr&quot;</span>: [<span class="number">2</span>]*student&#123;stu1, stu2&#125;,</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- templates/arr.tmpl --&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;p&gt;hello, \&#123;\&#123;.title\&#125;\&#125;&lt;/p&gt;</span><br><span class="line">    \&#123;\&#123;range $index, $ele := .stuArr \&#125;\&#125;</span><br><span class="line">    &lt;p&gt;\&#123;\&#123; $index \&#125;\&#125;: \&#123;\&#123; $ele.Name \&#125;\&#125; is \&#123;\&#123; $ele.Age \&#125;\&#125; years old&lt;/p&gt;</span><br><span class="line">    \&#123;\&#123; end \&#125;\&#125;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>Gin默认支持使用模板Go语言标准的模板<code>text/template</code>和<code>html/template</code></p>
+<h3 id="静态文件代理"><a href="#静态文件代理" class="headerlink" title="静态文件代理"></a>静态文件代理</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    router := gin.Default()</span><br><span class="line">    router.Static(<span class="string">&quot;/assets&quot;</span>, <span class="string">&quot;./assets&quot;</span>)</span><br><span class="line">    router.StaticFS(<span class="string">&quot;/more_static&quot;</span>, http.Dir(<span class="string">&quot;my_file_system&quot;</span>))</span><br><span class="line">    router.StaticFile(<span class="string">&quot;/favicon.ico&quot;</span>, <span class="string">&quot;./resources/favicon.ico&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Listen and serve on 0.0.0.0:8080</span></span><br><span class="line">    router.Run(<span class="string">&quot;:8080&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    router := gin.Default()</span><br><span class="line"></span><br><span class="line">    router.GET(<span class="string">&quot;/local/file&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">        c.File(<span class="string">&quot;local/file.go&quot;</span>)</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> fs http.FileSystem = <span class="comment">// ...</span></span><br><span class="line">    router.GET(<span class="string">&quot;/fs/file&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">        c.FileFromFS(<span class="string">&quot;fs/file.go&quot;</span>, fs)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="下载文件"><a href="#下载文件" class="headerlink" title="下载文件"></a>下载文件</h3><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    router := gin.Default()</span><br><span class="line">    router.GET(<span class="string">&quot;/dataFromReader&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">        response, err := http.Get(<span class="string">&quot;https://raw.githubusercontent.com/gin-gonic/logo/master/color.png&quot;</span>)</span><br><span class="line">        <span class="keyword">if</span> err != <span class="literal">nil</span> || response.StatusCode != http.StatusOK &#123;</span><br><span class="line">            c.Status(http.StatusServiceUnavailable)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line">    </span><br><span class="line">        reader := response.Body</span><br><span class="line">        contentLength := response.ContentLength</span><br><span class="line">        contentType := response.Header.Get(<span class="string">&quot;Content-Type&quot;</span>)</span><br><span class="line">    </span><br><span class="line">        extraHeaders := <span class="keyword">map</span>[<span class="type">string</span>]<span class="type">string</span>&#123;</span><br><span class="line">            <span class="string">&quot;Content-Disposition&quot;</span>: <span class="string">`attachment; filename=&quot;gopher.png&quot;`</span>,</span><br><span class="line">        &#125;</span><br><span class="line">    </span><br><span class="line">        c.DataFromReader(http.StatusOK, contentLength, contentType, reader, extraHeaders)</span><br><span class="line">    &#125;)</span><br><span class="line">    router.Run(<span class="string">&quot;:8088&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://blog.ifan.host/2022/06/03/language/golang/libs/gin/" title="GoLang gin web组件" target="_blank" rel="external">https://blog.ifan.host/2022/06/03/language/golang/libs/gin/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/Mr-iFan" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/Mr-iFan" target="_blank"><span class="text-dark">iFan</span><small class="ml-1x">在路上啊</small></a></h3>
+        <div>个人简介。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2022/06/03/language/golang/libs/cobra/" title="GoLang Cobra 命令行解析组件"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2022/06/03/language/golang/libs/logrus/" title="GoLang logrus 日志组件"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.jpg" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Mr-iFan" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+<!-- custom analytics part create by xiamo -->
+<script defer src="https://cdn1.lncld.net/static/js/av-min-1.2.1.js"></script>
+<script defer>
+AV.init({
+  appId: 'NWrHqpVOYyEWPWucCx1ItMHb-gzGzoHsz',
+  appKey: '7WN72ODWriRqLktj8J6ehXBF'
+});
+
+function showTime(Counter) {
+	var query = new AV.Query(Counter);
+		var visitors= $('.leancloud_visitors');
+		query.greaterThanOrEqualTo("time", 0);		
+		query.find({
+			success: function(results) {
+				if (results.length == 0) {				
+					return;
+				}
+				var data = results;
+				visitors.each(function(){
+					var url = $(this).attr('id').trim();					
+					for (var i = 0; i < data.length; i++) {
+						var object = data[i];
+						var content = object.get('time');
+						var _url = object.get('url')
+						if(url == _url){
+							$(this).text(content);
+						}
+					}
+				})
+				
+			},
+			error: function(object, error) {
+				console.log("Error: " + error.code + " " + error.message);
+			}
+		});
+}
+
+function addCount(Counter) {
+	var Counter = AV.Object.extend("Counter");
+	url = $(".leancloud_visitors").attr('id').trim();
+	title = $(".leancloud_visitors").attr('data-flag-title').trim();
+	var query = new AV.Query(Counter);
+	query.equalTo("url", url);
+	query.find({
+		success: function(results) {
+			if (results.length > 0) {
+				var counter = results[0];
+				counter.fetchWhenSave(true);
+				counter.increment("time");
+				counter.save(null, {
+					success: function(counter) {
+						var content = counter.get('time');
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(counter, error) {
+						console.log('Failed to save Visitor num, with error message: ' + error.message);
+					}
+				});
+			} else {
+				var newcounter = new Counter();
+				newcounter.set("title", title);
+				newcounter.set("url", url);
+				newcounter.set("time", 1);
+				newcounter.save(null, {
+					success: function(newcounter) {
+					    console.log("newcounter.get('time')="+newcounter.get('time'));
+						var content = newcounter.get('time');
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(newcounter, error) {
+						console.log('Failed to create');
+					}
+				});
+			}
+		},
+		error: function(error) {
+			console.log('Error:' + error.code + " " + error.message);
+		}
+	});
+}
+$(function() {
+	var Counter = AV.Object.extend("Counter");
+	if ($('.leancloud_visitors').length == 1) {
+		addCount(Counter);
+	} else {
+		showTime(Counter);
+	}
+}); 
+</script>
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Redis 命令索引 | iFan</title>
+  <meta name="description" content="命令索引String   命令 描述 时间复杂度    APPEND key value 追加一个值到key上 O(1)   BITCOUNT key [start end] 统计字符串指定起始位置的字节数 O(N)   BITFIELD key [GET type offset] [SET type offset value] [INCRBY type offset increment] [OV">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis 命令索引">
+<meta property="og:url" content="https://blog.ifan.host/2022/06/03/database/redis/cmd/index.html">
+<meta property="og:site_name" content="iFan">
+<meta property="og:description" content="命令索引String   命令 描述 时间复杂度    APPEND key value 追加一个值到key上 O(1)   BITCOUNT key [start end] 统计字符串指定起始位置的字节数 O(N)   BITFIELD key [GET type offset] [SET type offset value] [INCRBY type offset increment] [OV">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-06-03T08:00:00.000Z">
+<meta property="article:modified_time" content="2022-08-08T10:24:39.518Z">
+<meta property="article:author" content="iFan">
+<meta property="article:tag" content="数据库">
+<meta property="article:tag" content="Redis">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://blog.ifan.host/2022/06/03/database/redis/cmd/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="iFan" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/Mr-iFan" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">iFan</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">在路上啊</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> 北京</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Mr-iFan" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>啥也不是</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/MyBatis/">MyBatis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/Spring-Boot/">Spring Boot</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Centos/">Centos</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Debian/">Debian</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/service/">service</a><span class="category-list-count">4</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Lua/">Lua</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Minio/">Minio</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NodeJS/">NodeJS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/NodeJS/nvm/">nvm</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Jupyter/">Jupyter</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/jupyterlab/">jupyterlab</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/pyenv/">pyenv</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Scala/">Scala</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/WEB/">WEB</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/WEB/HTTP/">HTTP</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/WEB/Nginx/">Nginx</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/WEB/%E5%8E%8B%E6%B5%8B/">压测</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/boto3/">boto3</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/boto3/%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8/">文件存储</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/golang/">golang</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a><span class="category-list-count">10</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/Git/">Git</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/ffmpeg/">ffmpeg</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/proxy/">proxy</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/proxy/%E7%88%AC%E8%99%AB/">爬虫</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/vim/">vim</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/%E7%BC%96%E7%A8%8B%E5%B7%A5%E5%85%B7/">编程工具</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><span class="category-list-count">39</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/ElasticSearch/">ElasticSearch</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/MongoDB/">MongoDB</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/">MySQL</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/Redis/">Redis</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/Sqlite/">Sqlite</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/%E5%A4%A7%E6%95%B0%E6%8D%AE/HBase/">HBase</a><span class="category-list-count">3</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/lxml/">lxml</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/mitmproxy/">mitmproxy</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/puppeteer/">puppeteer</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/pyppeteer/">pyppeteer</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/xpath/">xpath</a><span class="category-list-count">1</span></li></ul></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Centos/" rel="tag">Centos</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Debian/" rel="tag">Debian</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ElasticSearch/" rel="tag">ElasticSearch</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/" rel="tag">Git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HBase/" rel="tag">HBase</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jupyter/" rel="tag">Jupyter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lua/" rel="tag">Lua</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Minio/" rel="tag">Minio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB/" rel="tag">MongoDB</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MyBatis/" rel="tag">MyBatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NodeJS/" rel="tag">NodeJS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scala/" rel="tag">Scala</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Boot/" rel="tag">Spring Boot</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sqlite/" rel="tag">Sqlite</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB/" rel="tag">WEB</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Wrk/" rel="tag">Wrk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/boto3/" rel="tag">boto3</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/" rel="tag">ffmpeg</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang/" rel="tag">golang</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jupyterlab/" rel="tag">jupyterlab</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lxml/" rel="tag">lxml</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mitmproxy/" rel="tag">mitmproxy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nvm/" rel="tag">nvm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/proxy/" rel="tag">proxy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/puppeteer/" rel="tag">puppeteer</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pyenv/" rel="tag">pyenv</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pyppeteer/" rel="tag">pyppeteer</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/service/" rel="tag">service</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tesseract/" rel="tag">tesseract</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/" rel="tag">vim</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xpath/" rel="tag">xpath</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="tag">基础知识</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" rel="tag">大数据</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">39</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8/" rel="tag">文件存储</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E7%A8%8B%E5%B7%A5%E5%85%B7/" rel="tag">编程工具</a><span class="tag-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Centos/" style="font-size: 13.33px;">Centos</a> <a href="/tags/Debian/" style="font-size: 13px;">Debian</a> <a href="/tags/ElasticSearch/" style="font-size: 13.78px;">ElasticSearch</a> <a href="/tags/Git/" style="font-size: 13.11px;">Git</a> <a href="/tags/HBase/" style="font-size: 13.22px;">HBase</a> <a href="/tags/HTTP/" style="font-size: 13.78px;">HTTP</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/Jupyter/" style="font-size: 13px;">Jupyter</a> <a href="/tags/Linux/" style="font-size: 13.56px;">Linux</a> <a href="/tags/Lua/" style="font-size: 13.11px;">Lua</a> <a href="/tags/Minio/" style="font-size: 13px;">Minio</a> <a href="/tags/MongoDB/" style="font-size: 13.22px;">MongoDB</a> <a href="/tags/MyBatis/" style="font-size: 13px;">MyBatis</a> <a href="/tags/MySQL/" style="font-size: 13.78px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 13.44px;">Nginx</a> <a href="/tags/NodeJS/" style="font-size: 13px;">NodeJS</a> <a href="/tags/Python/" style="font-size: 13.22px;">Python</a> <a href="/tags/Redis/" style="font-size: 13.67px;">Redis</a> <a href="/tags/Scala/" style="font-size: 13.11px;">Scala</a> <a href="/tags/Spring-Boot/" style="font-size: 13.11px;">Spring Boot</a> <a href="/tags/Sqlite/" style="font-size: 13px;">Sqlite</a> <a href="/tags/WEB/" style="font-size: 13.33px;">WEB</a> <a href="/tags/Wrk/" style="font-size: 13px;">Wrk</a> <a href="/tags/boto3/" style="font-size: 13px;">boto3</a> <a href="/tags/ffmpeg/" style="font-size: 13px;">ffmpeg</a> <a href="/tags/golang/" style="font-size: 13.89px;">golang</a> <a href="/tags/jupyterlab/" style="font-size: 13px;">jupyterlab</a> <a href="/tags/lxml/" style="font-size: 13px;">lxml</a> <a href="/tags/mitmproxy/" style="font-size: 13px;">mitmproxy</a> <a href="/tags/nvm/" style="font-size: 13px;">nvm</a> <a href="/tags/proxy/" style="font-size: 13px;">proxy</a> <a href="/tags/puppeteer/" style="font-size: 13px;">puppeteer</a> <a href="/tags/pyenv/" style="font-size: 13px;">pyenv</a> <a href="/tags/pyppeteer/" style="font-size: 13px;">pyppeteer</a> <a href="/tags/python/" style="font-size: 13px;">python</a> <a href="/tags/service/" style="font-size: 13.33px;">service</a> <a href="/tags/tesseract/" style="font-size: 13px;">tesseract</a> <a href="/tags/vim/" style="font-size: 13.11px;">vim</a> <a href="/tags/xpath/" style="font-size: 13px;">xpath</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" style="font-size: 13px;">基础知识</a> <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" style="font-size: 13.22px;">大数据</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 13.67px;">工具</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 14px;">数据库</a> <a href="/tags/%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8/" style="font-size: 13px;">文件存储</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 13.44px;">爬虫</a> <a href="/tags/%E7%BC%96%E7%A8%8B%E5%B7%A5%E5%85%B7/" style="font-size: 13.22px;">编程工具</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a><span class="archive-list-count">61</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">38</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/%E5%B7%A5%E5%85%B7/proxy/">proxy</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/08/08/tools/proxy/" class="title">nginx正向代理、tinyproxy和goproxy代理</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-08-08T10:24:39.539Z" itemprop="datePublished">2022-08-08</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/08/03/tools/typora/" class="title">Typora 修改源码模式和预览模式的宽度</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-08-03T00:56:00.000Z" itemprop="datePublished">2022-08-03</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/07/10/bigdata/hbase/rank-family/" class="title">大数据 Hbase 列族的配置</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-07-10T06:25:00.000Z" itemprop="datePublished">2022-07-10</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/WEB/">WEB</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/WEB/Nginx/">Nginx</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/07/01/web/nginx/goaccess-nginx-log/" class="title">Nginx 使用 goaccess 分析日志</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-07-01T01:01:00.000Z" itemprop="datePublished">2022-07-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Minio/">Minio</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/07/01/database/minio/minio-nginx-proxy/" class="title">Minio 配置 nginx 代理</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-07-01T01:00:00.000Z" itemprop="datePublished">2022-07-01</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-database/redis/cmd" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Redis 命令索引
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2022/06/03/database/redis/cmd/" class="article-date">
+	  <time datetime="2022-06-03T08:00:00.000Z" itemprop="datePublished">2022-06-03</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>►<a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/Redis/">Redis</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/Redis/" rel="tag">Redis</a>, <a class="article-tag-link-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a>
+  </span>
+
+
+        
+
+	<span class="article-read hidden-xs">
+    	<i class="icon icon-eye-fill" aria-hidden="true"></i>
+    	<span id="/2022/06/03/database/redis/cmd/" class="leancloud_visitors"  data-flag-title="Redis 命令索引">0</span>
+    </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2022/06/03/database/redis/cmd/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 2.5k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 10(分)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h2 id="命令索引"><a href="#命令索引" class="headerlink" title="命令索引"></a>命令索引</h2><h3 id="String"><a href="#String" class="headerlink" title="String"></a>String</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+<th>时间复杂度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>APPEND key value</code></td>
+<td>追加一个值到key上</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td><code>BITCOUNT key [start end]</code></td>
+<td>统计字符串指定起始位置的字节数</td>
+<td>O(N)</td>
+</tr>
+<tr>
+<td><code>BITFIELD key [GET type offset] [SET type offset value] [INCRBY type offset increment] [OVERFLOW WRAP|SAT|FAIL]</code></td>
+<td>位图的操作</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td><code>BITOP operation destkey key [key ...]</code></td>
+<td>对一个或多个保存二进制位的字符串key进行位元操作，将结果保存在destkey</td>
+<td>O(N)</td>
+</tr>
+<tr>
+<td><code>BITPOS key bit [start] [end]</code></td>
+<td>返回字符串中第一个被设置为1或者0的bit位</td>
+<td>O(N)</td>
+</tr>
+<tr>
+<td><code>DECR key</code></td>
+<td>整数原子减1</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td><code>DECRBY key decrement</code></td>
+<td>原子减指定的整数</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td><code>GET key</code></td>
+<td>返回key的value</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td><code>GETBIT key offset</code></td>
+<td>返回位的值存储在关键的字符串值的偏移量。</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td><code>GETRANGE key start end</code></td>
+<td>获取存储在key上的值的一个子字符串</td>
+<td>O(N)</td>
+</tr>
+<tr>
+<td><code>GETSET key value</code></td>
+<td>设置一个key的value，并获取设置前的值</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td><code>INCR key</code></td>
+<td>执行原子加1操作</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td><code>INCRBY key increment</code></td>
+<td>执行原子增加一个整数</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td><code>INCRBYFLOAT key increment</code></td>
+<td>执行原子增加一个浮点数</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td><code>MGET key [key ...]</code></td>
+<td>获得所有key的值</td>
+<td>O(N)</td>
+</tr>
+<tr>
+<td><code>MSET key value [key value ...]</code></td>
+<td>设置多个key value</td>
+<td>O(N)</td>
+</tr>
+<tr>
+<td><code>MSETNX key value [key value ...]</code></td>
+<td>设置多个key value,仅当key存在时</td>
+<td>O(N)</td>
+</tr>
+<tr>
+<td><code>PSETEX key milliseconds value</code></td>
+<td>Set the value and expiration in milliseconds of a key</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td><code>SET key value [EX seconds] [PX milliseconds] [NX|XX]</code></td>
+<td>设置一个key的value值</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td><code>SETBIT key offset value</code></td>
+<td>Sets or clears the bit at offset in the string value stored at key</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td><code>SETEX key seconds value</code></td>
+<td>设置key-value并设置过期时间（单位：秒）</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td><code>SETNX key value</code></td>
+<td>设置的一个关键的价值，只有当该键不存在</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td><code>SETRANGE key offset value</code></td>
+<td>Overwrite part of a string at key starting at the specified offset</td>
+<td>O(M)</td>
+</tr>
+<tr>
+<td><code>STRLEN key</code></td>
+<td>获取指定key值的长度</td>
+<td>O(1)</td>
+</tr>
+</tbody></table>
+<h3 id="List"><a href="#List" class="headerlink" title="List"></a>List</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+<th>时间复杂度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>BLPOP key [key ...] timeout</code></td>
+<td>删除，并获得该列表中的第一元素，或阻塞，直到有一个可用</td>
+<td></td>
+</tr>
+<tr>
+<td><code>BRPOP key [key ...] timeout</code></td>
+<td>删除，并获得该列表中的最后一个元素，或阻塞，直到有一个可用</td>
+<td></td>
+</tr>
+<tr>
+<td><code>BRPOPLPUSH source destination timeout</code></td>
+<td>弹出一个列表的值，将它推到另一个列表，并返回它;或阻塞，直到有一个可用</td>
+<td></td>
+</tr>
+<tr>
+<td><code>LINDEX key index</code></td>
+<td>获取一个元素，通过其索引列表</td>
+<td></td>
+</tr>
+<tr>
+<td><code>LINSERT key BEFORE|AFTER pivot value</code></td>
+<td>在列表中的另一个元素之前或之后插入一个元素</td>
+<td></td>
+</tr>
+<tr>
+<td><code>LLEN key</code></td>
+<td>获得队列(List)的长度</td>
+<td></td>
+</tr>
+<tr>
+<td><code>LPOP key</code></td>
+<td>从队列的左边出队一个元素</td>
+<td></td>
+</tr>
+<tr>
+<td><code>LPUSH key value [value ...]</code></td>
+<td>从队列的左边入队一个或多个元素</td>
+<td></td>
+</tr>
+<tr>
+<td><code>LPUSHX key value</code></td>
+<td>当队列存在时，从队到左边入队一个元素</td>
+<td></td>
+</tr>
+<tr>
+<td><code>LRANGE key start stop</code></td>
+<td>从列表中获取指定返回的元素</td>
+<td></td>
+</tr>
+<tr>
+<td><code>LREM key count value</code></td>
+<td>从列表中删除元素</td>
+<td></td>
+</tr>
+<tr>
+<td><code>LSET key index value</code></td>
+<td>设置队列里面一个元素的值</td>
+<td></td>
+</tr>
+<tr>
+<td><code>LTRIM key start stop</code></td>
+<td>修剪到指定范围内的清单</td>
+<td></td>
+</tr>
+<tr>
+<td><code>RPOP key</code></td>
+<td>从队列的右边出队一个元</td>
+<td></td>
+</tr>
+<tr>
+<td><code>RPOPLPUSH source destination</code></td>
+<td>删除列表中的最后一个元素，将其追加到另一个列表</td>
+<td></td>
+</tr>
+<tr>
+<td><code>RPUSH key value [value ...]</code></td>
+<td>从队列的右边入队一个元素</td>
+<td></td>
+</tr>
+<tr>
+<td><code>RPUSHX key value</code></td>
+<td>从队列的右边入队一个元素，仅队列存在时有效</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+<th>时间复杂度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>HDEL key field [field ...]</code></td>
+<td>删除一个或多个Hash的field</td>
+<td></td>
+</tr>
+<tr>
+<td><code>HEXISTS key field</code></td>
+<td>判断field是否存在于hash中</td>
+<td></td>
+</tr>
+<tr>
+<td><code>HGET key field</code></td>
+<td>获取hash中field的值</td>
+<td></td>
+</tr>
+<tr>
+<td><code>HGETALL key</code></td>
+<td>从hash中读取全部的域和值</td>
+<td></td>
+</tr>
+<tr>
+<td><code>HINCRBY key field increment</code></td>
+<td>将hash中指定域的值增加给定的数字</td>
+<td></td>
+</tr>
+<tr>
+<td><code>HINCRBYFLOAT key field increment</code></td>
+<td>将hash中指定域的值增加给定的浮点数</td>
+<td></td>
+</tr>
+<tr>
+<td><code>HKEYS key</code></td>
+<td>获取hash的所有字段</td>
+<td></td>
+</tr>
+<tr>
+<td><code>HLEN key</code></td>
+<td>获取hash里所有字段的数量</td>
+<td></td>
+</tr>
+<tr>
+<td><code>HMGET key field [field ...]</code></td>
+<td>获取hash里面指定字段的值</td>
+<td></td>
+</tr>
+<tr>
+<td><code>HMSET key field value [field value ...]</code></td>
+<td>设置hash字段值</td>
+<td></td>
+</tr>
+<tr>
+<td><code>HSET key field value</code></td>
+<td>设置hash里面一个字段的值</td>
+<td></td>
+</tr>
+<tr>
+<td><code>HSETNX key field value</code></td>
+<td>设置hash的一个字段，只有当这个字段不存在时有效</td>
+<td></td>
+</tr>
+<tr>
+<td><code>HSTRLEN key field</code></td>
+<td>获取hash里面指定field的长度</td>
+<td></td>
+</tr>
+<tr>
+<td><code>HVALS key</code></td>
+<td>获得hash的所有值</td>
+<td></td>
+</tr>
+<tr>
+<td><code>HSCAN key cursor [MATCH pattern] [COUNT count]</code></td>
+<td>迭代hash里面的元素</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="Sets"><a href="#Sets" class="headerlink" title="Sets"></a>Sets</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+<th>时间复杂度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>SADD key member [member ...]</code></td>
+<td>添加一个或者多个元素到集合里</td>
+<td>O(N)</td>
+</tr>
+<tr>
+<td><code>SCARD key</code></td>
+<td>获取集合里面元素的数量</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td><code>SDIFF key [key ...]</code></td>
+<td>获取队列中不存在的元素</td>
+<td>O(N)</td>
+</tr>
+<tr>
+<td><code>SDIFFSTORE destination key [key1 key2 ...]</code></td>
+<td>取key1和key2的差集，放在key中，如果key中存在元素，则将其覆盖</td>
+<td>O(N)</td>
+</tr>
+<tr>
+<td><code>SINTER key [key ...]</code></td>
+<td>获得两个集合的交集</td>
+<td>O(N*M)</td>
+</tr>
+<tr>
+<td><code>SINTERSTORE destination key [key1 key2 ...]</code></td>
+<td>取key1和key2的交集，放在key中，如果key中存在元素，则将其覆盖</td>
+<td>O(N*M)</td>
+</tr>
+<tr>
+<td><code>SISMEMBER key member</code></td>
+<td>确定一个给定的值是一个集合的成员</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td><code>SMEMBERS key</code></td>
+<td>获取集合里面的所有元素</td>
+<td>O(N)</td>
+</tr>
+<tr>
+<td><code>SMOVE source destination member</code></td>
+<td>移动集合里面的一个元素到另一个集合</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td><code>SPOP key [count]</code></td>
+<td>删除并获取一个集合里面的元素</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td><code>SRANDMEMBER key [count]</code></td>
+<td>从集合里面随机获取一个元素</td>
+<td>O(N)</td>
+</tr>
+<tr>
+<td><code>SREM key member [member ...]</code></td>
+<td>从集合里删除一个或多个元素</td>
+<td>O(N)</td>
+</tr>
+<tr>
+<td><code>SUNION key [key ...]</code></td>
+<td>返回给定的多个集合的并集中的所有成员.</td>
+<td>O(N)</td>
+</tr>
+<tr>
+<td><code>SUNIONSTORE destination key [key ...]</code></td>
+<td>合并set元素，并将结果存入新的set里面</td>
+<td>O(N)</td>
+</tr>
+<tr>
+<td><code>SSCAN key cursor [MATCH pattern] [COUNT count]</code></td>
+<td>迭代set里面的元素</td>
+<td>O(N)</td>
+</tr>
+</tbody></table>
+<h3 id="ZSet"><a href="#ZSet" class="headerlink" title="ZSet"></a>ZSet</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+<th>时间复杂度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>ZADD key [NX|XX] [CH] [INCR] score member [score member ...]</code></td>
+<td>添加到有序set的一个或多个成员，或更新的分数，如果它已经存在</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ZCARD key</code></td>
+<td>获取一个排序的集合中的成员数量</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ZCOUNT key min max</code></td>
+<td>返回分数范围内的成员数量</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ZINCRBY key increment member</code></td>
+<td>增量的一名成员在排序设置的评分</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ZINTERSTORE destination numkeys key [key ...] [WEIGHTS weight [weight ...]] [AGGREGATE SUM|MIN|MAX]</code></td>
+<td>相交多个排序集，导致排序的设置存储在一个新的关键</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ZLEXCOUNT key min max</code></td>
+<td>返回成员之间的成员数量</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ZPOPMAX key [count]</code></td>
+<td>Remove and return members with the highest scores in a sorted set</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ZPOPMIN key [count]</code></td>
+<td>Remove and return members with the lowest scores in a sorted set</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ZRANGE key start stop [WITHSCORES]</code></td>
+<td>根据指定的index返回，返回sorted set的成员列表</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ZRANGEBYLEX key min max [LIMIT offset count]</code></td>
+<td>返回指定成员区间内的成员，按字典正序排列, 分数必须相同。</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ZREVRANGEBYLEX key max min [LIMIT offset count]</code></td>
+<td>返回指定成员区间内的成员，按字典倒序排列, 分数必须相同</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ZRANGEBYSCORE key min max [WITHSCORES] [LIMIT offset count]</code></td>
+<td>返回有序集合中指定分数区间内的成员，分数由低到高排序。</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ZRANK key member</code></td>
+<td>确定在排序集合成员的索引</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ZREM key member [member ...]</code></td>
+<td>从排序的集合中删除一个或多个成员</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ZREMRANGEBYLEX key min max</code></td>
+<td>删除名称按字典由低到高排序成员之间所有成员。</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ZREMRANGEBYRANK key start stop</code></td>
+<td>在排序设置的所有成员在给定的索引中删除</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ZREMRANGEBYSCORE key min max</code></td>
+<td>删除一个排序的设置在给定的分数所有成员</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ZREVRANGE key start stop [WITHSCORES]</code></td>
+<td>在排序的设置返回的成员范围，通过索引，下令从分数高到低</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ZREVRANGEBYSCORE key max min [WITHSCORES] [LIMIT offset count]</code></td>
+<td>返回有序集合中指定分数区间内的成员，分数由高到低排序。</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ZREVRANK key member</code></td>
+<td>确定指数在排序集的成员，下令从分数高到低</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ZSCORE key member</code></td>
+<td>获取成员在排序设置相关的比分</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ZUNIONSTORE destination numkeys key [key ...] [WEIGHTS weight [weight ...]] [AGGREGATE SUM|MIN|MAX]</code></td>
+<td>添加多个排序集和导致排序的设置存储在一个新的关键</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ZSCAN key cursor [MATCH pattern] [COUNT count]</code></td>
+<td>迭代sorted sets里面的元素</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="Geo"><a href="#Geo" class="headerlink" title="Geo"></a>Geo</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+<th>时间复杂度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>geoadd key [ NX | XX] [CH] longitude latitude member [ longitude latitude member ...]</code></td>
+<td>添加地理位置坐标</td>
+<td><code>O(log(N))</code></td>
+</tr>
+<tr>
+<td><code>geopos key member [member ...]</code></td>
+<td>获取地理位置的坐标</td>
+<td><code>O(N)</code></td>
+</tr>
+<tr>
+<td><code>geodist key member1 member2 [ M | KM | FT | MI]</code></td>
+<td>计算两个位置之间的距离</td>
+<td><code>O(log(N))</code></td>
+</tr>
+<tr>
+<td><code>georadius key longitude latitude radius M | KM | FT | MI [WITHCOORD] [WITHDIST] [WITHHASH] [ COUNT count [ANY]] [ ASC | DESC] [STORE key] [STOREDIST key]</code></td>
+<td>根据用户给定的经纬度坐标来获取指定范围内的地理位置集合</td>
+<td><code>O(N+log(M))</code></td>
+</tr>
+<tr>
+<td><code>georadiusbymember key member radius M | KM | FT | MI [WITHCOORD] [WITHDIST] [WITHHASH] [ COUNT count [ANY]] [ ASC | DESC] [STORE key] [STOREDIST key]</code></td>
+<td>根据储存在位置集合里面的某个地点获取指定范围内的地理位置集合</td>
+<td><code>O(N+log(M))</code></td>
+</tr>
+<tr>
+<td><code>geohash key member [member ...]</code></td>
+<td>返回一个或多个位置对象的 <code>geohash</code> 值</td>
+<td><code>O(log(N))</code></td>
+</tr>
+</tbody></table>
+<h2 id="HyperLogLog"><a href="#HyperLogLog" class="headerlink" title="HyperLogLog"></a>HyperLogLog</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+<th>时间复杂度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>PFADD key element [element …]</code></td>
+<td>添加元素到 <code>HyperLogLog</code> 中</td>
+<td><code>O(1)</code></td>
+</tr>
+<tr>
+<td><code>PFCOUNT key [key …]</code></td>
+<td>获取给定键的近似基数，不存在则返回0</td>
+<td><code>O(N)</code></td>
+</tr>
+<tr>
+<td><code>PFMERGE destkey sourcekey [sourcekey …]</code></td>
+<td>合并多个 <code>HyperLogLog</code> 为一个</td>
+<td><code>O(N)</code></td>
+</tr>
+</tbody></table>
+<h2 id="集群命令"><a href="#集群命令" class="headerlink" title="集群命令"></a>集群命令</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+<th>时间复杂度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>cluster info</code></td>
+<td>打印集群的信息</td>
+<td></td>
+</tr>
+<tr>
+<td><code>cluster nodes</code></td>
+<td>列出集群当前已知的所有节点（ node），以及这些节点的相关信息。</td>
+<td></td>
+</tr>
+<tr>
+<td><code>cluster meet &lt;ip&gt; &lt;port&gt;</code></td>
+<td>将 ip 和 port 所指定的节点添加到集群当中，让它成为集群的一份子。</td>
+<td></td>
+</tr>
+<tr>
+<td><code>cluster forget &lt;node_id&gt;</code></td>
+<td>从集群中移除 node_id 指定的节点。</td>
+<td></td>
+</tr>
+<tr>
+<td><code>cluster replicate &lt;node_id&gt;</code></td>
+<td>将当前节点设置为 node_id 指定的节点的从节点。</td>
+<td></td>
+</tr>
+<tr>
+<td><code>cluster saveconfig</code></td>
+<td>将节点的配置文件保存到硬盘里面。</td>
+<td></td>
+</tr>
+<tr>
+<td><code>cluster addslots &lt;slot&gt; [slot ...]</code></td>
+<td>将一个或多个槽（ slot）指派（ assign）给当前节点。</td>
+<td></td>
+</tr>
+<tr>
+<td><code>cluster delslots &lt;slot&gt; [slot ...]</code></td>
+<td>移除一个或多个槽对当前节点的指派。</td>
+<td></td>
+</tr>
+<tr>
+<td><code>cluster flushslots</code></td>
+<td>移除指派给当前节点的所有槽，让当前节点变成一个没有指派任何槽的节点。</td>
+<td></td>
+</tr>
+<tr>
+<td><code>cluster setslot &lt;slot&gt; node &lt;node_id&gt;</code></td>
+<td>将槽 slot 指派给 node_id 指定的节点，如果槽已经指派给另一个节点，那么先让另一个节点删除该槽&gt;，然后再进行指派。</td>
+<td></td>
+</tr>
+<tr>
+<td><code>cluster setslot &lt;slot&gt; migrating &lt;node_id&gt;</code></td>
+<td>将本节点的槽 slot 迁移到 node_id 指定的节点中。</td>
+<td></td>
+</tr>
+<tr>
+<td><code>cluster setslot &lt;slot&gt; importing &lt;node_id&gt;</code></td>
+<td>从 node_id 指定的节点中导入槽 slot 到本节点。</td>
+<td></td>
+</tr>
+<tr>
+<td><code>cluster setslot &lt;slot&gt; stable</code></td>
+<td>取消对槽 slot 的导入（ import）或者迁移（ migrate）。</td>
+<td></td>
+</tr>
+<tr>
+<td><code>cluster keyslot &lt;key&gt;</code></td>
+<td>计算键 key 应该被放置在哪个槽上。</td>
+<td></td>
+</tr>
+<tr>
+<td><code>cluster countkeysinslot &lt;slot&gt;</code></td>
+<td>返回槽 slot 目前包含的键值对数量。</td>
+<td></td>
+</tr>
+<tr>
+<td><code>cluster getkeysinslot &lt;slot&gt; &lt;count&gt;</code></td>
+<td>返回 count 个 slot 槽中的键</td>
+<td></td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://blog.ifan.host/2022/06/03/database/redis/cmd/" title="Redis 命令索引" target="_blank" rel="external">https://blog.ifan.host/2022/06/03/database/redis/cmd/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/Mr-iFan" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/Mr-iFan" target="_blank"><span class="text-dark">iFan</span><small class="ml-1x">在路上啊</small></a></h3>
+        <div>个人简介。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2022/06/03/database/redis/resp/" title="Redis Resp 协议"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2022/06/03/language/python/tools/send-email/" title="Python 工具方法 发送邮件"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.jpg" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Mr-iFan" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+<!-- custom analytics part create by xiamo -->
+<script defer src="https://cdn1.lncld.net/static/js/av-min-1.2.1.js"></script>
+<script defer>
+AV.init({
+  appId: 'NWrHqpVOYyEWPWucCx1ItMHb-gzGzoHsz',
+  appKey: '7WN72ODWriRqLktj8J6ehXBF'
+});
+
+function showTime(Counter) {
+	var query = new AV.Query(Counter);
+		var visitors= $('.leancloud_visitors');
+		query.greaterThanOrEqualTo("time", 0);		
+		query.find({
+			success: function(results) {
+				if (results.length == 0) {				
+					return;
+				}
+				var data = results;
+				visitors.each(function(){
+					var url = $(this).attr('id').trim();					
+					for (var i = 0; i < data.length; i++) {
+						var object = data[i];
+						var content = object.get('time');
+						var _url = object.get('url')
+						if(url == _url){
+							$(this).text(content);
+						}
+					}
+				})
+				
+			},
+			error: function(object, error) {
+				console.log("Error: " + error.code + " " + error.message);
+			}
+		});
+}
+
+function addCount(Counter) {
+	var Counter = AV.Object.extend("Counter");
+	url = $(".leancloud_visitors").attr('id').trim();
+	title = $(".leancloud_visitors").attr('data-flag-title').trim();
+	var query = new AV.Query(Counter);
+	query.equalTo("url", url);
+	query.find({
+		success: function(results) {
+			if (results.length > 0) {
+				var counter = results[0];
+				counter.fetchWhenSave(true);
+				counter.increment("time");
+				counter.save(null, {
+					success: function(counter) {
+						var content = counter.get('time');
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(counter, error) {
+						console.log('Failed to save Visitor num, with error message: ' + error.message);
+					}
+				});
+			} else {
+				var newcounter = new Counter();
+				newcounter.set("title", title);
+				newcounter.set("url", url);
+				newcounter.set("time", 1);
+				newcounter.save(null, {
+					success: function(newcounter) {
+					    console.log("newcounter.get('time')="+newcounter.get('time'));
+						var content = newcounter.get('time');
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(newcounter, error) {
+						console.log('Failed to create');
+					}
+				});
+			}
+		},
+		error: function(error) {
+			console.log('Error:' + error.code + " " + error.message);
+		}
+	});
+}
+$(function() {
+	var Counter = AV.Object.extend("Counter");
+	if ($('.leancloud_visitors').length == 1) {
+		addCount(Counter);
+	} else {
+		showTime(Counter);
+	}
+}); 
+</script>
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

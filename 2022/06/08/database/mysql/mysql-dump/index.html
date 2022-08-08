@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Mysql dump 备份数据 | iFan</title>
+  <meta name="description" content="只涉及到 mysqldump 工具的使用，没有 binlog 日志的恢复  备份1. 导出所有数据1mysqldump -uroot -proot --all-database &gt; all.sql  2. 备份指定数据库123# --add-drop-database 创建数据库之前先删除之前的库mysqldump -uroot -proot db1 --add-drop-database">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mysql dump 备份数据">
+<meta property="og:url" content="https://blog.ifan.host/2022/06/08/database/mysql/mysql-dump/index.html">
+<meta property="og:site_name" content="iFan">
+<meta property="og:description" content="只涉及到 mysqldump 工具的使用，没有 binlog 日志的恢复  备份1. 导出所有数据1mysqldump -uroot -proot --all-database &gt; all.sql  2. 备份指定数据库123# --add-drop-database 创建数据库之前先删除之前的库mysqldump -uroot -proot db1 --add-drop-database">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-06-08T10:00:00.000Z">
+<meta property="article:modified_time" content="2022-08-08T10:24:39.528Z">
+<meta property="article:author" content="iFan">
+<meta property="article:tag" content="数据库">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://blog.ifan.host/2022/06/08/database/mysql/mysql-dump/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="iFan" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/Mr-iFan" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">iFan</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">在路上啊</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> 北京</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Mr-iFan" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>啥也不是</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/MyBatis/">MyBatis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/Spring-Boot/">Spring Boot</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Centos/">Centos</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Debian/">Debian</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/service/">service</a><span class="category-list-count">4</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Lua/">Lua</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Minio/">Minio</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NodeJS/">NodeJS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/NodeJS/nvm/">nvm</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Jupyter/">Jupyter</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/jupyterlab/">jupyterlab</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/pyenv/">pyenv</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Scala/">Scala</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/WEB/">WEB</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/WEB/HTTP/">HTTP</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/WEB/Nginx/">Nginx</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/WEB/%E5%8E%8B%E6%B5%8B/">压测</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/boto3/">boto3</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/boto3/%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8/">文件存储</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/golang/">golang</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a><span class="category-list-count">10</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/Git/">Git</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/ffmpeg/">ffmpeg</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/proxy/">proxy</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/proxy/%E7%88%AC%E8%99%AB/">爬虫</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/vim/">vim</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/%E7%BC%96%E7%A8%8B%E5%B7%A5%E5%85%B7/">编程工具</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><span class="category-list-count">39</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/ElasticSearch/">ElasticSearch</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/MongoDB/">MongoDB</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/">MySQL</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/Redis/">Redis</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/Sqlite/">Sqlite</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/%E5%A4%A7%E6%95%B0%E6%8D%AE/HBase/">HBase</a><span class="category-list-count">3</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/lxml/">lxml</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/mitmproxy/">mitmproxy</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/puppeteer/">puppeteer</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/pyppeteer/">pyppeteer</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/xpath/">xpath</a><span class="category-list-count">1</span></li></ul></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Centos/" rel="tag">Centos</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Debian/" rel="tag">Debian</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ElasticSearch/" rel="tag">ElasticSearch</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/" rel="tag">Git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HBase/" rel="tag">HBase</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jupyter/" rel="tag">Jupyter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lua/" rel="tag">Lua</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Minio/" rel="tag">Minio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB/" rel="tag">MongoDB</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MyBatis/" rel="tag">MyBatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NodeJS/" rel="tag">NodeJS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scala/" rel="tag">Scala</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Boot/" rel="tag">Spring Boot</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sqlite/" rel="tag">Sqlite</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB/" rel="tag">WEB</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Wrk/" rel="tag">Wrk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/boto3/" rel="tag">boto3</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/" rel="tag">ffmpeg</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang/" rel="tag">golang</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jupyterlab/" rel="tag">jupyterlab</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lxml/" rel="tag">lxml</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mitmproxy/" rel="tag">mitmproxy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nvm/" rel="tag">nvm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/proxy/" rel="tag">proxy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/puppeteer/" rel="tag">puppeteer</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pyenv/" rel="tag">pyenv</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pyppeteer/" rel="tag">pyppeteer</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/service/" rel="tag">service</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tesseract/" rel="tag">tesseract</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/" rel="tag">vim</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xpath/" rel="tag">xpath</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="tag">基础知识</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" rel="tag">大数据</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">39</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8/" rel="tag">文件存储</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E7%A8%8B%E5%B7%A5%E5%85%B7/" rel="tag">编程工具</a><span class="tag-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Centos/" style="font-size: 13.33px;">Centos</a> <a href="/tags/Debian/" style="font-size: 13px;">Debian</a> <a href="/tags/ElasticSearch/" style="font-size: 13.78px;">ElasticSearch</a> <a href="/tags/Git/" style="font-size: 13.11px;">Git</a> <a href="/tags/HBase/" style="font-size: 13.22px;">HBase</a> <a href="/tags/HTTP/" style="font-size: 13.78px;">HTTP</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/Jupyter/" style="font-size: 13px;">Jupyter</a> <a href="/tags/Linux/" style="font-size: 13.56px;">Linux</a> <a href="/tags/Lua/" style="font-size: 13.11px;">Lua</a> <a href="/tags/Minio/" style="font-size: 13px;">Minio</a> <a href="/tags/MongoDB/" style="font-size: 13.22px;">MongoDB</a> <a href="/tags/MyBatis/" style="font-size: 13px;">MyBatis</a> <a href="/tags/MySQL/" style="font-size: 13.78px;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 13.44px;">Nginx</a> <a href="/tags/NodeJS/" style="font-size: 13px;">NodeJS</a> <a href="/tags/Python/" style="font-size: 13.22px;">Python</a> <a href="/tags/Redis/" style="font-size: 13.67px;">Redis</a> <a href="/tags/Scala/" style="font-size: 13.11px;">Scala</a> <a href="/tags/Spring-Boot/" style="font-size: 13.11px;">Spring Boot</a> <a href="/tags/Sqlite/" style="font-size: 13px;">Sqlite</a> <a href="/tags/WEB/" style="font-size: 13.33px;">WEB</a> <a href="/tags/Wrk/" style="font-size: 13px;">Wrk</a> <a href="/tags/boto3/" style="font-size: 13px;">boto3</a> <a href="/tags/ffmpeg/" style="font-size: 13px;">ffmpeg</a> <a href="/tags/golang/" style="font-size: 13.89px;">golang</a> <a href="/tags/jupyterlab/" style="font-size: 13px;">jupyterlab</a> <a href="/tags/lxml/" style="font-size: 13px;">lxml</a> <a href="/tags/mitmproxy/" style="font-size: 13px;">mitmproxy</a> <a href="/tags/nvm/" style="font-size: 13px;">nvm</a> <a href="/tags/proxy/" style="font-size: 13px;">proxy</a> <a href="/tags/puppeteer/" style="font-size: 13px;">puppeteer</a> <a href="/tags/pyenv/" style="font-size: 13px;">pyenv</a> <a href="/tags/pyppeteer/" style="font-size: 13px;">pyppeteer</a> <a href="/tags/python/" style="font-size: 13px;">python</a> <a href="/tags/service/" style="font-size: 13.33px;">service</a> <a href="/tags/tesseract/" style="font-size: 13px;">tesseract</a> <a href="/tags/vim/" style="font-size: 13.11px;">vim</a> <a href="/tags/xpath/" style="font-size: 13px;">xpath</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" style="font-size: 13px;">基础知识</a> <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" style="font-size: 13.22px;">大数据</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 13.67px;">工具</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 14px;">数据库</a> <a href="/tags/%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8/" style="font-size: 13px;">文件存储</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 13.44px;">爬虫</a> <a href="/tags/%E7%BC%96%E7%A8%8B%E5%B7%A5%E5%85%B7/" style="font-size: 13.22px;">编程工具</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a><span class="archive-list-count">61</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">38</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/%E5%B7%A5%E5%85%B7/proxy/">proxy</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/08/08/tools/proxy/" class="title">nginx正向代理、tinyproxy和goproxy代理</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-08-08T10:24:39.539Z" itemprop="datePublished">2022-08-08</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/08/03/tools/typora/" class="title">Typora 修改源码模式和预览模式的宽度</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-08-03T00:56:00.000Z" itemprop="datePublished">2022-08-03</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/07/10/bigdata/hbase/rank-family/" class="title">大数据 Hbase 列族的配置</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-07-10T06:25:00.000Z" itemprop="datePublished">2022-07-10</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/WEB/">WEB</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/WEB/Nginx/">Nginx</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/07/01/web/nginx/goaccess-nginx-log/" class="title">Nginx 使用 goaccess 分析日志</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-07-01T01:01:00.000Z" itemprop="datePublished">2022-07-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Minio/">Minio</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/07/01/database/minio/minio-nginx-proxy/" class="title">Minio 配置 nginx 代理</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-07-01T01:00:00.000Z" itemprop="datePublished">2022-07-01</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-database/mysql/mysql-dump" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Mysql dump 备份数据
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2022/06/08/database/mysql/mysql-dump/" class="article-date">
+	  <time datetime="2022-06-08T10:00:00.000Z" itemprop="datePublished">2022-06-08</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>►<a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/">MySQL</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/MySQL/" rel="tag">MySQL</a>, <a class="article-tag-link-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a>
+  </span>
+
+
+        
+
+	<span class="article-read hidden-xs">
+    	<i class="icon icon-eye-fill" aria-hidden="true"></i>
+    	<span id="/2022/06/08/database/mysql/mysql-dump/" class="leancloud_visitors"  data-flag-title="Mysql dump 备份数据">0</span>
+    </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2022/06/08/database/mysql/mysql-dump/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 3.9k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 17(分)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <blockquote>
+<p>只涉及到 <code>mysqldump</code> 工具的使用，没有 <code>binlog</code> 日志的恢复</p>
+</blockquote>
+<h2 id="备份"><a href="#备份" class="headerlink" title="备份"></a>备份</h2><h3 id="1-导出所有数据"><a href="#1-导出所有数据" class="headerlink" title="1. 导出所有数据"></a>1. 导出所有数据</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -uroot -proot --all-database &gt; all.sql</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-备份指定数据库"><a href="#2-备份指定数据库" class="headerlink" title="2. 备份指定数据库"></a>2. 备份指定数据库</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># --add-drop-database 创建数据库之前先删除之前的库</span></span><br><span class="line">mysqldump -uroot -proot db1 --add-drop-database &gt; db1.sql</span><br><span class="line">mysqldump -uroot -proot --databases db1 db2 --add-drop-database &gt; db1_and_db2.sql</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-备份指定表"><a href="#3-备份指定表" class="headerlink" title="3. 备份指定表"></a>3. 备份指定表</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># --add-drop-table 创建表之前先删除之前的表</span></span><br><span class="line"><span class="comment"># -single-transaction 添加全局锁，如果在导出多个表的时候，不添加全局锁，会导致两个表的数据不一致</span></span><br><span class="line">mysqldump -uroot -proot --databases db1 -single-transaction --tables t1 t2 &gt; t1_t2.sql</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-根据条件导出"><a href="#4-根据条件导出" class="headerlink" title="4. 根据条件导出"></a>4. 根据条件导出</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -uroot -proot --databases db1 --tables t1 --<span class="built_in">where</span>=<span class="string">&#x27;id=1&#x27;</span> &gt; t1.sql</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-只导出表结构"><a href="#5-只导出表结构" class="headerlink" title="5. 只导出表结构"></a>5. 只导出表结构</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -uroot -proot --no-data --databases db1 &gt; db1.sql</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-只导出表数据"><a href="#6-只导出表数据" class="headerlink" title="6. 只导出表数据"></a>6. 只导出表数据</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -uroot -proot --no-data --databases db1 --tables t1 --no-create-db --no-create-info --skip-add-drop-table &gt; t1.sql</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-数据不落地导出导入"><a href="#7-数据不落地导出导入" class="headerlink" title="7. 数据不落地导出导入"></a>7. 数据不落地导出导入</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysqldump --host=h1 -uroot -proot --databases db1 |mysql --host=h2 -uroot -proot db2</span><br><span class="line"><span class="comment"># 压缩传输 -C</span></span><br><span class="line">mysqldump --host=h1 -uroot -proot -C --databases <span class="built_in">test</span> |mysql --host=h2 -uroot -proot <span class="built_in">test</span> </span><br></pre></td></tr></table></figure>
+
+<h3 id="8-导出数据为CSV"><a href="#8-导出数据为CSV" class="headerlink" title="8. 导出数据为CSV"></a>8. 导出数据为CSV</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -uroot -proot --no-data --databases db1 --tables t1 --fields-terminated-by &#x27;,&#x27; &gt; t1.sql</span><br></pre></td></tr></table></figure>
+
+<h3 id="9-使用sql语句备份指定查询的数据"><a href="#9-使用sql语句备份指定查询的数据" class="headerlink" title="9. 使用sql语句备份指定查询的数据"></a>9. 使用sql语句备份指定查询的数据</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from tablename into outfile &#x27;target_file&#x27; [option];</span><br></pre></td></tr></table></figure>
+
+<p><strong>option</strong> 参数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">fields terminated by &#x27;string&#x27;                   // 字段分隔符，默认为制表符&#x27;\t&#x27;</span><br><span class="line">fields [optionally] enclosed by &#x27;char&#x27;          // 字段引用符，如果加 optionally 选项则只用在 char、varchar 和 text 等字符型字段上，默认不使用引用符  </span><br><span class="line">fields escaped by &#x27;char&#x27;                        // 转移字符、默认为 &#x27;\&#x27;  </span><br><span class="line">lines starting by &#x27;string&#x27;                      // 每行前都加此字符串，默认&#x27;&#x27;  </span><br><span class="line">lines terminated by &#x27;string&#x27;                    // 行结束符，默认为&#x27;\n&#x27;  </span><br><span class="line"></span><br><span class="line"># char 表示此符号只能是单个字符，string表示可以是字符串。</span><br></pre></td></tr></table></figure>
+
+<p>导出csv文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from user into outfile &#x27;user.csv&#x27; fields terminated by &quot;,&quot; optionally  enclosed by &#x27;&quot;&#x27;;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="恢复"><a href="#恢复" class="headerlink" title="恢复"></a>恢复</h2><h3 id="1-使用sql语句导入数据"><a href="#1-使用sql语句导入数据" class="headerlink" title="1. 使用sql语句导入数据"></a>1. 使用sql语句导入数据</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">source table.sql</span><br><span class="line">mysqldump <span class="comment">--host=h1 -uroot -proot &lt; backup.sql</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-导入指定格式的文件"><a href="#2-导入指定格式的文件" class="headerlink" title="2. 导入指定格式的文件"></a>2. 导入指定格式的文件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">load data [local]infile &#x27;filename&#x27; into table tablename [option]</span><br></pre></td></tr></table></figure>
+
+<p><strong>option</strong> 选项</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">fields terminated by &#x27;string&#x27; (字段分割符，默认为制表符&#x27;t&#x27;)</span><br><span class="line">fields [optionally] enclosed by &#x27;char&#x27; (字段引用符，如果加 optionally 选项则只用在 char varchar text 等字符型字段上。默认不使用引用符)</span><br><span class="line">fields escaped by &#x27;char&#x27; (转义字符，默认为&#x27;&#x27;)</span><br><span class="line">lines starting by &#x27;string&#x27; (每行前都加此字符串，默认为&#x27;&#x27;)</span><br><span class="line">lines terminated by &#x27;string&#x27; (行结束符，默认为&#x27;n&#x27;)</span><br><span class="line">ignore number lines (忽略输入文件中的前几行数据)</span><br><span class="line">(col_name_or_user_var,...) (按照列出的字段顺序和字段数量加载数据)</span><br><span class="line">set col_name = expr,...将列做一定的数值转换后再加载。</span><br></pre></td></tr></table></figure>
+
+<p>导入csv文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">load data infile &#x27;user.csv&#x27; into table user fields terminated by &#x27;,&#x27; enclosed by &#x27;&quot;&#x27;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="mysqldump-参数"><a href="#mysqldump-参数" class="headerlink" title="mysqldump 参数"></a>mysqldump 参数</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--all-databases , -A</span></span><br><span class="line">导出全部数据库。</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--all-databases</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--all-tablespaces , -Y</span></span><br><span class="line">导出全部表空间。</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--all-databases --all-tablespaces</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--no-tablespaces , -y</span></span><br><span class="line">不导出任何表空间信息。</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--all-databases --no-tablespaces</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--add-drop-database</span></span><br><span class="line">每个数据库创建之前添加<span class="keyword">drop</span>数据库语句。</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--all-databases --add-drop-database</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--add-drop-table</span></span><br><span class="line">每个数据表创建之前添加<span class="keyword">drop</span>数据表语句。(默认为打开状态，使用<span class="comment">--skip-add-drop-table取消选项)</span></span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--all-databases (默认添加drop语句)</span></span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--all-databases –skip-add-drop-table (取消drop语句)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--add-locks</span></span><br><span class="line">在每个表导出之前增加LOCK TABLES并且之后UNLOCK <span class="keyword">TABLE</span>。(默认为打开状态，使用<span class="comment">--skip-add-locks取消选项)</span></span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--all-databases (默认添加LOCK语句)</span></span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--all-databases –skip-add-locks (取消LOCK语句)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--allow-keywords</span></span><br><span class="line">允许创建是关键词的列名字。这由表名前缀于每个列名做到。</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--all-databases --allow-keywords</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--apply-slave-statements</span></span><br><span class="line">在<span class="string">&#x27;CHANGE MASTER&#x27;</span>前添加<span class="string">&#x27;STOP SLAVE&#x27;</span>，并且在导出的最后添加<span class="string">&#x27;START SLAVE&#x27;</span>。</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--all-databases --apply-slave-statements</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--character-sets-dir</span></span><br><span class="line">字符集文件的目录</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--all-databases --character-sets-dir=/usr/local/mysql/share/mysql/charsets</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--comments</span></span><br><span class="line">附加注释信息。默认为打开，可以用<span class="comment">--skip-comments取消</span></span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--all-databases (默认记录注释)</span></span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--all-databases --skip-comments (取消注释)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--compatible</span></span><br><span class="line">导出的数据将和其它数据库或旧版本的MySQL 相兼容。值可以为ansi、mysql323、mysql40、postgresql、oracle、mssql、db2、maxdb、no_key_options、no_tables_options、no_field_options等，</span><br><span class="line">要使用几个值，用逗号将它们隔开。它并不保证能完全兼容，而是尽量兼容。</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--all-databases --compatible=ansi</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--compact</span></span><br><span class="line">导出更少的输出信息(用于调试)。去掉注释和头尾等结构。可以使用选项：<span class="comment">--skip-add-drop-table --skip-add-locks --skip-comments --skip-disable-keys</span></span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--all-databases --compact</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--complete-insert, -c</span></span><br><span class="line">使用完整的<span class="keyword">insert</span>语句(包含列名称)。这么做能提高插入效率，但是可能会受到max_allowed_packet参数的影响而导致插入失败。</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--all-databases --complete-insert</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--compress, -C</span></span><br><span class="line">在客户端和服务器之间启用压缩传递所有信息</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--all-databases --compress</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--create-options, -a</span></span><br><span class="line">在<span class="keyword">CREATE</span> <span class="keyword">TABLE</span>语句中包括所有MySQL特性选项。(默认为打开状态)</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--all-databases</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--databases, -B</span></span><br><span class="line">导出几个数据库。参数后面所有名字参量都被看作数据库名。</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--databases test mysql</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--debug</span></span><br><span class="line">输出debug信息，用于调试。默认值为：d:t,<span class="operator">/</span>tmp<span class="operator">/</span>mysqldump.trace</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--all-databases --debug</span></span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--all-databases --debug=&quot; d:t,/tmp/debug.trace&quot;</span></span><br><span class="line"><span class="comment">--debug-check</span></span><br><span class="line">检查内存和打开文件使用说明并退出。</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--all-databases --debug-check</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--debug-info</span></span><br><span class="line">输出调试信息并退出</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--all-databases --debug-info</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--default-character-set</span></span><br><span class="line">设置默认字符集，默认值为utf8</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--all-databases --default-character-set=utf8</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--delayed-insert</span></span><br><span class="line">采用延时插入方式（<span class="keyword">INSERT</span> DELAYED）导出数据</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--all-databases --delayed-insert</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--delete-master-logs</span></span><br><span class="line">master备份后删除日志. 这个参数将自动激活<span class="comment">--master-data。</span></span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--all-databases --delete-master-logs</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--disable-keys</span></span><br><span class="line">对于每个表，用<span class="comment">/*!40000 ALTER TABLE tbl_name DISABLE KEYS */</span>;和<span class="comment">/*!40000 ALTER TABLE tbl_name ENABLE KEYS */</span>;语句引用<span class="keyword">INSERT</span>语句。这样可以更快地导入dump出来的文件，因为它是在插入所有行后创建索引的。该选项只适合MyISAM表，默认为打开状态。</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--all-databases </span></span><br><span class="line"></span><br><span class="line"><span class="comment">--dump-slave</span></span><br><span class="line">该选项将主的binlog位置和文件名追加到导出数据的文件中(<span class="keyword">show</span> slave status)。设置为<span class="number">1</span>时，将会以CHANGE MASTER命令输出到数据文件；设置为<span class="number">2</span>时，会在change前加上注释。该选项将会打开<span class="comment">--lock-all-tables，除非--single-transaction被指定。该选项会自动关闭--lock-tables选项。默认值为0。</span></span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--all-databases --dump-slave=1</span></span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--all-databases --dump-slave=2 --master-data</span></span><br><span class="line">该选项将当前服务器的binlog的位置和文件名追加到输出文件中(<span class="keyword">show</span> master status)。如果为<span class="number">1</span>，将会输出CHANGE MASTER 命令；如果为<span class="number">2</span>，输出的CHANGE MASTER命令前添加注释信息。该选项将打开<span class="comment">--lock-all-tables 选项，除非-</span></span><br><span class="line"></span><br><span class="line"><span class="operator">-</span>single<span class="operator">-</span>transaction也被指定（在这种情况下，全局读锁在开始导出时获得很短的时间；其他内容参考下面的<span class="comment">--single-transaction选项）。该选项自动关闭--lock-tables选项。</span></span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost --all-databases --master-data=1;</span></span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost --all-databases --master-data=2; --events, -E</span></span><br><span class="line">导出事件。</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--all-databases --events</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--extended-insert, -e</span></span><br><span class="line">使用具有多个<span class="keyword">VALUES</span>列的<span class="keyword">INSERT</span>语法。这样使导出文件更小，并加速导入时的速度。默认为打开状态，使用<span class="comment">--skip-extended-insert取消选项。</span></span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--all-databases</span></span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--all-databases--skip-extended-insert (取消选项)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--fields-terminated-by</span></span><br><span class="line">导出文件中忽略给定字段。与<span class="comment">--tab选项一起使用，不能用于--databases和--all-databases选项</span></span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p test test <span class="comment">--tab=&quot;/home/mysql&quot; --fields-terminated-by=&quot;#&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--fields-enclosed-by</span></span><br><span class="line">输出文件中的各个字段用给定字符包裹。与<span class="comment">--tab选项一起使用，不能用于--databases和--all-databases选项</span></span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p test test <span class="comment">--tab=&quot;/home/mysql&quot; --fields-enclosed-by=&quot;#&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--fields-optionally-enclosed-by</span></span><br><span class="line">输出文件中的各个字段用给定字符选择性包裹。与<span class="comment">--tab选项一起使用，不能用于--databases和--all-databases选项</span></span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p test test <span class="comment">--tab=&quot;/home/mysql&quot; --fields-enclosed-by=&quot;#&quot; --fields-optionally-enclosed-by =&quot;#&quot;</span></span><br><span class="line"><span class="comment">--fields-escaped-by</span></span><br><span class="line">输出文件中的各个字段忽略给定字符。与<span class="comment">--tab选项一起使用，不能用于--databases和--all-databases选项</span></span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p mysql <span class="keyword">user</span> <span class="comment">--tab=&quot;/home/mysql&quot; --fields-escaped-by=&quot;#&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--flush-logs</span></span><br><span class="line">开始导出之前刷新日志。</span><br><span class="line">请注意：假如一次导出多个数据库(使用选项<span class="comment">--databases或者--all-databases)，将会逐个数据库刷新日志。除使用--lock-all-tables或者--master-data外。在这种情况下，日志将会被刷新一次，相应的所以表同时被锁定。因此，如果打算同时导出和刷新日志应该使用--lock-all-tables 或者--master-data 和--flush-logs。</span></span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--all-databases --flush-logs</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--flush-privileges</span></span><br><span class="line">在导出mysql数据库之后，发出一条FLUSH PRIVILEGES 语句。为了正确恢复，该选项应该用于导出mysql数据库和依赖mysql数据库数据的任何时候。</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--all-databases --flush-privileges</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--force</span></span><br><span class="line">在导出过程中忽略出现的<span class="keyword">SQL</span>错误。</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--all-databases --force</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--help</span></span><br><span class="line">显示帮助信息并退出。</span><br><span class="line">mysqldump <span class="comment">--help</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--hex-blob</span></span><br><span class="line">使用十六进制格式导出二进制字符串字段。如果有二进制数据就必须使用该选项。影响到的字段类型有<span class="type">BINARY</span>、<span class="type">VARBINARY</span>、<span class="type">BLOB</span>。</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--all-databases --hex-blob</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--host, -h</span></span><br><span class="line">需要导出的主机信息</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost --all-databases</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--ignore-table</span></span><br><span class="line">不导出指定表。指定忽略多个表时，需要重复多次，每次一个表。每个表必须同时指定数据库和表名。例如：<span class="comment">--ignore-table=database.table1 --ignore-table=database.table2 ……</span></span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost --all-databases --ignore-table=mysql.user</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--include-master-host-port</span></span><br><span class="line">在<span class="comment">--dump-slave产生的&#x27;CHANGE MASTER TO..&#x27;语句中增加&#x27;MASTER_HOST=&lt;host&gt;，MASTER_PORT=&lt;port&gt;&#x27; </span></span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost --all-databases --include-master-host-port</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--insert-ignore</span></span><br><span class="line">在插入行时使用<span class="keyword">INSERT</span> IGNORE语句.</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost --all-databases --insert-ignore</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--lines-terminated-by</span></span><br><span class="line">输出文件的每行用给定字符串划分。与<span class="comment">--tab选项一起使用，不能用于--databases和--all-databases选项。</span></span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost test test --tab=&quot;/tmp/mysql&quot; --lines-terminated-by=&quot;##&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--lock-all-tables, -x</span></span><br><span class="line">提交请求锁定所有数据库中的所有表，以保证数据的一致性。这是一个全局读锁，并且自动关闭<span class="comment">--single-transaction 和--lock-tables 选项。</span></span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost --all-databases --lock-all-tables</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--lock-tables, -l</span></span><br><span class="line">开始导出前，锁定所有表。用READ <span class="keyword">LOCAL</span>锁定表以允许MyISAM表并行插入。对于支持事务的表例如InnoDB和BDB，<span class="comment">--single-transaction是一个更好的选择，因为它根本不需要锁定表。</span></span><br><span class="line">请注意当导出多个数据库时，<span class="comment">--lock-tables分别为每个数据库锁定表。因此，该选项不能保证导出文件中的表在数据库之间的逻辑一致性。不同数据库表的导出状态可以完全不同。</span></span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost --all-databases --lock-tables</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--log-error</span></span><br><span class="line">附加警告和错误信息到给定文件</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost --all-databases --log-error=/tmp/mysqldump_error_log.err</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--max_allowed_packet</span></span><br><span class="line">服务器发送和接受的最大包长度。</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost --all-databases --max_allowed_packet=10240</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--net_buffer_length</span></span><br><span class="line">TCP<span class="operator">/</span>IP和socket连接的缓存大小。</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost --all-databases --net_buffer_length=1024</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--no-autocommit</span></span><br><span class="line">使用autocommit<span class="operator">/</span><span class="keyword">commit</span> 语句包裹表。</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost --all-databases --no-autocommit</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--no-create-db, -n</span></span><br><span class="line">只导出数据，而不添加<span class="keyword">CREATE</span> DATABASE 语句。</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost --all-databases --no-create-db</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--no-create-info, -t</span></span><br><span class="line">只导出数据，而不添加<span class="keyword">CREATE</span> <span class="keyword">TABLE</span> 语句。</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost --all-databases --no-create-info</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--no-data, -d</span></span><br><span class="line">不导出任何数据，只导出数据库表结构。</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost --all-databases --no-data</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--no-set-names, -N</span></span><br><span class="line">等同于<span class="comment">--skip-set-charset</span></span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost --all-databases --no-set-names</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--opt</span></span><br><span class="line">等同于<span class="comment">--add-drop-table, --add-locks, --create-options, --quick, --extended-insert, --lock-tables, --set-charset, --disable-keys 该选项默认开启, 可以用--skip-opt禁用.</span></span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost --all-databases --opt</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--order-by-primary</span></span><br><span class="line">如果存在主键，或者第一个唯一键，对每个表的记录进行排序。在导出MyISAM表到InnoDB表时有效，但会使得导出工作花费很长时间。 </span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost --all-databases --order-by-primary</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--password, -p</span></span><br><span class="line">连接数据库密码</span><br><span class="line"></span><br><span class="line"><span class="comment">--pipe(windows系统可用)</span></span><br><span class="line">使用命名管道连接mysql</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost --all-databases --pipe</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--port, -P</span></span><br><span class="line">连接数据库端口号</span><br><span class="line"></span><br><span class="line"><span class="comment">--protocol</span></span><br><span class="line">使用的连接协议，包括：tcp, socket, pipe, memory.</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost --all-databases --protocol=tcp</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--quick, -q</span></span><br><span class="line">不缓冲查询，直接导出到标准输出。默认为打开状态，使用<span class="comment">--skip-quick取消该选项。</span></span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost --all-databases </span></span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost --all-databases --skip-quick</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--quote-names,-Q</span></span><br><span class="line">使用（`）引起表和列名。默认为打开状态，使用<span class="comment">--skip-quote-names取消该选项。</span></span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost --all-databases</span></span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost --all-databases --skip-quote-names</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--replace</span></span><br><span class="line">使用REPLACE <span class="keyword">INTO</span> 取代<span class="keyword">INSERT</span> <span class="keyword">INTO</span>.</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost --all-databases --replace</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--result-file, -r</span></span><br><span class="line">直接输出到指定文件中。该选项应该用在使用回车换行对（\\r\\n）换行的系统上（例如：DOS，Windows）。该选项确保只有一行被使用。</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost --all-databases --result-file=/tmp/mysqldump_result_file.txt</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--routines, -R</span></span><br><span class="line">导出存储过程以及自定义函数。</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost --all-databases --routines</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--set-charset</span></span><br><span class="line">添加<span class="string">&#x27;SET NAMES default_character_set&#x27;</span>到输出文件。默认为打开状态，使用<span class="comment">--skip-set-charset关闭选项。</span></span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost --all-databases </span></span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost --all-databases --skip-set-charset</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--single-transaction</span></span><br><span class="line">该选项在导出数据之前提交一个<span class="keyword">BEGIN</span> <span class="keyword">SQL</span>语句，<span class="keyword">BEGIN</span> 不会阻塞任何应用程序且能保证导出时数据库的一致性状态。它只适用于多版本存储引擎，仅InnoDB。本选项和<span class="comment">--lock-tables 选项是互斥的，因为LOCK TABLES 会使任何挂起的事务隐含提交。要想导出大表的话，应结合使用--quick 选项。</span></span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost --all-databases --single-transaction</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--dump-date</span></span><br><span class="line">将导出时间添加到输出文件中。默认为打开状态，使用<span class="comment">--skip-dump-date关闭选项。</span></span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost --all-databases</span></span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost --all-databases --skip-dump-date</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--skip-opt</span></span><br><span class="line">禁用–opt选项.</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost --all-databases --skip-opt</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--socket,-S</span></span><br><span class="line">指定连接mysql的socket文件位置，默认路径<span class="operator">/</span>tmp<span class="operator">/</span>mysql.sock</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost --all-databases --socket=/tmp/mysqld.sock</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--tab,-T</span></span><br><span class="line">为每个表在给定路径创建tab分割的文本文件。注意：仅仅用于mysqldump和mysqld服务器运行在相同机器上。</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost test test --tab=&quot;/home/mysql&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--tables</span></span><br><span class="line">覆盖<span class="comment">--databases (-B)参数，指定需要导出的表名。</span></span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost --databases test --tables test</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--triggers</span></span><br><span class="line">导出触发器。该选项默认启用，用<span class="comment">--skip-triggers禁用它。</span></span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost --all-databases --triggers</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--tz-utc</span></span><br><span class="line">在导出顶部设置时区TIME_ZONE<span class="operator">=</span><span class="string">&#x27;+00:00&#x27;</span> ，以保证在不同时区导出的<span class="type">TIMESTAMP</span> 数据或者数据被移动其他时区时的正确性。</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost --all-databases --tz-utc</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--user, -u</span></span><br><span class="line">指定连接的用户名。</span><br><span class="line"></span><br><span class="line"><span class="comment">--verbose, --v</span></span><br><span class="line">输出多种平台信息。</span><br><span class="line"></span><br><span class="line"><span class="comment">--version, -V</span></span><br><span class="line">输出mysqldump版本信息并退出</span><br><span class="line"></span><br><span class="line"><span class="comment">--where, -w</span></span><br><span class="line">只转储给定的<span class="keyword">WHERE</span>条件选择的记录。请注意如果条件包含命令解释符专用空格或字符，一定要将条件引用起来。</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost --all-databases --where=&quot; user=&#x27;root&#x27;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--xml, -X</span></span><br><span class="line">导出XML格式.</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost --all-databases --xml</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--plugin_dir</span></span><br><span class="line">客户端插件的目录，用于兼容不同的插件版本。</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost --all-databases --plugin_dir=&quot;/usr/local/lib/plugin&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--default_auth</span></span><br><span class="line">客户端插件默认使用权限。</span><br><span class="line">mysqldump <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="comment">--host=localhost --all-databases --default-auth=&quot;/usr/local/lib/plugin/&lt;PLUGIN&gt;&quot;</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://blog.ifan.host/2022/06/08/database/mysql/mysql-dump/" title="Mysql dump 备份数据" target="_blank" rel="external">https://blog.ifan.host/2022/06/08/database/mysql/mysql-dump/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/Mr-iFan" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/Mr-iFan" target="_blank"><span class="text-dark">iFan</span><small class="ml-1x">在路上啊</small></a></h3>
+        <div>个人简介。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2022/06/08/database/mysql/mysql-Indexes/" title="Mysql 基础知识 索引"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2022/06/08/database/elasticsearch/elasticsearch-interview/" title="ElasticSearch 安装"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.jpg" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Mr-iFan" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+<!-- custom analytics part create by xiamo -->
+<script defer src="https://cdn1.lncld.net/static/js/av-min-1.2.1.js"></script>
+<script defer>
+AV.init({
+  appId: 'NWrHqpVOYyEWPWucCx1ItMHb-gzGzoHsz',
+  appKey: '7WN72ODWriRqLktj8J6ehXBF'
+});
+
+function showTime(Counter) {
+	var query = new AV.Query(Counter);
+		var visitors= $('.leancloud_visitors');
+		query.greaterThanOrEqualTo("time", 0);		
+		query.find({
+			success: function(results) {
+				if (results.length == 0) {				
+					return;
+				}
+				var data = results;
+				visitors.each(function(){
+					var url = $(this).attr('id').trim();					
+					for (var i = 0; i < data.length; i++) {
+						var object = data[i];
+						var content = object.get('time');
+						var _url = object.get('url')
+						if(url == _url){
+							$(this).text(content);
+						}
+					}
+				})
+				
+			},
+			error: function(object, error) {
+				console.log("Error: " + error.code + " " + error.message);
+			}
+		});
+}
+
+function addCount(Counter) {
+	var Counter = AV.Object.extend("Counter");
+	url = $(".leancloud_visitors").attr('id').trim();
+	title = $(".leancloud_visitors").attr('data-flag-title').trim();
+	var query = new AV.Query(Counter);
+	query.equalTo("url", url);
+	query.find({
+		success: function(results) {
+			if (results.length > 0) {
+				var counter = results[0];
+				counter.fetchWhenSave(true);
+				counter.increment("time");
+				counter.save(null, {
+					success: function(counter) {
+						var content = counter.get('time');
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(counter, error) {
+						console.log('Failed to save Visitor num, with error message: ' + error.message);
+					}
+				});
+			} else {
+				var newcounter = new Counter();
+				newcounter.set("title", title);
+				newcounter.set("url", url);
+				newcounter.set("time", 1);
+				newcounter.save(null, {
+					success: function(newcounter) {
+					    console.log("newcounter.get('time')="+newcounter.get('time'));
+						var content = newcounter.get('time');
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(newcounter, error) {
+						console.log('Failed to create');
+					}
+				});
+			}
+		},
+		error: function(error) {
+			console.log('Error:' + error.code + " " + error.message);
+		}
+	});
+}
+$(function() {
+	var Counter = AV.Object.extend("Counter");
+	if ($('.leancloud_visitors').length == 1) {
+		addCount(Counter);
+	} else {
+		showTime(Counter);
+	}
+}); 
+</script>
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>
