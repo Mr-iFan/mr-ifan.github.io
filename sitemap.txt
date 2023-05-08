@@ -1,3 +1,4 @@
+https://blog.ifan.host/2022/08/09/tools/Metro/
 https://blog.ifan.host/2022/08/09/tools/keyboard/
 https://blog.ifan.host/2022/06/03/tools/proxy/
 https://blog.ifan.host/2022/04/02/tools/ffmpeg/
@@ -166,7 +167,7 @@ https://blog.ifan.host/tags/Spring-Boot/
 https://blog.ifan.host/tags/Mac/
 https://blog.ifan.host/tags/Sqlalchemy/
 https://blog.ifan.host/tags/ORM/
-https://blog.ifan.host/tags/%E9%94%AE%E7%9B%98/
+https://blog.ifan.host/tags/%E7%94%9F%E6%B4%BB/
 https://blog.ifan.host/categories/%E7%88%AC%E8%99%AB/
 https://blog.ifan.host/categories/golang/
 https://blog.ifan.host/categories/%E7%88%AC%E8%99%AB/xpath/
@@ -216,4 +217,4 @@ https://blog.ifan.host/categories/Java/Spring-Boot/
 https://blog.ifan.host/categories/%E5%B7%A5%E5%85%B7/Mac/
 https://blog.ifan.host/categories/Sqlalchemy/
 https://blog.ifan.host/categories/Sqlalchemy/ORM/
-https://blog.ifan.host/categories/%E5%B7%A5%E5%85%B7/%E9%94%AE%E7%9B%98/
+https://blog.ifan.host/categories/%E5%B7%A5%E5%85%B7/%E7%94%9F%E6%B4%BB/
