@@ -1,3 +1,4 @@
+https://blog.ifan.host/2022/08/10/tools/development-tool/vscode-config/
 https://blog.ifan.host/2022/08/09/tools/Metro/
 https://blog.ifan.host/2022/08/09/tools/keyboard/
 https://blog.ifan.host/2022/06/03/tools/proxy/
@@ -73,9 +74,9 @@ https://blog.ifan.host/2022/04/03/web/nginx/openresty-install/
 https://blog.ifan.host/2022/04/02/web/nginx/wrk/
 https://blog.ifan.host/2022/04/03/web/nginx/nginx-config/
 https://blog.ifan.host/2022/04/02/tools/git/git-cmd-img/
-https://blog.ifan.host/2022/04/02/tools/%20development-tool/sublime-text/
-https://blog.ifan.host/2022/04/02/tools/%20development-tool/vscode-shortcut-key/
-https://blog.ifan.host/2022/04/02/tools/%20development-tool/idae-shortcut-key/
+https://blog.ifan.host/2022/04/02/tools/development-tool/sublime-text/
+https://blog.ifan.host/2022/04/02/tools/development-tool/idae-shortcut-key/
+https://blog.ifan.host/2022/04/02/tools/development-tool/vscode-shortcut-key/
 https://blog.ifan.host/2022/08/03/tools/typora/
 https://blog.ifan.host/2022/04/02/tools/vim/vim-imgs/
 https://blog.ifan.host/2022/04/03/tools/vim/vim-key/
